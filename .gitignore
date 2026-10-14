@@ -1,1 +1,5 @@
 .DS_Store
+
+# Do NOT ignore node_modules/ here: the package skill ships a vendored copy of
+# fflate in AcademyTemplates/skills/package/scripts/node_modules/ and stlp.js
+# resolves it from there, so it must stay tracked and go into the released zip.

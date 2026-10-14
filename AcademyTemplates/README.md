@@ -25,7 +25,7 @@ Every template also works by hand, without AI.
 | [`academy-templates:diploma-project`](skills/diploma-project/README.md) | `academy-diploma-project` | PDF | students | the **final diploma / thesis document** (and defense-slides outline), Latin or Armenian | pdfLaTeX / XeLaTeX |
 | [`academy-templates:lab-manual`](skills/lab-manual/README.md) | `academy-lab-manual` | PDF + app | lecturers | a **lab manual PDF** and the matching **app lab** (`lab.json` steps + check quiz, source files) | XeLaTeX, Python 3 |
 | [`academy-templates:training`](skills/training/README.md) | `academy-training` | Web | lecturers | an **interactive web training**: topics, interactive blocks, quizzes that unlock topics, certificate; standalone / preview / platform modes | Python 3 |
-| [`academy-templates:package`](skills/package/README.md) | `academy-package` | Package | course authors | a **SemiTec Learning Package** (`.stlp`) for the [SemiTec Academy](../../Academy/README.md) app from trainings, labs, PDF / Markdown readings, videos, files, projects — with a week-by-week **study plan** | Node.js 18+ |
+| [`academy-templates:package`](skills/package/README.md) | `academy-package` | Package | course authors | a **SemiTec Learning Package** (`.stlp`) for the [SemiTec Academy](https://github.com/SemiTecFoundation/semitec-academy#readme) app from trainings, labs, PDF / Markdown readings, videos, files, projects — with a week-by-week **study plan** | Node.js 18+ |
 
 All PDF templates support **English, Armenian (reformed) and Armenian (classical)** (diploma-project:
 Latin template + Armenian XeLaTeX variant). Ask in plain words — the right skill is chosen from its
