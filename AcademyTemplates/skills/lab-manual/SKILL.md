@@ -52,8 +52,9 @@ objectives, the procedure as a list of steps, what is measured / shown, what is 
 graded, starter files (code, testbench, constraints, scripts). Ask for existing material (old PDF, code).
 
 ### 2. Create the folder
-Copy the template (`latex/` and `lab/`) to the new lab folder — for a SemiTec Learning Package usually
-`Foundation/…/Labs/<course>/lab-NN-<name>/`. `examples/lab-01-shift-register/` is a complete example.
+Copy the template (`latex/` and `lab/`) to the new lab folder:
+`<contentRoot>/<topic>/labs/<topic>-lab-NN-<name>/` (see *Where files go*).
+`examples/lab-01-shift-register/` is a complete example.
 
 ### 3. Write the manual (`latex/`)
 - `metadata.tex`: all fields; `\setlabid{lab-NN-name}` = the lab's id in the package.

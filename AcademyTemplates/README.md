@@ -108,6 +108,31 @@ AcademyTemplates/
 Release checklist: update the skill → `python3 tools/skills.py zip` → `python3 tools/skills.py check`
 (0 errors) → raise the plugin version and add a `CHANGELOG.md` entry.
 
+## Destination folders — `.semitec.json`
+
+The `training`, `lab-manual`, `project-brief` and `package` skills never hard-code where your files go.
+On first use they look for **`.semitec.json`**, searching from the working folder upward; if it is not
+there they ask you once and write it, so later runs stay quiet. Create it yourself to skip the question:
+
+```json
+{
+  "contentRoot":  "LearningMaterials",
+  "packagesRoot": "LearningMaterials/Packages",
+  "briefsRoot":   "Briefs",
+  "academyRepo":  "../semitec-academy"
+}
+```
+
+| Key | Used by | Meaning |
+|---|---|---|
+| `contentRoot` | training, lab-manual, project-brief, package | where course materials live — trainings, labs and projects are created under `<contentRoot>/<topic>/` |
+| `packagesRoot` | package | where `pack-spec.json` folders are created |
+| `briefsRoot` | project-brief | optional — where finished briefs are collected, if you keep them apart from the course content |
+| `academyRepo` | package | optional — a checkout of [semitec-academy](https://github.com/SemiTecFoundation/semitec-academy), so the skill can use its current `packer/stlp.js` instead of the bundled copy |
+
+Paths are relative to `.semitec.json` itself, or absolute. Only the keys a skill needs have to be
+present. `diploma-project` writes wherever you tell it and needs no configuration.
+
 ## Where things go
 
 - Package sources and built `.stlp` files: the Academy repository's `packs/` and `dist/`

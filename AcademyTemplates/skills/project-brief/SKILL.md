@@ -163,7 +163,8 @@ Academy). Hand over to the matching skill when the user needs one of those outpu
 ## Where new material goes
 Course content lives in `<content>/<topic>/`, where `<content>` is `contentRoot` (see *Where files go*) — e.g.
 `IC-Design/Digital-Design/Verification/projects/verif-<name>/` (the brief's LaTeX + `project/` from
-brief2project.py). In that workspace, finished diploma topics may instead live in `Diploma-Projects/`.
+brief2project.py). If `briefsRoot` is set, finished briefs are collected there instead of under the
+topic.
 Folder names are `<topic>-<short-name>` (they become ids in packages). Use a **last-level** topic (one
 without sub-topics). Where `<content>/tools/inventory.py` exists, run it with `--init <topic>` first if
 the topic's folders are missing, and again after adding material; skip this when the script is absent.
