@@ -1,0 +1,103 @@
+{
+  "title": "Lab 1: [what the student builds]",
+  "summary": "One or two sentences: the goal of the lab (Markdown).",
+  "difficulty": "beginner",
+  "estimatedTime": "2 h",
+  "equipment": [
+    "[board]",
+    "[tool and version]"
+  ],
+  "objectives": [
+    "[objective 1]",
+    "[objective 2]",
+    "[objective 3]"
+  ],
+  "manual": "manual.pdf",
+  "files": "src",
+  "steps": [
+    {
+      "id": "setup",
+      "title": "Set up the project",
+      "md": "[What to do — short; the manual has the details.]",
+      "manualPage": 2
+    },
+    {
+      "id": "design",
+      "title": "Write the design",
+      "md": "[…]",
+      "files": [
+        "src/README.txt"
+      ],
+      "hint": "[optional hint]",
+      "manualPage": 2
+    },
+    {
+      "id": "simulate",
+      "title": "Simulate",
+      "md": "[…]",
+      "manualPage": 2
+    },
+    {
+      "id": "board",
+      "title": "Test on the board",
+      "md": "[…]",
+      "manualPage": 2
+    }
+  ],
+  "quiz": {
+    "title": "Lab check",
+    "passThreshold": 0.75,
+    "questions": [
+      {
+        "id": "q1",
+        "type": "single",
+        "text": "[question]",
+        "options": [
+          "[right]",
+          "[wrong]",
+          "[wrong]"
+        ],
+        "correct": [
+          0
+        ],
+        "review": [
+          "design"
+        ]
+      },
+      {
+        "id": "q2",
+        "type": "multiple",
+        "text": "[question with several right answers]",
+        "options": [
+          "[right]",
+          "[right]",
+          "[wrong]"
+        ],
+        "correct": [
+          0,
+          1
+        ],
+        "review": [
+          "simulate"
+        ]
+      },
+      {
+        "id": "q3",
+        "type": "order",
+        "text": "Put the steps in order.",
+        "items": [
+          "Set up the project",
+          "Write the design",
+          "Simulate",
+          "Test on the board"
+        ],
+        "review": [
+          "setup",
+          "design",
+          "simulate",
+          "board"
+        ]
+      }
+    ]
+  }
+}

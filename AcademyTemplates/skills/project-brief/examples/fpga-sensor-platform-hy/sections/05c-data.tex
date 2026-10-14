@@ -1,0 +1,18 @@
+\chapter{Տվյալների ֆորմատ և մոդել}
+\label{ch:data}
+
+FPGA/PS տվյալները սերվեր ուղարկելուց առաջ ձևափոխվում են կառուցվածքային ֆորմատի.
+\begin{verbatim}
+{ "device": "AUP_ZU3_01", "experiment_id": 12, "sensor": "vibration",
+  "timestamp": 1789063200, "sequence": 1524,
+  "raw_value": 728, "processed_value": 681, "status": "normal" }
+\end{verbatim}
+PS-ը տվյալները ուղարկում է API-ին, օրինակ՝ \texttt{POST /api/v1/data}։
+
+Տվյալների բազան պետք է աջակցի \textbf{փորձերի (experiments)} հասկացությունը.
+\begin{itemize}
+  \item \textbf{Experiment} — \texttt{experiment\_id}, \texttt{device\_id}, \texttt{configuration}, \texttt{start\_time}, \texttt{end\_time}։
+  \item \textbf{Sensor} — \texttt{sensor\_id}, \texttt{sensor\_type}, \texttt{sample\_rate}, \texttt{unit}։
+  \item \textbf{Sample} — \texttt{experiment\_id}, \texttt{sensor\_id}, \texttt{timestamp}, \texttt{sequence\_number}, \texttt{raw\_value}, \texttt{processed\_value}, \texttt{status}։
+\end{itemize}
+Այս մոդելը թույլ է տալիս համեմատել փորձերը (օր.՝ Experiment~\#12 vs \#18)։

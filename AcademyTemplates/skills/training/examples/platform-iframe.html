@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Platform integration demo — iframe + postMessage</title>
+<!-- This page plays the role of YOUR PLATFORM. It embeds the training in an <iframe>,
+     gives it the saved progress when it asks, and stores every progress update.
+     Here the "database" is this browser's localStorage; in a real platform you would
+     call your backend instead (see INTEGRATION.md). -->
+<style>
+  body { margin: 0; font: 14px/1.5 system-ui, sans-serif; display: grid; grid-template-columns: 340px 1fr; height: 100vh; background: #eef1f5; color: #1d2433; }
+  aside { padding: 14px; overflow: auto; border-right: 1px solid #d5dbe3; background: #fff; }
+  h1 { font-size: 16px; margin: 0 0 4px; } h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: #5e6b80; margin: 16px 0 6px; }
+  select, button { font: inherit; padding: 5px 8px; margin: 2px 2px 2px 0; }
+  pre { background: #0f1720; color: #e6edf3; padding: 8px; border-radius: 6px; font-size: 11px; max-height: 240px; overflow: auto; white-space: pre-wrap; }
+  #log div { border-bottom: 1px solid #eee; padding: 2px 0; font-size: 12px; } #log b { color: #1f6feb; }
+  iframe { width: 100%; height: 100%; border: 0; background: #fff; }
+  .bar { height: 8px; background: #dde4ee; border-radius: 9px; overflow: hidden; } .bar i { display: block; height: 100%; background: #1a9b5c; width: 0; transition: width .4s; }
+  @media (max-width: 800px) { body { grid-template-columns: 1fr; grid-template-rows: auto 70vh; } }
+</style>
+</head>
+<body>
+<aside>
+  <h1>Demo platform</h1>
+  <p>The training runs in the frame on the right in <code>mode=platform</code>. Progress is stored by <em>this</em> page.</p>
+  <h2>Logged-in user</h2>
+  <select id="user">
+    <option value="u-101|Anna Petrosyan">Anna Petrosyan (u-101)</option>
+    <option value="u-102|Davit Hakobyan">Davit Hakobyan (u-102)</option>
+  </select>
+  <h2>Progress <span id="pct"></span></h2>
+  <div class="bar"><i id="bar"></i></div>
+  <h2>Commands to the training</h2>
+  <button data-cmd="navigate" data-hash="#certificate">Open certificate</button>
+  <button data-cmd="getState">Ask for state</button>
+  <button data-cmd="reset">Reset user</button>
+  <h2>Events from the training</h2>
+  <div id="log"></div>
+  <h2>Stored state ("database")</h2>
+  <pre id="state">—</pre>
+</aside>
+<iframe id="frame" title="Training"></iframe>
+<script>
+  var DB_KEY = 'demo-platform-db';                  // pretend database
+  function db() { try { return JSON.parse(localStorage.getItem(DB_KEY)) || {}; } catch (e) { return {}; } }
+  function dbSave(d) { try { localStorage.setItem(DB_KEY, JSON.stringify(d)); } catch (e) {} }
+  var frame = document.getElementById('frame'), sel = document.getElementById('user');
+  function user() { var p = sel.value.split('|'); return { id: p[0], name: p[1] }; }
+  function key(trainingId) { return trainingId + '/' + user().id; }
+  function log(type, detail) {
+    var d = document.createElement('div');
+    d.innerHTML = '<b>' + type + '</b> ' + (detail && detail.reason ? detail.reason : '') + (detail && detail.topicId ? ' ' + detail.topicId : '') + (detail && detail.score != null ? ' ' + Math.round(detail.score * 100) + '%' : '');
+    var l = document.getElementById('log'); l.insertBefore(d, l.firstChild);
+    while (l.children.length > 40) l.removeChild(l.lastChild);
+  }
+  function show(state) {
+    document.getElementById('state').textContent = state ? JSON.stringify(state, null, 1) : '—';
+    var p = state ? state.percent || 0 : 0;
+    document.getElementById('bar').style.width = p + '%'; document.getElementById('pct').textContent = p + '%';
+  }
+  function send(msg) { msg.target = 'semitec-training'; frame.contentWindow.postMessage(msg, '*'); }
+
+  window.addEventListener('message', function (e) {
+    if (e.source !== frame.contentWindow) return;          // only our iframe
+    var m = e.data || {}; if (m.source !== 'semitec-training') return;
+    log(m.type, m.detail);
+    if (m.type === 'requestState') {                      // training starts: give it the saved state
+      var saved = db()[key(m.trainingId)] || null;
+      send({ type: 'init', state: saved, user: user(), lockName: true });
+      show(saved);
+    }
+    if (m.type === 'progress' || m.type === 'state') {     // save every update
+      var d = db(); d[key(m.trainingId)] = m.detail.state; dbSave(d); show(m.detail.state);
+    }
+    if (m.type === 'completed') log('→ platform', { reason: 'mark course completed for ' + user().name });
+  });
+  document.querySelectorAll('[data-cmd]').forEach(function (b) {
+    b.onclick = function () { send({ type: b.dataset.cmd, hash: b.dataset.hash }); };
+  });
+  function load() { document.getElementById('log').innerHTML = ''; show(null); frame.src = '../index.html?mode=platform&t=' + Date.now(); }
+  sel.onchange = load; load();
+</script>
+</body>
+</html>

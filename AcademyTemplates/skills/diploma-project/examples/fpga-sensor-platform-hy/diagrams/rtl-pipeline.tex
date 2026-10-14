@@ -1,0 +1,14 @@
+\begin{tikzpicture}[
+    >=Stealth, node distance=6mm,
+    blk/.style={draw, rounded corners, align=center, minimum width=4.8cm,
+                minimum height=8mm, fill=white, font=\small}]
+  \node[blk] (a) {Signal Generator};
+  \node[blk, below=of a] (b) {Sensor Emulator};
+  \node[blk, below=of b] (c) {Data Acquisition};
+  \node[blk, below=of c] (d) {Processing IP};
+  \node[blk, below=of d] (e) {Data Packetizer};
+  \node[blk, below=of e] (f) {FIFO / BRAM};
+  \node[blk, below=of f] (g) {AXI};
+  \node[blk, below=of g, fill=dipaccent!8] (h) {Zynq PS};
+  \foreach \x/\y in {a/b,b/c,c/d,d/e,e/f,f/g,g/h}{\draw[->] (\x) -- (\y);}
+\end{tikzpicture}

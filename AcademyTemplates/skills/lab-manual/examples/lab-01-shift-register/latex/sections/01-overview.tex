@@ -1,0 +1,14 @@
+\section{Overview}
+You describe a 4-bit \emph{serial-in, parallel-out} (SIPO) shift register in SystemVerilog, verify it
+with a self-checking testbench and run it on the board: a push button gives the shift pulse, a switch the
+serial input, and four LEDs show the register. The same structure receives bits in UART and SPI
+interfaces and in JTAG data registers.
+
+\subsection*{Objectives}
+After this lab you can:
+\begin{objectives}
+  \item describe sequential logic with \texttt{always\_ff};
+  \item verify a module with a self-checking testbench and an assertion;
+  \item explain why a push button must be synchronised and debounced, and do it;
+  \item map ports to pins, implement the design and check timing.
+\end{objectives}

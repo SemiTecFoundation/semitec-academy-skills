@@ -1,0 +1,36 @@
+\chapter{Շրջանակ, MVP և սահմանափակումներ}
+\label{ch:scope}
+
+Բակալավրիատի ծավալը իրատեսական պահելու համար առաջին տարբերակը (\gls{mvp}) պետք է պարունակի.
+
+\section{MVP — ապարատային մաս}
+\begin{itemize}
+  \item մեկ AUP ZU3 հարթակ,
+  \item 3 էմուլացված սենսորի տիպ՝ Temperature, Pressure, Vibration,
+  \item վերաօգտագործելի գեներատորներ՝ Ramp, Periodic, LFSR/Noise, Anomaly injection,
+  \item FIFO/BRAM բուֆերացում,
+  \item մոտ 3 processing IP՝ Moving Average, Min/Max, Threshold/Event Detection,
+  \item AXI4-Lite կոնֆիգուրացիա, PL$\rightarrow$PS տվյալների փոխանցում, Ethernet հաղորդակցություն։
+\end{itemize}
+
+\section{MVP — ծրագրային մաս}
+\begin{itemize}
+  \item մեկ սերվերային համակարգիչ (Backend/API, տվյալների բազա),
+  \item Web dashboard՝ փորձի կոնֆիգուրացիայով,
+  \item տվյալների վիզուալիզացիա (live և պատմական), փորձերի համեմատում,
+  \item հիմնական վիճակագրական վերլուծություն,
+  \item մեկ մոդելավորման / անոմալիաների հայտնաբերման կիրառություն։
+\end{itemize}
+
+\section{Շրջանակից դուրս}
+\begin{itemize}
+  \item ֆիզիկական սենսորներ, AXI DMA, FPGA reconfiguration, Linux PS-ի վրա, closed-loop կառավարում — տե՛ս ընդլայնումները (բաժին~\ref{ch:extensions})։
+  \item արտադրական մակարդակի անվտանգություն և օգտատերերի կառավարում Web հարթակում։
+\end{itemize}
+
+\section{Սահմանափակումներ և ենթադրություններ}
+\begin{itemize}
+  \item Հասանելի է մեկ AUP ZU3 հարթակ. ուսանող 2-ը մինչև ինտեգրումը աշխատում է էմուլյատորով կամ գրանցված տվյալներով (տե՛ս բաժին~\ref{ch:tasks})։
+  \item AUP ZU3-ի սարքը (XCZU3EG) աջակցվում է Vivado/Vitis-ի անվճար (Standard) տարբերակով։
+  \item Սերվերային ծրագրային ապահովման տեխնոլոգիաները ուսանող 2-ն ընտրում է ղեկավարի հետ համաձայնեցմամբ. բաժին~\ref{ch:learning}-ում բերված են առաջարկվող տարբերակները։
+\end{itemize}

@@ -1,0 +1,48 @@
+%% =====================================================================
+%%  Diploma / Thesis / Research Project — MAIN FILE
+%%
+%%  Build (recommended):   latexmk -pdf main.tex
+%%  Or manually:           pdflatex main → bibtex main → makeglossaries main
+%%                         → pdflatex main → pdflatex main
+%%
+%%  You mostly edit:  metadata.tex, the files in sections/, references.bib,
+%%  glossary.tex, and add your own images/ and diagrams/.
+%% =====================================================================
+\documentclass[12pt,a4paper,oneside]{report}
+
+\usepackage{diplomastyle}      % all packages + custom commands live here
+
+\input{metadata}               % project title, author, supervisor, ...
+\makeglossaries
+\input{abbreviations}          % acronyms  → List of Abbreviations
+\input{glossary}               % terms     → Glossary
+
+\begin{document}
+
+%% ---- Title page ----
+\maketitlepage
+
+%% ---- Front matter: TOC, lists, abstract (roman page numbers) ----
+\frontmatterpages{%
+  \input{sections/00-abstract}%
+}
+
+%% ---- Main matter (arabic page numbers, running headers) ----
+\mainmatterstart
+\input{sections/01-introduction}
+\input{sections/02-background}
+\input{sections/03-methodology}
+\input{sections/04-design}
+\input{sections/05-results}
+\input{sections/06-conclusion}
+
+%% ---- Back matter ----
+\printbibsection            % References (from references.bib)
+\printglossarysection       % Abbreviations + Glossary (from glossary.tex)
+\appendixsection{%
+  \input{sections/07-appendix}%
+}
+
+\makebackpage
+
+\end{document}

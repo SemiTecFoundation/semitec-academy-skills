@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Training — same-page integration demo</title>
+  <!-- The training lives one folder up; <base> makes all relative paths (css, js, JSON, assets) resolve there. -->
+  <base href="../">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/certificate.css">
+  <link rel="stylesheet" id="theme-css" href="css/themes/foundation.css">
+</head>
+<body class="layout-sidebar">
+  <!-- YOUR PLATFORM renders this block on the server: who is logged in + how to load/save progress. -->
+  <script>
+    window.TRAINING_CONFIG = {
+      mode: 'platform',
+      urlParams: false,                 // the URL cannot change mode/user on a real platform
+      user: { id: 'u-201', name: 'Mariam Sargsyan' },
+      lockName: true,                   // certificate uses the platform name
+      adapter: {                        // custom adapter: any storage you like (here: a fake DB in localStorage)
+        load: function (trainingId, user) {
+          // real platform: return fetch('/my/api/...').then(r => r.ok ? r.json() : null)
+          try { return JSON.parse(localStorage.getItem('fake-db:' + trainingId + ':' + user.id)); } catch (e) { return null; }
+        },
+        save: function (state, trainingId, user) {
+          // real platform: return fetch('/my/api/...', { method: 'PUT', body: JSON.stringify(state) })
+          try { localStorage.setItem('fake-db:' + trainingId + ':' + user.id, JSON.stringify(state)); } catch (e) {}
+        }
+      }
+    };
+    // Listen to training events on the same page:
+    document.addEventListener('training:completed', function (e) { console.log('Training completed', e.detail); });
+    document.addEventListener('training:quizAttempt', function (e) { console.log('Quiz attempt', e.detail); });
+  </script>
+  <div id="app" aria-live="polite"><div class="boot">Loading training…</div></div>
+  <script src="js/md.js"></script>
+  <script src="js/core.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/blocks.js"></script>
+  <script src="js/quiz.js"></script>
+  <script src="js/certificate.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

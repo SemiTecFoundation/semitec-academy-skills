@@ -1,0 +1,32 @@
+%% =====================================================================
+%%  LABORATORY MANUAL — MAIN FILE   (SemiTec Foundation lab-manual template)
+%%
+%%  1. Pick the language: english | armenian | armenian-classical  (+ draft)
+%%  2. Fill metadata.tex.
+%%  3. Write the sections in sections/ (guidance in the comments of each file).
+%%     Every \labstep{id}{Title} in 04-procedure.tex must have the same id as a step in ../lab/lab.json.
+%%  4. Build:  python3 ../tools/build.py      (or: latexmk -xelatex main.tex)
+%%     build.py also copies the PDF to ../lab/manual.pdf, writes step page numbers into lab.json
+%%     and checks the lab folder — the lab/ folder is then ready for a SemiTec Learning Package (.stlp).
+%% =====================================================================
+\documentclass[11pt,a4paper]{article}
+\usepackage[english]{labstyle}     % english | armenian | armenian-classical  (+ draft)
+
+\input{metadata}
+\addbibresource{references.bib}
+
+\begin{document}
+\makelabtitle
+{\setlength{\parskip}{0pt}\small\tableofcontents}
+
+\input{sections/01-overview}       % Required: goal, objectives, what you build
+\input{sections/02-background}     % Required: the theory needed for this lab
+\input{sections/03-preparation}    % Required: before the lab (tools, files, safety)
+\input{sections/04-procedure}      % Required: numbered steps (\labstep) — the same steps as lab.json
+\input{sections/05-results}        % Recommended: measurements, checkpoints, expected results
+\input{sections/06-questions}      % Recommended: control questions
+\input{sections/07-report}         % Required: what to hand in and how it is assessed
+
+\nocite{*}          % list every entry of references.bib (remove to list only cited ones)
+\printreferences
+\end{document}

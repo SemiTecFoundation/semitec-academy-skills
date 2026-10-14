@@ -1,0 +1,13 @@
+% Example TikZ diagram — replace with the project's architecture / block diagram.
+% Keep ONLY the tikzpicture here; insert with \adddiagram[fig:arch]{architecture}{0.8}{Caption.}
+\begin{tikzpicture}[node distance=10mm and 14mm,
+  box/.style={draw=briefaccent,fill=brieflight,rounded corners=2pt,minimum width=26mm,
+              minimum height=10mm,align=center,font=\small},
+  arr/.style={-{Stealth},thick,briefaccent}]
+  \node[box] (in)  {Input / source};
+  \node[box,right=of in] (core) {Core component\\(student 1)};
+  \node[box,right=of core] (out) {Platform / output\\(student 2)};
+  \draw[arr] (in) -- (core);
+  \draw[arr] (core) -- node[above,font=\scriptsize]{data} (out);
+  \draw[arr] (out.south) -- ++(0,-6mm) -| node[pos=0.25,below,font=\scriptsize]{configuration} (core.south);
+\end{tikzpicture}

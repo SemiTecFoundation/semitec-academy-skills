@@ -1,0 +1,29 @@
+{
+  "collection": "research_topics",
+  "template": "project-brief",
+  "title": "[Topic title]",
+  "description": "[150–300 words: problem statement, goals, MVP]",
+  "supervisor": "[platform user of supervisor 1]",
+  "co_supervisors": [],
+  "organization": "[partner organization or university]",
+  "areas": ["[research_areas option]"],
+  "requirements": "[prerequisites, short]",
+  "work_type": "diploma",
+  "degree_level": "bachelor",
+  "slots": 1,
+  "deadline": "YYYY-MM-DD",
+  "status": "open",
+  "attachments": ["brief.pdf"],
+  "extra": {
+    "brief_language": "english | armenian | armenian-classical",
+    "mode": "single | cross-department",
+    "departments": ["[department 1]", "[department 2 if cross]"],
+    "duration": "[e.g. 30 weeks]",
+    "start_date": "YYYY-MM-DD",
+    "industry_mentor": "[name, role]",
+    "tools": ["[tool / equipment]"],
+    "core_learning_topics": ["[the \\apply rows of the learning path]"],
+    "keywords": ["[keyword]"],
+    "brief_version": "1.0"
+  }
+}

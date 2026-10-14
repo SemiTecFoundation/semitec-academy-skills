@@ -1,0 +1,30 @@
+\begin{tikzpicture}[
+    >=Stealth, node distance=8mm,
+    blk/.style={draw=briefaccent, rounded corners, align=center, minimum width=6.2cm,
+                minimum height=9mm, fill=white, font=\small},
+    grp/.style={draw, dashed, rounded corners, inner sep=4mm},
+    lbl/.style={font=\footnotesize\bfseries, color=briefgray}]
+  \node[blk] (sg)  {Signal Generator / Sensor Emulator};
+  \node[blk, below=of sg]  (da) {Data Acquisition};
+  \node[blk, below=of da]  (pi) {Processing IPs};
+  \node[blk, below=of pi]  (fb) {FIFO / BRAM};
+  \node[blk, below=14mm of fb] (ps) {ARM Cortex-A53\\Data Collector / Control Software};
+  \node[blk, below=14mm of ps] (be) {Backend / API};
+  \node[blk, below=of be]  (db) {Database};
+  \node[blk, below=of db, minimum height=13mm] (web)
+        {Web Platform\\Visualization \textperiodcentered\ Analytics \textperiodcentered\ Modeling \textperiodcentered\ Configuration};
+  \draw[->] (sg) -- (da);
+  \draw[->] (da) -- (pi);
+  \draw[->] (pi) -- (fb);
+  \draw[->] (fb) -- node[right, font=\footnotesize] {AXI} (ps);
+  \draw[<->] (ps) -- node[right, font=\footnotesize] {Ethernet} (be);
+  \draw[->] (be) -- (db);
+  \draw[<->] (db) -- (web);
+  \begin{scope}[on background layer]
+    \node[grp, fit=(sg)(fb), label={[lbl]above right:PL — Ուսանող 1}] (pl) {};
+    \node[grp, fit=(ps),     label={[lbl]above right:PS}] (psg) {};
+    \node[grp, draw=briefaccent, fit=(pl)(psg),
+          label={[lbl, color=briefaccent]above:AUP ZU3}] (soc) {};
+    \node[grp, fit=(be)(web), label={[lbl]below right:Սերվեր և Web — Ուսանող 2}] (sw) {};
+  \end{scope}
+\end{tikzpicture}

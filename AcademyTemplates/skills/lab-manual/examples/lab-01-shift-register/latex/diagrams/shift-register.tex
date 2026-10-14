@@ -1,0 +1,9 @@
+\begin{tikzpicture}[ff/.style={draw=labaccent,very thick,fill=lablight,minimum width=14mm,minimum height=12mm,font=\sffamily\bfseries},>=Stealth]
+  \node[ff] (f0) {FF0}; \node[ff,right=9mm of f0] (f1) {FF1}; \node[ff,right=9mm of f1] (f2) {FF2}; \node[ff,right=9mm of f2] (f3) {FF3};
+  \draw[->,thick] ([xshift=-14mm]f0.west) node[left,font=\sffamily\small]{d\_in} -- (f0.west);
+  \foreach \a/\b in {f0/f1,f1/f2,f2/f3} \draw[->,thick] (\a.east) -- (\b.west);
+  \draw[thick] ([yshift=-9mm,xshift=-14mm]f0.south west) node[left,font=\sffamily\small]{clk} -- ([yshift=-9mm]f3.south);
+  \foreach \f/\q in {f0/q[0],f1/q[1],f2/q[2],f3/q[3]} {
+    \draw[->,thick] ([yshift=-9mm]\f.south) -- (\f.south);
+    \draw[->,thick,labaccent] (\f.north) -- ++(0,6mm) node[above,font=\sffamily\small]{\q}; }
+\end{tikzpicture}

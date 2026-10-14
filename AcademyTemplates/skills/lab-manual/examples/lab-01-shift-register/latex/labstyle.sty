@@ -1,0 +1,233 @@
+%% labstyle.sty — SemiTec Foundation laboratory manual style.
+%% Same look as the project-brief template (briefstyle.sty): XeLaTeX, FreeSerif/FreeSans/FreeMono,
+%% English / Armenian (reformed) / Armenian (classical) fixed strings in lang/.
+%%
+%% Options: english | armenian | armenian-classical   (+ draft)
+%% Commands: see ../reference/commands.md
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{labstyle}[2026/10/14 SemiTec lab manual style v1.0]
+
+\newif\iflab@draft
+\newcommand{\lab@lang}{english}
+\DeclareOption{english}{\renewcommand{\lab@lang}{english}}
+\DeclareOption{armenian}{\renewcommand{\lab@lang}{armenian}}
+\DeclareOption{armenian-classical}{\renewcommand{\lab@lang}{armenian-classical}}
+\DeclareOption{draft}{\lab@drafttrue}
+\DeclareOption*{\PackageWarning{labstyle}{Unknown option `\CurrentOption'}}
+\ProcessOptions\relax
+
+%% ---------------------------------------------------------------- packages
+\RequirePackage{fontspec}
+\RequirePackage[a4paper,margin=2.2cm,headheight=15pt]{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{booktabs}
+\RequirePackage{longtable}
+\RequirePackage{array}
+\RequirePackage{tabularx}
+\RequirePackage{caption}
+\RequirePackage[table]{xcolor}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{setspace}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{tcolorbox}
+\RequirePackage{xparse}
+\RequirePackage{etoolbox}
+\RequirePackage{enumitem}
+\RequirePackage{tikz}
+\RequirePackage{listings}
+\RequirePackage{needspace}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,shapes.geometric}
+\RequirePackage[backend=biber,style=numeric,sorting=none,maxbibnames=4]{biblatex}
+\RequirePackage[hidelinks,bookmarksnumbered]{hyperref}
+\tcbuselibrary{skins,breakable,raster}
+
+%% ---------------------------------------------------------------- fonts (Armenian + Latin)
+\IfFontExistsTF{FreeSerif}{%
+  \setmainfont{FreeSerif}\setsansfont{FreeSans}\setmonofont{FreeMono}[Scale=0.92]%
+}{%
+  \setmainfont{FreeSerif}[Extension=.otf,UprightFont=*,BoldFont=*Bold,ItalicFont=*Italic,BoldItalicFont=*BoldItalic]%
+  \setsansfont{FreeSans}[Extension=.otf,UprightFont=*,BoldFont=*Bold,ItalicFont=*Oblique,BoldItalicFont=*BoldOblique]%
+  \setmonofont{FreeMono}[Extension=.otf,UprightFont=*,BoldFont=*Bold,ItalicFont=*Oblique,BoldItalicFont=*BoldOblique,Scale=0.92]%
+}
+
+%% ---------------------------------------------------------------- language strings
+\input{lang/lab-lang-\lab@lang.tex}
+\renewcommand{\contentsname}{\LLcontents}
+\renewcommand{\figurename}{\LLfigure}
+\renewcommand{\tablename}{\LLtable}
+\renewcommand{\refname}{\LLreferences}
+\DefineBibliographyStrings{english}{bibliography={\LLreferences},references={\LLreferences}}
+
+%% ---------------------------------------------------------------- look & feel
+\setstretch{1.2}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{3em}
+\definecolor{labaccent}{RGB}{32,72,120}
+\definecolor{labgray}{RGB}{95,95,95}
+\definecolor{lablight}{RGB}{236,242,249}
+\definecolor{labgood}{RGB}{20,120,70}
+\definecolor{labwarn}{RGB}{190,110,0}
+\definecolor{labdanger}{RGB}{185,35,35}
+\definecolor{labcode}{RGB}{246,248,251}
+\captionsetup{font=small,labelfont=bf}
+\setlist{itemsep=0.15em,topsep=0.3em}
+\titleformat{\section}{\Large\bfseries\color{labaccent}}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.2em}{0.5em}
+\titleformat{\subsection}{\large\bfseries\color{labaccent!85!black}}{\thesubsection}{0.6em}{}
+\pretocmd{\section}{\Needspace{6\baselineskip}}{}{}
+\pretocmd{\subsection}{\Needspace{4\baselineskip}}{}{}
+
+%% ---------------------------------------------------------------- metadata
+\newcommand{\lab@def}[2]{%
+  \expandafter\newcommand\csname lab@#1\endcsname{#2}%
+  \expandafter\newcommand\csname set#1\endcsname[1]{\expandafter\renewcommand\csname lab@#1\endcsname{##1}}}
+\lab@def{labtitle}{[Lab title]}
+\lab@def{labsubtitle}{}
+\lab@def{labnumber}{}
+\lab@def{labid}{}            % id of the lab in a SemiTec Learning Package (lab.json folder name)
+\lab@def{course}{}
+\lab@def{institution}{}
+\lab@def{faculty}{}
+\lab@def{department}{}
+\lab@def{author}{}
+\lab@def{version}{}
+\lab@def{date}{}
+\lab@def{year}{}
+\lab@def{duration}{}
+\lab@def{difficulty}{}      % beginner | intermediate | advanced  (or free text)
+\lab@def{equipment}{}
+\lab@def{software}{}
+\lab@def{prerequisites}{}
+\lab@def{groupsize}{}
+\newcommand{\lab@difficultytext}{%
+  \ifdefstring{\lab@difficulty}{beginner}{\LLbeginner}{%
+  \ifdefstring{\lab@difficulty}{intermediate}{\LLintermediate}{%
+  \ifdefstring{\lab@difficulty}{advanced}{\LLadvanced}{\lab@difficulty}}}}
+
+%% red markers for information still to be filled in (\setnomissingcheck hides them)
+\newif\iflab@showmissing\lab@showmissingtrue
+\newcommand{\setnomissingcheck}{\lab@showmissingfalse}
+\newcommand{\missing}[1]{\iflab@showmissing\textcolor{labdanger}{\textbf{[\,#1\,]}}\fi}
+
+%% ---------------------------------------------------------------- title block + "lab at a glance"
+\newcommand{\lab@tile}[2]{\ifdefempty{#2}{}{%
+  \begin{tcolorbox}[enhanced,colback=white,colframe=labaccent!25,boxrule=0.5pt,arc=2pt,left=5pt,right=5pt,top=3pt,bottom=3pt]
+    {\sffamily\scriptsize\color{labgray}#1}\par\vspace{1pt}{\raggedright\sffamily\small\bfseries #2\par}
+  \end{tcolorbox}}}
+\newcommand{\lab@row}[2]{\ifdefempty{#2}{}{\leavevmode{\sffamily\scriptsize\color{labgray}#1} & \leavevmode\small #2\\[0.25em]}}
+\newcommand{\makelabtitle}{%
+  \thispagestyle{plain}%
+  \begin{tcolorbox}[enhanced,colback=labaccent,colframe=labaccent,coltext=white,arc=3pt,left=10pt,right=10pt,top=8pt,bottom=8pt]
+    {\sffamily\small\MakeUppercase{\ifdefempty{\lab@institution}{\LLdoctype}{\lab@institution}}%
+      \ifdefempty{\lab@course}{}{~·~\lab@course}\par}\vspace{4pt}
+    {\sffamily\huge\bfseries \ifdefempty{\lab@labnumber}{}{\LLlab~\lab@labnumber:~}\lab@labtitle\par}
+    \ifdefempty{\lab@labsubtitle}{}{\vspace{3pt}{\sffamily\large \lab@labsubtitle\par}}
+    \iflab@draft\vspace{3pt}{\sffamily\small\bfseries\color{labwarn!40!white}\LLdraft}\fi
+  \end{tcolorbox}
+  \vspace{0.3em}
+  {\sffamily\small\bfseries\color{labaccent}\LLglance}\par\vspace{0.2em}
+  \begin{tcbraster}[raster columns=4,raster equal height,raster column skip=4pt]
+    \lab@tile{\LLduration}{\lab@duration}
+    \lab@tile{\LLdifficulty}{\lab@difficultytext}
+    \lab@tile{\LLgroupsize}{\lab@groupsize}
+    \lab@tile{\LLversion}{\lab@version\ifdefempty{\lab@date}{}{ · \lab@date}}
+  \end{tcbraster}
+  \begin{tcolorbox}[enhanced,colback=lablight,colframe=lablight,arc=2pt,left=6pt,right=6pt,top=4pt,bottom=4pt]
+    \renewcommand{\arraystretch}{1.1}%
+    \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.22\linewidth}>{\raggedright\arraybackslash}p{0.72\linewidth}@{}}
+      \lab@row{\LLequipment}{\lab@equipment}
+      \lab@row{\LLsoftware}{\lab@software}
+      \lab@row{\LLprerequisites}{\lab@prerequisites}
+      \lab@row{\LLauthor}{\lab@author}
+      \lab@row{\LLdepartment}{\lab@department\ifdefempty{\lab@faculty}{}{, \lab@faculty}}
+    \end{tabular}
+  \end{tcolorbox}}
+
+%% ---------------------------------------------------------------- page style
+\newcommand{\labheaderstyle}{%
+  \pagestyle{fancy}\fancyhf{}%
+  \fancyhead[L]{\small\color{labgray}\ifdefempty{\lab@labnumber}{}{\LLlab~\lab@labnumber~—~}\lab@labtitle}%
+  \fancyhead[R]{\small\color{labgray}\LLheader\iflab@draft~·~\textcolor{labdanger}{\LLdraft}\fi}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0.4pt}\renewcommand{\footrulewidth}{0pt}}
+\AtBeginDocument{\labheaderstyle\pagenumbering{arabic}}
+
+%% ---------------------------------------------------------------- callouts
+\newtcolorbox{labcallout}[2][labaccent]{enhanced,colback=#1!5,colframe=#1!75,fonttitle=\bfseries\sffamily,
+  coltitle=white,title=#2,breakable,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt}
+\newcommand{\notebox}[1]{\begin{labcallout}[labgray]{\LLnote}#1\end{labcallout}}
+\newcommand{\tipbox}[1]{\begin{labcallout}{\LLtip}#1\end{labcallout}}
+\newcommand{\safetybox}[1]{\begin{labcallout}[labdanger]{\LLsafety}#1\end{labcallout}}
+\newcommand{\checkpoint}[1]{\begin{labcallout}[labgood]{$\checkmark$~\LLcheckpoint}#1\end{labcallout}}
+\newcommand{\expected}[1]{\par\smallskip{\color{labgood!80!black}\bfseries\LLexpected:}~#1\par}
+
+%% ---------------------------------------------------------------- objectives
+\newenvironment{objectives}{\begin{itemize}[label={\color{labaccent}\textbullet},leftmargin=1.4em]}{\end{itemize}}
+
+%% ---------------------------------------------------------------- procedure steps
+%% \labstep[files]{id}{Title}  — numbered step "Step 3 · Title". The id MUST equal the step id in
+%% ../lab/lab.json: tools/build.py writes the page of every step into lab.json ("manualPage") and
+%% tools/check_lab.py compares both lists. [files] = comma list of paths in lab/ (shown as chips).
+\newcounter{labstep}
+\newcommand{\lab@chip}[1]{\tcbox[on line,colback=white,colframe=labaccent!45,boxsep=0pt,left=3pt,right=3pt,
+  top=1pt,bottom=1pt,arc=1.5pt,fontupper=\ttfamily\scriptsize]{#1}}
+\NewDocumentCommand{\labstep}{o m m}{%
+  \Needspace{6\baselineskip}\refstepcounter{labstep}\label{labstep:#2}%
+  \par\vspace{0.8em}%
+  \begin{tcolorbox}[enhanced,colback=lablight,colframe=lablight,arc=2pt,left=6pt,right=6pt,top=3pt,bottom=3pt]
+    {\sffamily\bfseries\large\color{labaccent}\LLstep~\thelabstep\quad\color{black}#3}%
+    \IfValueT{#1}{\par\vspace{2pt}{\sffamily\scriptsize\color{labgray}\LLfiles:}~\lab@chips{#1}}%
+  \end{tcolorbox}\par
+  \addcontentsline{toc}{subsection}{\protect\numberline{\thelabstep}#3}}
+\newcommand{\lab@chips}[1]{\@for\lab@f:=#1\do{\lab@chip{\expandafter\detokenize\expandafter{\lab@f}}~}}
+\newcommand{\stepref}[1]{\LLstep~\ref{labstep:#1}}
+
+%% ---------------------------------------------------------------- code
+\lstdefinelanguage{SystemVerilog}[]{Verilog}{morekeywords={logic,always_ff,always_comb,always_latch,bit,byte,int,
+  shortint,longint,typedef,enum,struct,packed,interface,modport,package,import,class,extends,function,task,automatic,
+  assert,property,sequence,covergroup,coverpoint,bins,unique,priority,initial,final,timeunit,timeprecision}}
+\lstset{basicstyle=\ttfamily\small,backgroundcolor=\color{labcode},frame=single,rulecolor=\color{labaccent!30},
+  framesep=4pt,xleftmargin=6pt,xrightmargin=6pt,columns=fullflexible,keepspaces=true,breaklines=true,
+  keywordstyle=\color{labaccent}\bfseries,commentstyle=\color{labgray}\itshape,stringstyle=\color{labgood!80!black},
+  numbers=left,numberstyle=\tiny\color{labgray},numbersep=6pt,showstringspaces=false,tabsize=2,
+  extendedchars=true,inputencoding=utf8}
+%% \srcfile[language]{path in lab/}{caption} — include a source file of the lab (the same file students
+%% get in the app's Files tab). Default language: SystemVerilog.
+\newcommand{\labfilesdir}{../lab/}
+\NewDocumentCommand{\srcfile}{O{SystemVerilog} m m}{%
+  \lstinputlisting[language=#1,title={\sffamily\footnotesize\bfseries\color{labaccent}\detokenize{#2}\quad\normalfont\color{labgray}#3}]{\labfilesdir#2}}
+
+%% ---------------------------------------------------------------- figures
+\NewDocumentCommand{\addimage}{o m m m}{%
+  \begin{figure}[htbp]\centering\includegraphics[width=#3\textwidth]{#2}\caption{#4}\IfValueT{#1}{\label{#1}}\end{figure}}
+\NewDocumentCommand{\adddiagram}{o m m m}{%
+  \begin{figure}[htbp]\centering\resizebox{#3\textwidth}{!}{\input{diagrams/#2}}\caption{#4}\IfValueT{#1}{\label{#1}}\end{figure}}
+
+%% ---------------------------------------------------------------- tables
+%% measurements: \begin{measurements}[caption] \measure{quantity}{expected}{unit} \end{measurements}
+\NewDocumentEnvironment{measurements}{o}{%
+  \small\renewcommand{\arraystretch}{1.5}%
+  \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.38\linewidth}>{\raggedright\arraybackslash}p{0.2\linewidth}
+                     >{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.1\linewidth}@{}}
+    \IfValueT{#1}{\caption{#1}\\}
+    \toprule\textbf{\LLquantity} & \textbf{\LLexpectedcol} & \textbf{\LLmeasured} & \textbf{\LLunit}\\\midrule\endhead
+    \bottomrule\endlastfoot}{\end{longtable}}
+\newcommand{\measure}[3]{#1 & #2 & \rule[-2pt]{0.9\linewidth}{0.3pt} & #3\\}
+%% assessment: \begin{assessment} \criterion{what is checked}{weight} \end{assessment}
+\NewDocumentEnvironment{assessment}{o}{%
+  \small\renewcommand{\arraystretch}{1.35}%
+  \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.78\linewidth}>{\raggedleft\arraybackslash}p{0.16\linewidth}@{}}
+    \IfValueT{#1}{\caption{#1}\\}
+    \toprule\textbf{\LLcriterion} & \textbf{\LLweight}\\\midrule\endhead
+    \bottomrule\endlastfoot}{\end{longtable}}
+\newcommand{\criterion}[2]{#1 & #2\\}
+
+%% ---------------------------------------------------------------- questions
+\newenvironment{questions}{\begin{enumerate}[label=\textbf{\LLquestionprefix\arabic*.},leftmargin=2.6em,itemsep=0.5em]\let\question\item}{\end{enumerate}}
+
+%% ---------------------------------------------------------------- references
+\newcommand{\printreferences}{\printbibliography[heading=bibnumbered,title=\LLreferences]}
+\endinput

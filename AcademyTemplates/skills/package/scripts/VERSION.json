@@ -1,0 +1,71 @@
+{
+  "skill": "academy-templates:package",
+  "release": "1.6.0",
+  "builtFrom": "SemiTec Academy 1.6.0",
+  "builtAt": "2026-10-14T11:36:07.301Z",
+  "extension": ".stlp",
+  "writes": {
+    "pack": 1,
+    "training": 1,
+    "reading": 1,
+    "lab": 1,
+    "video": 1,
+    "material": 1,
+    "project": 1
+  },
+  "appCanOpen": {
+    "pack": [
+      1
+    ],
+    "training": [
+      1
+    ],
+    "video": [
+      1
+    ],
+    "material": [
+      1
+    ],
+    "lab": [
+      1,
+      2
+    ],
+    "reading": [
+      1,
+      2
+    ],
+    "project": [
+      1
+    ]
+  },
+  "history": [
+    {
+      "app": "1.0.0",
+      "notes": "First release: accounts, library, trainings, readings, labs."
+    },
+    {
+      "app": "1.1.0",
+      "notes": "Sections by type, videos, other materials, pack specs (stlp create)."
+    },
+    {
+      "app": "1.2.0",
+      "notes": "Lab source files, compact lab header."
+    },
+    {
+      "app": "1.3.0",
+      "notes": "SemiTec Academy, .stlp packages, Markdown readings and materials."
+    },
+    {
+      "app": "1.4.0",
+      "notes": "Library search and filters, enrollment and study plans (package schedule), calendar, Today panel, projects, certificates."
+    },
+    {
+      "app": "1.5.0",
+      "notes": "Dashboard, catalog (folders and catalog links), publishers with logos, materials attached to labs (\"for\"), project categories, user and application settings."
+    },
+    {
+      "app": "1.6.0",
+      "notes": "Prerequisites (\"prerequisite\": true): optional refreshers shown before the course, not counted. Attached materials (\"for\") no longer count in progress."
+    }
+  ]
+}

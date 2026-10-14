@@ -1,0 +1,18 @@
+{
+  "name": "semitec-skills",
+  "owner": {
+    "name": "SemiTec Foundation"
+  },
+  "metadata": {
+    "description": "Claude plugins of the SemiTec Foundation for making course and research materials."
+  },
+  "plugins": [
+    {
+      "name": "academy-templates",
+      "source": "./AcademyTemplates",
+      "description": "Templates as skills: project briefs, diploma documents, lab manuals, interactive trainings and SemiTec Learning Packages (.stlp) for SemiTec Academy.",
+      "version": "1.2.0",
+      "category": "education"
+    }
+  ]
+}

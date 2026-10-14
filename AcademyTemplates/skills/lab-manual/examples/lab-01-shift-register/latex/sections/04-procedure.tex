@@ -1,0 +1,36 @@
+\section{Procedure}
+
+\labstep{project}{Create the Vivado project}
+Create an RTL project for your board. Add \texttt{src/rtl/*.sv} as design sources and
+\texttt{src/sim/tb\_shift4.sv} as a simulation source; set \texttt{top} as the top module.
+
+\labstep[src/rtl/shift4.sv]{rtl}{Write the shift register}
+Complete the module. On reset all bits become 0; otherwise the bits move one place and \texttt{d\_in}
+enters bit 0:
+\begin{lstlisting}[language=SystemVerilog]
+always_ff @(posedge clk)
+  if (rst) q <= '0;
+  else     q <= {q[2:0], d_in};
+\end{lstlisting}
+
+\labstep[src/sim/tb_shift4.sv]{testbench}{Simulate with a testbench}
+Run the behavioural simulation of \texttt{tb\_shift4}. It shifts in 1, 0, 1, 1 and checks the result:
+\srcfile{src/sim/tb_shift4.sv}{self-checking testbench}
+\expected{the log prints \texttt{TEST PASSED}; in the waveform \texttt{q} becomes \texttt{1011} after the fourth edge.}
+
+\labstep[src/rtl/debounce.sv,src/rtl/top.sv]{debounce}{Debounce the button}
+Study \texttt{debounce.sv}: a two flip-flop synchroniser and a counter that accepts a new level only
+after it was stable for $10$\,ms ($10^6$ clocks at 100\,MHz). In \texttt{top.sv} replace the button
+clock by a clock enable: clock the shift register with \texttt{sysclk} and shift only when
+\texttt{shift\_en} is 1.
+
+\labstep[src/constraints/top.xdc]{constraints}{Constraints, implementation and timing}
+Complete the pin names in \texttt{top.xdc} from the master XDC of your board (button, switch, four LEDs,
+clock). Run synthesis and implementation and open the timing summary.
+\expected{no failing timing paths (WNS $\geq 0$).}
+
+\labstep{board}{Run it on the board}
+Generate the bitstream and program the device. Set SW0, press the button, watch the bit move along the
+LEDs.
+\checkpoint{After entering 1, 0, 1, 1 the LEDs show \texttt{1011} (LED3 is the first bit) — show it to
+the teacher.}

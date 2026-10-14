@@ -1,0 +1,21 @@
+%% 04 — PROCEDURE (required)
+%% One \labstep per step the student ticks off in the app. The id (first argument) must be the same as
+%% the step id in ../lab/lab.json (lowercase, digits, -). build.py writes each step's page into lab.json.
+%% Optional [files] = comma list of files in ../lab/ shown under the step; include a file with \srcfile.
+%% Keep each step to one action with a visible result; end important steps with \expected{…} or \checkpoint{…}.
+\section{Procedure}
+
+\labstep{setup}{Set up the project}
+\missing{What to create / open, which files to add.}
+
+\labstep[src/README.txt]{design}{Write the design}
+\missing{What to write. Show the interface or a skeleton:}
+% \srcfile{src/rtl/design.sv}{skeleton to complete}
+
+\labstep{simulate}{Simulate}
+\missing{How to run the testbench and what to look at.}
+\expected{\missing{what the waveform / log must show}}
+
+\labstep{board}{Test on the board}
+\missing{Program the board and test.}
+\checkpoint{\missing{What the teacher checks before the student continues.}}

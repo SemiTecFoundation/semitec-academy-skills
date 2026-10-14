@@ -1,0 +1,47 @@
+%% ---------------------------------------------------------------------
+%% 7. LEARNING PATH — Required · 1–3 pages
+%% Tells the student WHAT they must learn to do the project, to WHAT LEVEL,
+%% WHY (where it is used), and FROM WHERE. This is the chapter students use most.
+%% Structure:
+%%  7.1 Prerequisites — what the student must already know (from courses); how to
+%%      self-check and what to revise if weak.
+%%  7.2 Knowledge map — learningpath table(s). Group rows with \learngroup{...}.
+%%      Level: \aware (knows what it is) · \understand (can explain / read) · \apply (can build).
+%%      Give EVERY row a concrete resource: a book chapter, a vendor tutorial, a
+%%      course module, a paper — cite with \cite{key} (references.bib).
+%%      In cross mode: one table per student + a short shared table.
+%%  7.3 Tools and skills — software, equipment, languages, workflows.
+%% Keep it honest and finite: 8–20 rows per student; mark the 3–5 most important
+%% topics as \apply. Avoid "learn FPGA" — name the specific concept.
+%% ---------------------------------------------------------------------
+\chapter{Learning Path}
+\label{ch:learning}
+
+\section{Prerequisites}
+The student is expected to already have:
+\begin{itemize}
+  \item \missing{prerequisite 1 (course name)} — \emph{self-check:} \missing{how to verify / what to revise}
+  \item \missing{prerequisite 2}
+\end{itemize}
+
+\section{What to learn}
+\levellegend
+
+\begin{learningpath}[Knowledge map — \studentlabel{1}.]
+  \learngroup{\missing{Group 1, e.g. Fundamentals}}
+  \learn{\missing{topic}}{\apply}{\missing{where it is used}}{\cite{example-textbook}, \missing{ch.}}
+  \learn{\missing{topic}}{\understand}{\missing{where it is used}}{\cite{example-docs}}
+  \learngroup{\missing{Group 2, e.g. Platform and tools}}
+  \learn{\missing{topic}}{\aware}{\missing{where it is used}}{\cite{example-paper}}
+\end{learningpath}
+
+\ifcross{%
+\begin{learningpath}[Knowledge map — \studentlabel{2}.]
+  \learn{\missing{topic}}{\apply}{\missing{where it is used}}{\missing{resource}}
+\end{learningpath}
+}
+
+\section{Tools and skills}
+\begin{itemize}
+  \item \textbf{\missing{Tool}} — \missing{what it is used for; version; where to get a licence}
+\end{itemize}

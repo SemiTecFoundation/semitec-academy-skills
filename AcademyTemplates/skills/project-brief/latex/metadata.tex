@@ -1,0 +1,43 @@
+%% ---- Project brief metadata ------------------------------------------
+%% Every field except the title is optional: empty fields are not printed.
+%% Fields marked [platform] map 1:1 to the platform's research_topics record
+%% (see ../reference/platform-mapping.md).
+
+% --- identity
+\settopictitle{[Topic title — short, specific, outcome-oriented]}   % [platform] title
+\settopicsubtitle{}             % e.g. the title in a second language
+\setdoctype{}                   % leave empty for the default ("Diploma Project Brief")
+\setversion{0.1}
+\setdate{}
+\setstatus{Draft}               % Draft / Approved / Open for applications
+
+% --- institution
+\setinstitution{[University]}
+\setfaculty{[Faculty]}
+\setcity{Yerevan}
+\setyear{2026}
+
+% --- people
+%   Student names may stay empty while the topic is open — "to be assigned" is printed.
+\setstudentone{}
+\setdeptone{[Department of student 1]}
+\setsupervisorone{[Name, academic title]}                         % [platform] supervisor
+%   Cross-department mode: fill ANY of the next three (or \setcrossmode{yes}).
+\setstudenttwo{}
+\setdepttwo{}
+\setsupervisortwo{}                                               % [platform] co_supervisors
+\setpartnerorg{}                % industry / research partner      % [platform] organization
+\setmentor{}                    % industry mentor: name, role
+
+% --- platform fields
+\setworktype{Bachelor diploma project}      % [platform] work_type
+\setdegreelevel{Bachelor}                   % [platform] degree_level
+\setareas{[area 1], [area 2]}                 % [platform] areas
+\setkeywords{[keyword 1], [keyword 2], [keyword 3]}
+\setslots{1}                                % [platform] slots
+\setduration{[e.g. 2 semesters, ~30 weeks]}
+\setstartdate{}
+\setdeadline{}                              % [platform] deadline
+\setworklanguage{}
+\settools{[key hardware / software]}
+\setprerequisites{[one-line summary; details in the Learning Path chapter]}  % [platform] requirements

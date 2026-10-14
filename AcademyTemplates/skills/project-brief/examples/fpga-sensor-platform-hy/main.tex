@@ -1,0 +1,57 @@
+%% =====================================================================
+%%  PROJECT BRIEF / TASK DEFINITION — MAIN FILE
+%%
+%%  1. Pick the language (one line below):
+%%       english | armenian (reformed spelling) | armenian-classical
+%%  2. Fill metadata.tex (title, people, platform fields).
+%%  3. Write the chapters in sections/ (one file per chapter; guidance is in
+%%     the comments at the top of each file).
+%%  4. Build:   latexmk -xelatex main.tex     (XeLaTeX + Biber)
+%%
+%%  Single-student vs cross-department mode is automatic: set a second
+%%  student / department / supervisor in metadata.tex to switch to the
+%%  two-student layout.  Use \ifcross{...} / \ifsingle{...} in the text for
+%%  mode-specific content.
+%% =====================================================================
+\documentclass[11pt,a4paper,oneside]{report}
+\usepackage[armenian]{briefstyle}   % english | armenian | armenian-classical  (+ newpagechapters, draft)
+
+\input{metadata}
+\addbibresource{references.bib}
+\makenoidxglossaries
+\input{abbreviations}
+\input{glossary}
+
+\begin{document}
+\maketitlepage
+\frontmatterpages          % "Topic at a glance" card + table of contents
+\mainmatterstart
+
+%% ---- WHAT the project is ------------------------------------------
+\input{sections/01-context}         % Required
+\input{sections/02-problem}         % Required
+\input{sections/03-goals}           % Required
+\input{sections/04-scope}           % Required
+\input{sections/05a-fpga}           % Technical description, split into three chapters
+\input{sections/05b-communication}
+\input{sections/05c-data}
+%% ---- WHO does what -------------------------------------------------
+\input{sections/06-roles-tasks}     % Required
+%% ---- what the student must LEARN and how to START ------------------
+\input{sections/07-learning-path}   % Required
+\input{sections/08-getting-started} % Required
+%% ---- WHEN, WHAT is handed in, HOW it is judged ----------------------
+\input{sections/09-work-plan}       % Required
+\input{sections/10-deliverables}    % Required
+\input{sections/11-assessment}      % Required
+%% ---- optional / recommended ---------------------------------------
+\input{sections/12-demo}            % Recommended for engineering projects
+\input{sections/13-extensions}      % Optional
+\input{sections/14-supervision}     % Recommended
+
+%% ---- back matter ---------------------------------------------------
+\printreferences          % reading list + cited sources (references.bib)
+\printglossarysection     % abbreviations + glossary
+\approvalblock            % signatures of supervisor(s), mentor, student(s)
+
+\end{document}

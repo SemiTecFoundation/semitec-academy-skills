@@ -1,0 +1,42 @@
+\chapter{PS–PL հաղորդակցություն և runtime կոնֆիգուրացիա}
+\label{ch:comm}
+
+Zynq-ի մշակող համակարգը (PS) ծրագրավորվող տրամաբանության (PL) հետ կապվում է
+\textbf{AXI}-ի միջոցով՝ երկու ուղիներով.
+\begin{itemize}
+  \item \textbf{Data Path} (AXI-Stream / FIFO) — տվյալների փոխանցում PL$\rightarrow$PS։
+  \item \textbf{Control Path} (AXI4-Lite) — FPGA մոդուլների կոնֆիգուրացիա՝ ռեգիստրների միջոցով։
+\end{itemize}
+
+Web հարթակը պետք է կարողանա փոխել FPGA-ի վարքը \textbf{առանց bitstream
+վերագեներացնելու}՝ AXI4-Lite ռեգիստրների միջոցով (Աղյուսակ~\ref{tab:regmap})։
+
+\begin{table}[htbp]
+  \centering
+  \caption{AXI4-Lite կոնֆիգուրացիոն ռեգիստրների քարտեզի օրինակ.}
+  \label{tab:regmap}
+  \begin{tabular}{ll@{\hspace{2cm}}ll}
+    \toprule
+    \textbf{Հասցե} & \textbf{Ռեգիստր} & \textbf{Հասցե} & \textbf{Ռեգիստր} \\
+    \midrule
+    0x00 & CONTROL       & 0x18 & NOISE\_LEVEL   \\
+    0x04 & SENSOR\_TYPE  & 0x1C & THRESHOLD      \\
+    0x08 & SAMPLE\_RATE  & 0x20 & FILTER\_ENABLE \\
+    0x0C & SIGNAL\_TYPE  & 0x24 & FILTER\_WINDOW \\
+    0x10 & AMPLITUDE     & 0x28 & ANOMALY\_ENABLE\\
+    0x14 & FREQUENCY     & 0x2C & ANOMALY\_LEVEL \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Կոնֆիգուրացիայի ուղին է՝ Web Platform $\rightarrow$ Backend/API $\rightarrow$
+Ethernet $\rightarrow$ Zynq PS $\rightarrow$ AXI4-Lite $\rightarrow$ FPGA ռեգիստրներ
+$\rightarrow$ RTL մոդուլներ։
+
+\notebox{Պետք է հստակ տարբերել \textbf{runtime կոնֆիգուրացիան} (արդեն իրականացված
+ապարատի պարամետրերի փոփոխություն՝ պարտադիր) և \textbf{FPGA reconfiguration}-ը
+(նախապես գեներացված bitstream-ների միջև ընտրություն՝ ընդլայնում, ոչ MVP)։}
+
+Բուֆերացումն իրականացվում է FIFO/BRAM-ով՝ Processing IP $\rightarrow$ AXI FIFO
+$\rightarrow$ Zynq PS։ Բարձր տվյալահոսքի դեպքում AXI4-Stream $\rightarrow$ AXI DMA
+$\rightarrow$ DDR ուղին դիտվում է որպես ընդլայնում։

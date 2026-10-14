@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Training — delivery modes</title>
+<style>
+  body { font: 15px/1.6 system-ui, sans-serif; max-width: 860px; margin: 30px auto; padding: 0 16px; color: #1d2433; background: #f4f6fa; }
+  .card { background: #fff; border: 1px solid #dbe2ec; border-radius: 12px; padding: 14px 18px; margin: 14px 0; }
+  h1 { color: #12305a; } h2 { margin: 0 0 4px; font-size: 18px; } code { background: #eef2f7; padding: 1px 5px; border-radius: 4px; }
+  a.btn { display: inline-block; background: #1f6feb; color: #fff; padding: 6px 14px; border-radius: 8px; text-decoration: none; margin: 4px 6px 4px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; } td, th { border-bottom: 1px solid #eee; padding: 4px 6px; text-align: left; }
+  input, select { font: inherit; padding: 4px 6px; }
+</style>
+</head>
+<body>
+<h1>Training delivery modes</h1>
+<p>Open this page through <code>python3 tools/dev_server.py</code> so the REST demo works. Details: <code>INTEGRATION.md</code>.</p>
+
+<div class="card"><h2>1 · Standalone</h2>
+<p>Quizzes unlock topics; progress is saved in this browser.</p>
+<a class="btn" href="../index.html">Open standalone</a> <code>index.html</code> or <code>dist/training.html</code></div>
+
+<div class="card"><h2>2 · Preview</h2>
+<p>All topics open, nothing saved, certificate preview with style controls. Share it with reviewers or authors.</p>
+<a class="btn" href="../index.html?mode=preview">Open preview</a> <code>?mode=preview</code> or <code>dist/training-preview.html</code></div>
+
+<div class="card"><h2>3a · Platform — REST (your backend stores the progress)</h2>
+<p>User <select id="u"><option>student-1</option><option>student-2</option><option>student-3</option></select>
+name <input id="n" value="Anna Petrosyan"> <a class="btn" id="rest" href="#">Open as this user</a></p>
+<p>Teacher overview (<code>GET /api/progress/&lt;trainingId&gt;</code>): <a href="#" id="refresh">refresh</a></p>
+<table id="tbl"><tr><th>User</th><th>Name</th><th>%</th><th>Completed</th><th>Updated</th></tr></table></div>
+
+<div class="card"><h2>3b · Platform — iframe + postMessage (the host page stores the progress)</h2>
+<a class="btn" href="platform-iframe.html">Open iframe demo</a></div>
+
+<div class="card"><h2>3c · Platform — same page with a JavaScript adapter</h2>
+<a class="btn" href="platform-same-page.html">Open same-page demo</a></div>
+
+<script>
+  var TID = 'training-template-tour';
+  fetch('../training.json').then(function (r) { return r.json(); }).then(function (t) { TID = t.id; refresh(); });
+  document.getElementById('rest').onclick = function (e) {
+    e.preventDefault();
+    var q = new URLSearchParams({ mode: 'platform', progressUrl: '/api/progress/{trainingId}/{userId}', userId: document.getElementById('u').value, userName: document.getElementById('n').value });
+    location.href = '../index.html?' + q.toString();
+  };
+  function refresh(e) {
+    if (e) e.preventDefault();
+    fetch('/api/progress/' + TID).then(function (r) { return r.ok ? r.json() : []; }).then(function (rows) {
+      var t = document.getElementById('tbl'); while (t.rows.length > 1) t.deleteRow(1);
+      rows.forEach(function (x) { var r = t.insertRow(); [x.userId, x.name, x.percent, x.completedAt || '', x.updatedAt].forEach(function (v) { r.insertCell().textContent = v == null ? '' : v; }); });
+    }).catch(function () {});
+  }
+  document.getElementById('refresh').onclick = refresh;
+</script>
+</body>
+</html>

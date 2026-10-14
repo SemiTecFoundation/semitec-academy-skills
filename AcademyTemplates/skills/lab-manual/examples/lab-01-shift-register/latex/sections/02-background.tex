@@ -1,0 +1,10 @@
+\section{Background}
+A shift register is a chain of D flip-flops sharing one clock (Figure~\ref{fig:sr}). On every active
+edge each flip-flop takes the value of its left neighbour and the first one takes the serial input
+\cite{harris}. After four edges the four bits that entered one after another are available in parallel.
+
+\adddiagram[fig:sr]{shift-register}{0.75}{4-bit serial-in, parallel-out shift register}
+
+A mechanical push button \emph{bounces}: for a few milliseconds its contact opens and closes many
+times. Used directly as a clock it gives several edges per press. It is also asynchronous to the board
+clock and must be synchronised with two flip-flops before use.

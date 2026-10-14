@@ -1,0 +1,16 @@
+{
+  "specVersion": 1,
+  "pack": {
+    "id": "org.semitec.example-notes",
+    "version": "1.0.0",
+    "title": "Example notes",
+    "description": "A package with one Markdown reading."
+  },
+  "readings": [
+    {
+      "id": "notes",
+      "title": "Example notes (Markdown)",
+      "source": "markdown-reading/notes.md"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+%% ---------------------------------------------------------------------
+%% 6. ROLES AND TASKS — Required · 1–2 pages
+%% The concrete list of WHAT the student must do. Use the tasklist environment:
+%%   \begin{tasklist}{1} \task ... \end{tasklist}   → T1.1, T1.2 … (Armenian: Խ1.1 …)
+%% Each task: one verb, one result. Mark stretch items with \optionaltask.
+%% SINGLE mode: one section with the student's tasks.
+%% CROSS mode: one section per student — each must be a complete, defensible
+%%   diploma for that student's department ON ITS OWN — plus the shared tasks
+%%   and an `interfaces` table: the agreements that let both work in parallel.
+%% End each student section with the focus statement: what the diploma of this
+%% student is mainly about (what the examiners will look at).
+%% ---------------------------------------------------------------------
+\chapter{Roles and Tasks}
+\label{ch:tasks}
+
+\section{\studentlabel{1}\ifcross{ — \missing{department / focus}}}
+\textbf{Individual topic:} \emph{\missing{the title of this student's own diploma}}
+
+\begin{tasklist}{1}
+  \task \missing{task}
+  \task \missing{task}
+  \task \optionaltask \missing{stretch task}
+\end{tasklist}
+
+\keypoint{\missing{What this student's diploma is mainly about — the focus for the examiners.}}
+
+\ifcross{%
+\section{\studentlabel{2} — \missing{department / focus}}
+\textbf{Individual topic:} \emph{\missing{the title of this student's own diploma}}
+
+\begin{tasklist}{2}
+  \task \missing{task}
+  \task \missing{task}
+\end{tasklist}
+
+\keypoint{\missing{What this student's diploma is mainly about.}}
+
+\section{Shared tasks and interfaces}
+\begin{tasklist}{0}
+  \task Agree on and document the interfaces in Table~\ref{tab:ifaces} by \missing{week}.
+  \task \missing{integration and joint demonstration}
+\end{tasklist}
+
+\begin{interfaces}[Interfaces between the two parts of the project.\label{tab:ifaces}]
+  \iface{\missing{data stream}}{1 $\rightarrow$ 2}{\missing{format, rate, protocol}}
+  \iface{\missing{configuration}}{2 $\rightarrow$ 1}{\missing{commands / registers}}
+\end{interfaces}
+}

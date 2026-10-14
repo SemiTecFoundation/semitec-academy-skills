@@ -1,0 +1,520 @@
+%% =====================================================================
+%%  briefstyle.sty — Project Brief / Task Definition style (XeLaTeX)
+%%
+%%  A brief (առաջադրանք) is written by a SUPERVISOR or INDUSTRY MENTOR to define
+%%  a diploma / thesis / research project for students: what the project is,
+%%  what the student must learn, how to get started, what to do, by when, and
+%%  how the work will be judged.  (The student's FINAL diploma document is a
+%%  different template: ../diploma-project.)
+%%
+%%  Usage:   \usepackage[english]{briefstyle}             % English
+%%           \usepackage[armenian]{briefstyle}            % Armenian, reformed spelling
+%%           \usepackage[armenian-classical]{briefstyle}  % Armenian, classical spelling
+%%  Options: newpagechapters   — start every chapter on a new page
+%%           draft             — show a "DRAFT" watermark-like note in the header
+%%  Build:   latexmk -xelatex main.tex     (XeLaTeX + Biber; no makeglossaries needed)
+%% =====================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{briefstyle}[2026/10/04 v1.0 Project brief style (XeLaTeX, en/hy/hy-classical)]
+
+%% ---------------------------------------------------------------- options
+\newcommand{\brief@lang}{english}
+\newif\ifbrief@newpage \brief@newpagefalse
+\newif\ifbrief@draft   \brief@draftfalse
+\DeclareOption{english}{\renewcommand{\brief@lang}{english}}
+\DeclareOption{armenian}{\renewcommand{\brief@lang}{armenian}}
+\DeclareOption{armenian-classical}{\renewcommand{\brief@lang}{armenian-classical}}
+\DeclareOption{newpagechapters}{\brief@newpagetrue}
+\DeclareOption{draft}{\brief@drafttrue}
+\DeclareOption*{\PackageWarning{briefstyle}{Unknown option `\CurrentOption'}}
+\ProcessOptions\relax
+
+%% ---------------------------------------------------------------- packages
+\RequirePackage{fontspec}
+\RequirePackage[a4paper,margin=2.3cm]{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{booktabs}
+\RequirePackage{longtable}
+\RequirePackage{array}
+\RequirePackage{tabularx}
+\RequirePackage{caption}
+\RequirePackage[table]{xcolor}
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{setspace}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{tcolorbox}
+\RequirePackage{xparse}
+\RequirePackage{etoolbox}
+\RequirePackage{enumitem}
+\RequirePackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,calc,fit,backgrounds}
+\RequirePackage[backend=biber,style=numeric,sorting=none,maxbibnames=4,defernumbers=true]{biblatex}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage[acronym,toc,nonumberlist]{glossaries}
+\tcbuselibrary{skins,breakable}
+
+%% ---------------------------------------------------------------- fonts
+%% FreeSerif / FreeSans / FreeMono (GNU FreeFont) cover Armenian AND Latin, so
+%% technical terms (FPGA, AXI, RTL) stay in Latin inside Armenian text.
+%% Loaded by system name if installed, otherwise by file name from the TeX tree
+%% (TeX Live / MacTeX / Overleaf ship them as gnu-freefont).
+\IfFontExistsTF{FreeSerif}{%
+  \setmainfont{FreeSerif}\setsansfont{FreeSans}\setmonofont{FreeMono}[Scale=0.92]%
+}{%
+  \setmainfont{FreeSerif}[Extension=.otf,UprightFont=*,BoldFont=*Bold,
+    ItalicFont=*Italic,BoldItalicFont=*BoldItalic]%
+  \setsansfont{FreeSans}[Extension=.otf,UprightFont=*,BoldFont=*Bold,
+    ItalicFont=*Oblique,BoldItalicFont=*BoldOblique]%
+  \setmonofont{FreeMono}[Extension=.otf,UprightFont=*,BoldFont=*Bold,
+    ItalicFont=*Oblique,BoldItalicFont=*BoldOblique,Scale=0.92]%
+}
+
+%% ---------------------------------------------------------------- language strings
+%% All fixed words live in lang/brief-lang-<language>.tex. To add a language,
+%% copy one of those files, translate it, and add a \DeclareOption above.
+\input{lang/brief-lang-\brief@lang.tex}
+\renewcommand{\contentsname}{\BLcontents}
+\renewcommand{\listfigurename}{\BLlistfigures}
+\renewcommand{\listtablename}{\BLlisttables}
+\renewcommand{\figurename}{\BLfigure}
+\renewcommand{\tablename}{\BLtable}
+\renewcommand{\chaptername}{\BLchapter}
+\renewcommand{\appendixname}{\BLappendix}
+\renewcommand{\bibname}{\BLreferences}
+
+%% ---------------------------------------------------------------- look & feel
+\setstretch{1.25}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\setlength{\emergencystretch}{3em}  % no hyphenation patterns for Armenian: allow looser lines instead of overfull ones
+\setlength{\headheight}{15pt}
+\definecolor{briefaccent}{RGB}{32,72,120}
+\definecolor{briefgray}{RGB}{95,95,95}
+\definecolor{brieflight}{RGB}{236,242,249}
+\definecolor{briefaware}{RGB}{120,150,190}
+\definecolor{briefunderstand}{RGB}{40,120,160}
+\definecolor{briefapply}{RGB}{20,120,70}
+\definecolor{briefmissing}{RGB}{200,30,30}
+\captionsetup{font=small,labelfont=bf}
+\setlist{itemsep=0.15em,topsep=0.3em}
+
+%% Compact numbered chapter headings ("3. Goals"), no page break by default.
+\titleformat{\chapter}[hang]{\LARGE\bfseries\color{briefaccent}}{\thechapter.}{0.5em}{}
+\titlespacing*{\chapter}{0pt}{1.2em}{0.8em}
+\titleformat{\section}{\large\bfseries\color{briefaccent!85!black}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.6em}{}
+\ifbrief@newpage\else
+  \patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{\par\vspace{0.6em}}{}{}
+\fi
+%% Keep headings together with their first lines (no heading alone at a page bottom)
+\RequirePackage{needspace}
+\ifbrief@newpage\else\pretocmd{\chapter}{\Needspace{10\baselineskip}}{}{}\fi
+\pretocmd{\section}{\Needspace{5\baselineskip}}{}{}
+
+%% ---------------------------------------------------------------- metadata store
+%% Every field is optional except the title; empty fields are simply not printed.
+\newcommand{\brief@def}[2]{%
+  \expandafter\newcommand\csname brief@#1\endcsname{#2}%
+  \expandafter\newcommand\csname set#1\endcsname[1]{%
+    \expandafter\renewcommand\csname brief@#1\endcsname{##1}}}
+% --- identity
+\brief@def{topictitle}{[Topic title]}
+\brief@def{topicsubtitle}{}          % e.g. the title in a second language
+\brief@def{doctype}{}               % overrides the default "Diploma Project Brief" line
+\brief@def{version}{}
+\brief@def{date}{}
+\brief@def{status}{}                % e.g. Draft / Approved / Open for applications
+% --- institution
+\brief@def{institution}{}
+\brief@def{faculty}{}
+\brief@def{city}{}
+\brief@def{year}{\the\year}
+% --- people (student 2 / supervisor 2 set => cross-department mode)
+\brief@def{studentone}{}             % may stay empty while the topic is still open
+\brief@def{deptone}{}
+\brief@def{supervisorone}{}
+\brief@def{studenttwo}{}
+\brief@def{depttwo}{}
+\brief@def{supervisortwo}{}
+\brief@def{partnerorg}{}             % industry / research partner
+\brief@def{mentor}{}                 % industry mentor (name, role)
+\brief@def{crossmode}{}              % set to "yes" to force cross-department mode
+% --- platform fields (map to the research_topics record)
+\brief@def{worktype}{}               % diploma / thesis / research project / internship
+\brief@def{degreelevel}{}            % bachelor / master / phd
+\brief@def{areas}{}
+\brief@def{keywords}{}
+\brief@def{slots}{}
+\brief@def{duration}{}
+\brief@def{startdate}{}
+\brief@def{deadline}{}
+\brief@def{worklanguage}{}           % language of the final diploma
+\brief@def{tools}{}                  % key hardware / software
+\brief@def{prerequisites}{}          % one-line summary; details go in the Learning Path chapter
+
+%% Mode test: cross-department if a second student, second department or
+%% second supervisor is given, or \setcrossmode{yes}.
+\newif\ifbriefcross
+\AtBeginDocument{%
+  \briefcrossfalse
+  \ifdefempty{\brief@studenttwo}{}{\briefcrosstrue}%
+  \ifdefempty{\brief@depttwo}{}{\briefcrosstrue}%
+  \ifdefempty{\brief@supervisortwo}{}{\briefcrosstrue}%
+  \ifdefempty{\brief@crossmode}{}{\briefcrosstrue}%
+  \ifdefempty{\brief@doctype}{%
+    \ifbriefcross\renewcommand{\brief@doctype}{\BLdoctypecross}%
+    \else\renewcommand{\brief@doctype}{\BLdoctype}\fi}{}%
+}
+%% Content switches usable anywhere in the body:
+\newcommand{\ifcross}[1]{\ifbriefcross#1\fi}          % only in cross-department mode
+\newcommand{\ifsingle}[1]{\ifbriefcross\else#1\fi}    % only in single-student mode
+%% "Student 1" in cross mode, plain "Student" in single mode
+\newcommand{\studentlabel}[1]{\ifbriefcross\BLstudent~#1\else\BLstudent\fi}
+\newcommand{\supervisorlabel}[1]{\ifbriefcross\BLsupervisor~#1\else\BLsupervisor\fi}
+%% Placeholder for a student who has not been assigned yet
+\newcommand{\brief@person}[1]{\ifdefempty{#1}{\textcolor{briefgray}{\BLtbd}}{#1}}
+
+%% ---------------------------------------------------------------- missing-info marker
+%% \missing{...} marks information the author (or AI agent) still has to supply.
+%% It prints in red so nothing incomplete slips through; search for \missing
+%% before publishing.  \setnomissingcheck hides the markers (not recommended).
+\newif\ifbrief@showmissing \brief@showmissingtrue
+\newcommand{\setnomissingcheck}{\brief@showmissingfalse}
+\newcommand{\missing}[1]{\ifbrief@showmissing\textcolor{briefmissing}{\textbf{[\,#1\,]}}\fi}
+
+%% ---------------------------------------------------------------- title page
+\newcommand{\brief@tprow}[2]{\ifdefempty{#2}{}{\textbf{#1:} & #2\\[0.25em]}}
+\newcommand{\maketitlepage}{%
+  \begin{titlepage}
+    \centering
+    \ifdefempty{\brief@institution}{}{{\large\scshape \brief@institution\par}}
+    \ifdefempty{\brief@faculty}{}{{\normalsize \brief@faculty\par}}
+    \vspace{1.6cm}
+    {\large\color{briefaccent}\brief@doctype\par}
+    \vspace{0.8cm}
+    {\color{briefaccent}\rule{\linewidth}{0.8pt}}\par\vspace{0.5cm}
+    {\LARGE\bfseries \brief@topictitle\par}
+    \ifdefempty{\brief@topicsubtitle}{}{\vspace{0.4cm}{\large\itshape \brief@topicsubtitle\par}}
+    \vspace{0.5cm}{\color{briefaccent}\rule{\linewidth}{0.8pt}}\par
+    \vfill
+    \begin{flushleft}\large
+      \renewcommand{\arraystretch}{1.15}%
+      \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.33\linewidth}>{\raggedright\arraybackslash}p{0.62\linewidth}@{}}
+        \textbf{\studentlabel{1}:} & \brief@person{\brief@studentone}\ifdefempty{\brief@deptone}{}{\newline{\normalsize\color{briefgray}\brief@deptone}}\\[0.35em]
+        \ifbriefcross
+        \textbf{\studentlabel{2}:} & \brief@person{\brief@studenttwo}\ifdefempty{\brief@depttwo}{}{\newline{\normalsize\color{briefgray}\brief@depttwo}}\\[0.35em]
+        \fi
+        \brief@tprow{\supervisorlabel{1}}{\brief@supervisorone}
+        \ifbriefcross\brief@tprow{\supervisorlabel{2}}{\brief@supervisortwo}\fi
+        \brief@tprow{\BLpartner}{\brief@partnerorg}
+        \brief@tprow{\BLmentor}{\brief@mentor}
+      \end{tabular}
+    \end{flushleft}
+    \vfill
+    {\large \ifdefempty{\brief@city}{}{\brief@city,~}\brief@year\par}
+    \ifdefempty{\brief@version}{}{{\small\color{briefgray}\BLversion~\brief@version
+      \ifdefempty{\brief@date}{}{~·~\brief@date}\ifdefempty{\brief@status}{}{~·~\brief@status}\par}}
+  \end{titlepage}
+}
+
+%% ---------------------------------------------------------------- "topic at a glance" card
+%% Layout:  header band (label + title + subtitle)
+%%          key-fact tiles (work type · degree · format · duration · places)
+%%          people (per student: department + supervisor; partner, mentor) | timeline
+%%          areas and keywords as chips; tools and prerequisites
+%% Empty fields, tiles and blocks are left out automatically.
+\tcbuselibrary{raster}
+\newcommand{\brief@cardlabel}[1]{%
+  \vspace{0.5em}{\sffamily\scriptsize\bfseries\color{briefaccent}#1}\par\vspace{-0.35em}%
+  {\color{briefaccent!35}\rule{\linewidth}{0.5pt}}\par\vspace{0.15em}}
+% a stacked field: small grey label above the value
+\newcommand{\brief@field}[2]{\ifdefempty{#2}{}{%
+  \leavevmode{\sffamily\scriptsize\color{briefgray}#1}\par\vspace{-0.25em}%
+  {\small #2}\par\vspace{0.35em}}}
+% a key-fact tile
+\newcounter{brief@tiles}
+\newcommand{\brief@tile}[2]{%
+  \begin{tcolorbox}[enhanced,colback=brieflight,colframe=brieflight,arc=2pt,boxrule=0pt,
+      left=5pt,right=5pt,top=3pt,bottom=4pt,borderline west={2pt}{0pt}{briefaccent}]
+    \raggedright\setstretch{1.0}%
+    \leavevmode{\sffamily\scriptsize\color{briefgray}#1}\par\vspace{0.1em}
+    {\footnotesize\bfseries\color{briefaccent!80!black}#2}
+  \end{tcolorbox}}
+\newcommand{\brief@counttile}[1]{\ifdefempty{#1}{}{\stepcounter{brief@tiles}}}
+% a chip for areas / keywords (comma-separated lists)
+\newcommand{\brief@chip}[1]{\tcbox[on line,colback=white,colframe=briefaccent!45,
+  boxrule=0.5pt,arc=5pt,boxsep=0pt,left=4pt,right=4pt,top=1.6pt,bottom=1.6pt,
+  fontupper=\footnotesize\color{briefaccent!85!black}]{\strut#1}\hspace{0.15em}\allowbreak}
+% rows of the "field and requirements" block: label | chips or text
+\newcommand{\brief@rowlabel}[1]{\leavevmode{\sffamily\scriptsize\color{briefgray}#1}}
+\newcommand{\brief@chiprow}[2]{\ifdefempty{#2}{}{\brief@rowlabel{#1} &
+  \setlength{\lineskip}{3pt}\expandafter\forcsvlist\expandafter\brief@chip\expandafter{#2}\\[0.2em]}}
+\newcommand{\brief@textrow}[2]{\ifdefempty{#2}{}{\brief@rowlabel{#1} & \small #2\\[0.2em]}}
+\newenvironment{brief@rows}{%
+  \renewcommand{\arraystretch}{1.15}%
+  \tabularx{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.2\linewidth}
+                        >{\raggedright\arraybackslash}X@{}}}{\endtabularx}
+% one student block in the "people" column
+\newcommand{\brief@personblock}[4]{% #1 label, #2 name, #3 dept, #4 supervisor
+  {\small\bfseries #1:}~{\small\brief@person{#2}}\par\vspace{-0.1em}
+  \ifdefempty{#3}{}{{\footnotesize\color{briefgray}#3}\par\vspace{-0.1em}}
+  \ifdefempty{#4}{}{{\footnotesize\BLsupervisor:~#4}\par}\vspace{0.45em}}
+\newif\ifbrief@hastimeline
+\newcommand{\briefcard}{%
+  \setcounter{brief@tiles}{1}% format is always shown
+  \brief@counttile{\brief@worktype}\brief@counttile{\brief@degreelevel}%
+  \brief@counttile{\brief@duration}\brief@counttile{\brief@slots}%
+  \brief@hastimelinefalse
+  \ifdefempty{\brief@startdate}{}{\brief@hastimelinetrue}%
+  \ifdefempty{\brief@deadline}{}{\brief@hastimelinetrue}%
+  \ifdefempty{\brief@worklanguage}{}{\brief@hastimelinetrue}%
+  \begin{tcolorbox}[enhanced,breakable,colback=white,colframe=briefaccent,boxrule=0.7pt,arc=3pt,
+      left=9pt,right=9pt,top=7pt,bottom=5pt,
+      colbacktitle=briefaccent,coltitle=white,toptitle=6pt,bottomtitle=7pt,lefttitle=9pt,righttitle=9pt,
+      title={{\sffamily\scriptsize\bfseries\color{white!75!briefaccent}\BLglance}\par\vspace{0.2em}
+        {\raggedright\large\bfseries\setstretch{1.1}\brief@topictitle\par}%
+        \ifdefempty{\brief@topicsubtitle}{}{\vspace{0.15em}{\small\itshape\color{white!85!briefaccent}\brief@topicsubtitle\par}}}]
+    \setstretch{1.05}\setlength{\parskip}{0pt}%
+    % ---- key-fact tiles
+    \begin{tcbraster}[raster columns=\value{brief@tiles},raster equal height=rows,
+        raster column skip=4pt,raster before skip=0pt,raster after skip=6pt]
+      \ifdefempty{\brief@worktype}{}{\brief@tile{\BLworktype}{\brief@worktype}}
+      \ifdefempty{\brief@degreelevel}{}{\brief@tile{\BLdegree}{\brief@degreelevel}}
+      \brief@tile{\BLmode}{\ifbriefcross\BLmodecross\else\BLmodesingle\fi}
+      \ifdefempty{\brief@duration}{}{\brief@tile{\BLduration}{\brief@duration}}
+      \ifdefempty{\brief@slots}{}{\brief@tile{\BLslots}{\brief@slots}}
+    \end{tcbraster}
+    % ---- people | timeline
+    \noindent
+    \begin{minipage}[t]{\ifbrief@hastimeline 0.62\linewidth\else\linewidth\fi}
+      \brief@cardlabel{\BLpeople}
+      \brief@personblock{\studentlabel{1}}{\brief@studentone}{\brief@deptone}{\brief@supervisorone}
+      \ifbriefcross
+        \brief@personblock{\studentlabel{2}}{\brief@studenttwo}{\brief@depttwo}{\brief@supervisortwo}
+      \fi
+      \brief@field{\BLpartner}{\brief@partnerorg}
+      \brief@field{\BLmentor}{\brief@mentor}
+    \end{minipage}%
+    \ifbrief@hastimeline
+      \hfill
+      \begin{minipage}[t]{0.33\linewidth}
+        \brief@cardlabel{\BLtimeline}
+        \brief@field{\BLstart}{\brief@startdate}
+        \brief@field{\BLdeadline}{\brief@deadline}
+        \brief@field{\BLlanguage}{\brief@worklanguage}
+      \end{minipage}
+    \fi
+    \par\vspace{0.2em}
+    % ---- areas, keywords, tools, prerequisites
+    \vspace{-0.3em}\brief@cardlabel{\BLprofile}
+    \begin{brief@rows}
+      \brief@chiprow{\BLareas}{\brief@areas}
+      \brief@chiprow{\BLkeywords}{\brief@keywords}
+      \brief@textrow{\BLtools}{\brief@tools}
+      \brief@textrow{\BLprereq}{\brief@prerequisites}
+    \end{brief@rows}
+  \end{tcolorbox}%
+}
+
+%% ---------------------------------------------------------------- page structure
+\newcommand{\briefheaderstyle}{%
+  \pagestyle{fancy}\fancyhf{}%
+  \fancyhead[L]{\small\color{briefgray}\nouppercase{\leftmark}}%
+  \fancyhead[R]{\small\color{briefgray}\BLheader\ifbrief@draft~·~\textcolor{briefmissing}{\BLdraft}\fi}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0.4pt}\renewcommand{\footrulewidth}{0pt}%
+}
+%% Front matter: at-a-glance card + table of contents (one page if it fits).
+\newcommand{\frontmatterpages}{%
+  \pagenumbering{roman}\thispagestyle{plain}%
+  \briefcard\par\vspace{0.6em}%
+  {\setlength{\parskip}{0pt}\setstretch{1.4}\let\clearpage\relax\let\cleardoublepage\relax\tableofcontents}%
+  \clearpage}
+\newcommand{\mainmatterstart}{\clearpage\pagenumbering{arabic}\briefheaderstyle}
+
+%% ---------------------------------------------------------------- figures
+\NewDocumentCommand{\addimage}{o m m m}{%
+  \begin{figure}[htbp]\centering
+    \includegraphics[width=#3\textwidth]{#2}\caption{#4}\IfValueT{#1}{\label{#1}}%
+  \end{figure}}
+\NewDocumentCommand{\adddiagram}{o m m m}{%
+  \begin{figure}[htbp]\centering
+    \resizebox{#3\textwidth}{!}{\input{diagrams/#2}}\caption{#4}\IfValueT{#1}{\label{#1}}%
+  \end{figure}}
+
+%% ---------------------------------------------------------------- callout boxes
+\newtcolorbox{briefcallout}[2][briefaccent]{enhanced,colback=#1!5,colframe=#1!75,
+  fonttitle=\bfseries,coltitle=white,title=#2,breakable,boxrule=0.6pt,arc=2pt,left=6pt,right=6pt}
+\newcommand{\problemstatement}[1]{\begin{briefcallout}{\BLproblem}#1\end{briefcallout}}
+\newcommand{\summarybox}[1]{\begin{briefcallout}{\BLsummary}#1\end{briefcallout}}
+\newcommand{\notebox}[1]{\begin{briefcallout}[briefgray]{\BLnote}#1\end{briefcallout}}
+\newcommand{\keypoint}[1]{\begin{briefcallout}[briefapply]{\BLkeypoint}#1\end{briefcallout}}
+
+%% ---------------------------------------------------------------- task lists
+%% \begin{tasklist}{1} \task ... \end{tasklist}  → T1.1, T1.2 …  (Armenian: Խ1.1 …)
+%% Use the number of the student (1/2) or of a work package; 0 for shared tasks.
+\newenvironment{tasklist}[1]{%
+  \begin{enumerate}[label=\textbf{\BLtaskprefix#1.\arabic*},ref=\BLtaskprefix#1.\arabic*,
+      leftmargin=3.2em,itemsep=0.2em]%
+  \let\task\item}{\end{enumerate}}
+%% Optional / stretch task marker
+\newcommand{\optionaltask}{\textcolor{briefgray}{(\BLoptional)}~}
+
+%% ---------------------------------------------------------------- learning path
+%% Knowledge levels: \aware — know it exists and what it is for;
+%% \understand — can explain it and read others' work; \apply — can use it to build.
+\newcommand{\brief@badge}[2]{\tcbox[on line,colback=#1,colframe=#1,coltext=white,
+  boxsep=0pt,left=3pt,right=3pt,top=1.5pt,bottom=1.5pt,arc=1.5pt,fontupper=\scriptsize\bfseries]{#2}}
+\newcommand{\aware}{\brief@badge{briefaware}{\BLlevelaware}}
+\newcommand{\understand}{\brief@badge{briefunderstand}{\BLlevelunderstand}}
+\newcommand{\apply}{\brief@badge{briefapply}{\BLlevelapply}}
+%% \begin{learningpath}[caption] \learn{topic}{level}{why it is needed}{resources} \end{learningpath}
+\NewDocumentEnvironment{learningpath}{o}{%
+  \small\renewcommand{\arraystretch}{1.3}%
+  \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.24\linewidth}
+                     >{\centering\arraybackslash}p{0.14\linewidth}
+                     >{\raggedright\arraybackslash}p{0.27\linewidth}
+                     >{\raggedright\arraybackslash}p{0.25\linewidth}@{}}
+    \IfValueT{#1}{\caption{#1}\\}
+    \toprule
+    \textbf{\BLtopic} & \textbf{\BLlevel} & \textbf{\BLwhy} & \textbf{\BLresources}\\
+    \midrule\endfirsthead
+    \toprule
+    \textbf{\BLtopic} & \textbf{\BLlevel} & \textbf{\BLwhy} & \textbf{\BLresources}\\
+    \midrule\endhead
+    \bottomrule\endlastfoot
+}{\end{longtable}}
+\newcommand{\learn}[4]{#1 & #2 & #3 & #4\\}
+\newcommand{\learngroup}[1]{\multicolumn{4}{@{}l}{\cellcolor{brieflight}\textbf{#1}}\\}
+%% Legend for the level badges
+\newcommand{\levellegend}{{\small \aware~\BLlevelawaredesc\quad
+  \understand~\BLlevelunderstanddesc\quad \apply~\BLlevelapplydesc\par}}
+
+%% ---------------------------------------------------------------- warm-up exercises
+%% \begin{warmup}{Title}{estimated time} ... \donewhen{acceptance} \end{warmup}
+\newcounter{briefwarmup}
+\NewDocumentEnvironment{warmup}{m m}{%
+  \refstepcounter{briefwarmup}%
+  \begin{tcolorbox}[enhanced,breakable,colback=briefapply!4,colframe=briefapply!70,
+      boxrule=0.6pt,arc=2pt,left=6pt,right=6pt,fonttitle=\bfseries,coltitle=white,
+      title={\BLwarmup~\thebriefwarmup: #1\hfill\normalfont\small\ifblank{#2}{}{\BLtime: #2}}]}%
+  {\end{tcolorbox}}
+\newcommand{\donewhen}[1]{\par\smallskip\textbf{\color{briefapply!80!black}\BLdonewhen}~#1}
+
+%% ---------------------------------------------------------------- generic table environments
+%% Each is a longtable with a header row; rows are added with one command per row.
+\newcommand{\brief@longtable}[3]{% #1 colspec, #2 header row, #3 optional caption
+  \small\renewcommand{\arraystretch}{1.3}%
+  \begin{longtable}{#1}
+    \ifblank{#3}{}{\caption{#3}\\}
+    \toprule #2\\ \midrule\endfirsthead
+    \toprule #2\\ \midrule\endhead
+    \bottomrule\endlastfoot}
+% work plan: \milestone{weeks}{phase / milestone}{checkpoint result}
+\NewDocumentEnvironment{workplan}{O{}}{%
+  \brief@longtable{@{}>{\raggedright\arraybackslash}p{0.12\linewidth}
+                    >{\raggedright\arraybackslash}p{0.40\linewidth}
+                    >{\raggedright\arraybackslash}p{0.42\linewidth}@{}}
+   {\textbf{\BLweeks} & \textbf{\BLmilestone} & \textbf{\BLcheckpoint}}{#1}}{\end{longtable}}
+\newcommand{\milestone}[3]{#1 & #2 & #3\\}
+% deliverables: \deliverable{what}{format}{due}{owner}
+\NewDocumentEnvironment{deliverables}{O{}}{%
+  \brief@longtable{@{}>{\raggedright\arraybackslash}p{0.34\linewidth}
+                    >{\raggedright\arraybackslash}p{0.23\linewidth}
+                    >{\raggedright\arraybackslash}p{0.13\linewidth}
+                    >{\raggedright\arraybackslash}p{0.19\linewidth}@{}}
+   {\textbf{\BLdeliverable} & \textbf{\BLformat} & \textbf{\BLdue} & \textbf{\BLowner}}{#1}}{\end{longtable}}
+\newcommand{\deliverable}[4]{#1 & #2 & #3 & #4\\}
+% assessment rubric: \criterion{criterion}{weight}{minimum/pass}{good}{excellent}
+\NewDocumentEnvironment{rubric}{O{}}{%
+  \brief@longtable{@{}>{\raggedright\arraybackslash}p{0.18\linewidth}
+                    >{\centering\arraybackslash}p{0.07\linewidth}
+                    >{\raggedright\arraybackslash}p{0.21\linewidth}
+                    >{\raggedright\arraybackslash}p{0.21\linewidth}
+                    >{\raggedright\arraybackslash}p{0.21\linewidth}@{}}
+   {\textbf{\BLcriterion} & \textbf{\BLweight} & \textbf{\BLpass} & \textbf{\BLgood} & \textbf{\BLexcellent}}{#1}}{\end{longtable}}
+\newcommand{\criterion}[5]{#1 & #2 & #3 & #4 & #5\\}
+% risks: \risk{risk}{likelihood/impact}{mitigation}
+\NewDocumentEnvironment{risks}{O{}}{%
+  \brief@longtable{@{}>{\raggedright\arraybackslash}p{0.36\linewidth}
+                    >{\centering\arraybackslash}p{0.14\linewidth}
+                    >{\raggedright\arraybackslash}p{0.44\linewidth}@{}}
+   {\textbf{\BLrisk} & \textbf{\BLimpact} & \textbf{\BLmitigation}}{#1}}{\end{longtable}}
+\newcommand{\risk}[3]{#1 & #2 & #3\\}
+% interfaces between students / components (cross-department mode):
+% \iface{interface}{from → to}{agreed format / contract}
+\NewDocumentEnvironment{interfaces}{O{}}{%
+  \brief@longtable{@{}>{\raggedright\arraybackslash}p{0.26\linewidth}
+                    >{\raggedright\arraybackslash}p{0.20\linewidth}
+                    >{\raggedright\arraybackslash}p{0.48\linewidth}@{}}
+   {\textbf{\BLinterface} & \textbf{\BLdirection} & \textbf{\BLcontract}}{#1}}{\end{longtable}}
+\newcommand{\iface}[3]{#1 & #2 & #3\\}
+
+%% ---------------------------------------------------------------- weekly progress tracker
+%% \begin{progresstracker}[caption] \weekrow{week}{planned work / task ids}{checkpoint} \end{progresstracker}
+%% Prints a table with an empty check box and a notes column to fill in by hand
+%% (or in a PDF editor) every week.  \weekbreak{text} adds a shaded separator row.
+\newcommand{\brief@checkbox}{\raisebox{-0.15ex}{\large$\square$}}
+\NewDocumentEnvironment{progresstracker}{O{}}{%
+  \brief@longtable{@{}>{\centering\arraybackslash}p{0.07\linewidth}
+                    >{\raggedright\arraybackslash}p{0.38\linewidth}
+                    >{\raggedright\arraybackslash}p{0.23\linewidth}
+                    >{\centering\arraybackslash}p{0.07\linewidth}
+                    >{\raggedright\arraybackslash}p{0.14\linewidth}@{}}
+   {\textbf{\BLweek} & \textbf{\BLplanned} & \textbf{\BLcheckpoint} & \textbf{$\checkmark$} & \textbf{\BLnotes}}{#1}}{\end{longtable}}
+\newcommand{\weekrow}[3]{#1 & #2 & #3 & \brief@checkbox & \\ \midrule[0.3pt]}
+\newcommand{\weekbreak}[1]{\multicolumn{5}{@{}l}{\cellcolor{brieflight}\small\textbf{#1}}\\ \midrule[0.3pt]}
+
+%% ---------------------------------------------------------------- approval block
+\newcommand{\brief@signline}[2]{%
+  \ifdefempty{#2}{}{\noindent\parbox[t]{0.42\linewidth}{\textbf{#1}\\ #2}\hfill
+  \parbox[t]{0.25\linewidth}{\rule{\linewidth}{0.4pt}\\[-0.2em]\centering\scriptsize\BLsignature}\hfill
+  \parbox[t]{0.22\linewidth}{\rule{\linewidth}{0.4pt}\\[-0.2em]\centering\scriptsize\BLdate}\par\vspace{1.4em}}}
+\newcommand{\approvalblock}{%
+  \chapter*{\BLapproval}\addcontentsline{toc}{chapter}{\BLapproval}%
+  \BLapprovaltext\par\vspace{1.2em}
+  \brief@signline{\supervisorlabel{1}}{\brief@supervisorone}
+  \ifbriefcross\brief@signline{\supervisorlabel{2}}{\brief@supervisortwo}\fi
+  \brief@signline{\BLmentor}{\brief@mentor}
+  \brief@signline{\studentlabel{1}}{\brief@studentone}
+  \ifbriefcross\brief@signline{\studentlabel{2}}{\brief@studenttwo}\fi
+}
+
+%% ---------------------------------------------------------------- back matter
+%% References are printed in groups, each with its own label prefix, so a
+%% citation shows its kind: [B3] book, [A1] article / paper, [U5] user guide,
+%% datasheet or standard (@manual), [W2] web resource (@online), [M1] other.
+%% Empty groups are skipped. Citations in the text update automatically.
+\defbibheading{briefsub}[]{\section*{#1}}
+\newcommand{\brief@refgroup}[3]{% #1 prefix, #2 filter options, #3 title
+  \newrefcontext[labelprefix=#1]%
+  \printbibliography[#2,heading=briefsub,title={#3}]}
+\newcommand{\printreferences}{%
+  \chapter*{\BLreferences}\addcontentsline{toc}{chapter}{\BLreferences}%
+  \brief@refgroup{B}{type=book}{\BLrefbooks}%
+  \brief@refgroup{A}{filter=brief@articles}{\BLrefarticles}%
+  \brief@refgroup{U}{type=manual}{\BLrefmanuals}%
+  \brief@refgroup{W}{type=online}{\BLrefonline}%
+  \brief@refgroup{M}{filter=brief@other}{\BLrefother}%
+  \newrefcontext}
+\defbibfilter{brief@articles}{type=article or type=inproceedings or type=incollection}
+\defbibfilter{brief@other}{not type=book and not type=article and not type=inproceedings
+  and not type=incollection and not type=manual and not type=online}
+\renewcommand*{\glsclearpage}{}   % no page break before the lists
+\setcounter{tocdepth}{0}           % chapters only: card + contents fit on one page
+\renewcommand*{\l@chapter}[2]{%   compact, dotted chapter lines in the contents
+  \addpenalty{-\@highpenalty}\vskip 0pt \@plus\p@
+  {\setlength\@tempdima{1.8em}\begingroup
+    \parindent\z@ \rightskip\@pnumwidth \parfillskip -\@pnumwidth
+    \leavevmode\advance\leftskip\@tempdima \hskip -\leftskip
+    #1\nobreak\leaders\hbox{$\m@th\mkern\@dotsep mu\hbox{.}\mkern\@dotsep mu$}\hfill
+    \nobreak\hb@xt@\@pnumwidth{\hss #2}\par\penalty\@highpenalty
+  \endgroup}}
+\newcommand{\printglossarysection}{%
+  \glsaddall
+  \printnoidxglossary[type=\acronymtype,title=\BLabbreviations,sort=def]%
+  \printnoidxglossary[title=\BLglossary,sort=def]}
+
+\endinput

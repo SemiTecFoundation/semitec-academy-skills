@@ -1,0 +1,78 @@
+# package — SemiTec Learning Packages (`.stlp`)
+
+Builds **SemiTec Learning Packages** (`.stlp`): one signed file per course that students add to the
+**SemiTec Academy** desktop app (`Foundation/Products/Academy`). A package can hold any number of
+trainings, labs, readings, videos and other materials; the app shows them in sections, tracks each
+student's progress and verifies that the file comes from the Foundation and was not changed.
+
+The skill is versioned **with the app**: each app release that adds a content type or format gets a new
+skill release (see [`CHANGELOG.md`](CHANGELOG.md) and `scripts/VERSION.json`).
+
+## What it supports (release 1.5)
+
+| Content | From | Shown in SemiTec Academy as | App |
+|---|---|---|---|
+| Training | web training template (JSON topics, quizzes, certificate) | the interactive training, progress and certificate per student | ≥ 1.0 |
+| Lab | lab-manual template (`lab/`: `lab.json`, `manual.pdf`) | tabs *Manual*, *Steps* (checklist), *Check quiz* | ≥ 1.0 |
+| Lab source files | `"files"` in `lab.json` | tab *Files*: viewer, *Save file*, *Download all* (zip) | ≥ 1.2 |
+| Reading — PDF | any PDF | PDF reader: outline, zoom, resume, pages-read tracking | ≥ 1.0 |
+| Reading — Markdown | `.md` + its images | document reader: outline, tables, code with copy, text size, read tracking | ≥ 1.3 |
+| Video | `.mp4` / `.webm`, or a link | player with resume and watched tracking; links open in the browser | ≥ 1.1 |
+| Other material | any file or link | PDF / image / code / Markdown viewer, *Save a copy*, *Open with default app* | ≥ 1.1 |
+| Project | `project/` folder from the project-brief template (`project.json` + brief PDF) | project page: enroll, weekly plan with dates, tick weeks, notes, milestones, deliverables, rubric, brief | ≥ 1.4 |
+| Study plan | `schedule` (weeks → items) or `plannedWeeks` on items; topic weeks from a training's `schedule` | enrollment with a start date; *Study plan* view, Calendar, Today panel, reminders | ≥ 1.4 |
+| Publisher | `pack.publisher` + `pack.publisherLogo` (+ `publisherUrl`) | name and logo on every card; filter by publisher in Library, Catalog, Projects | 1.5 |
+| Materials of a lab | `"for": "<lab id>"` on a material | shown under the lab (course order, study plan) and in the lab's *Materials* tab | 1.5 |
+| Project category | `"category"` on a project (research, diploma, thesis, course-project, capstone, internship, other) | category badge and filter on the Projects page | 1.5 |
+| Catalog | `stlp catalog <folder>` -> `catalog.json` | the app's Catalog: install / update with one click | 1.5 |
+| Course certificate | `pack.certificate` → `certificate.json` | certificate when every item is completed; Certificates page, save as PDF | ≥ 1.4 |
+
+Course order (modules), a cover image, package versions (updates keep progress) and signing are
+supported for all.
+
+## How it works
+
+```
+pack-spec.json ──► stlp check ──► stlp create ──► org.semitec.<name>-<version>.stlp ──► SemiTec Academy
+ (list of all       checks every     copies the materials, writes      signed zip: manifest with a
+  materials and     material; ✗      the manifest, computes the        SHA-256 of every file +
+  their paths)      blocks create    minimum app version, signs        Ed25519 signature
+```
+
+1. **pack-spec.json** lists the package (id, version, title …) and the materials by section with their
+   paths. Format: [`reference/pack-spec.md`](reference/pack-spec.md).
+2. **check** validates each material deeply (training topics and quizzes, lab steps and files, PDF and
+   Markdown files, videos, links) and prints a table.
+3. **create** builds and signs the package (private key) — or `--unsigned` for a test.
+
+## Use it
+
+**With Claude Code** — install the Academy Templates plugin (see `../../README.md`); the skill is
+`academy-templates:package`. Then ask: *"Make a SemiTec package 'Digital Design 1' with the trainings FSM basics and Timing, labs 1–3
+from Labs/dd1, the lecture notes in Lectures/dd1 (Markdown) and the intro video."*
+
+**In the Claude app** — upload `dist/academy-package.zip` of the plugin as a skill (name `academy-package`).
+
+**Without AI** — the same commands by hand:
+
+```bash
+node scripts/stlp.js check  my-course/pack-spec.json
+node scripts/stlp.js create my-course/pack-spec.json --key /secure/semitec-foundation.key.pem
+```
+
+## Folder
+
+| Path | Content |
+|---|---|
+| `SKILL.md` | instructions for the AI assistant |
+| `CHANGELOG.md` | skill / app releases and what each added |
+| `ROADMAP.md` | planned skill features |
+| `reference/pack-spec.md` | the spec format and every check |
+| `reference/formats.md` | content types, format numbers, app versions |
+| `reference/markdown.md` | what Markdown readings support |
+| `reference/lab-json.md` | the lab format (made by the lab-manual template) |
+| `examples/` | full spec, minimal spec, a Markdown reading with an image |
+| `scripts/` | bundled packer (`stlp.js`, `lib/`, `fflate`) and `VERSION.json` — regenerate, do not edit |
+
+Regenerate `scripts/` after an app release:
+`node Foundation/Products/Academy/packer/stlp.js bundle-skill Foundation/Products/Skills/AcademyTemplates/skills/package/scripts`.
