@@ -21,7 +21,6 @@ references.bib      bibliography database (BibTeX)
 abbreviations.tex   acronyms  → "List of Abbreviations"
 glossary.tex        glossary terms → "Glossary"
 .latexmkrc          makes `latexmk` run bibtex + the glossary automatically
-Makefile            convenience build targets
 ```
 
 ## Building the PDF

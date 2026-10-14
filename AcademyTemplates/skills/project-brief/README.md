@@ -15,7 +15,7 @@ Use the skill `academy-templates:project-brief` (Claude Code plugin) or upload
 2. interviews you in short batches (`reference/interview.md`);
 3. shows you a one-page skeleton to approve;
 4. writes the brief, builds the PDF, runs the quality checklist;
-5. gives you the PDF, the LaTeX source and a platform topic record.
+5. gives you the PDF and the LaTeX source (plus an optional topic record for a topic-posting system).
 
 ## By hand
 1. Copy `latex/` to a new folder.

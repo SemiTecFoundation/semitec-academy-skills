@@ -3,6 +3,13 @@
 The skill is released with the SemiTec Academy app; the release number is the app version it was
 built from (see `scripts/VERSION.json`). Packages made with an older skill keep opening in newer apps.
 
+## 1.6.2
+- Bundled packer rebuilt from SemiTec Academy 1.6.2.
+- Signing: releases use the offline **production** key; the app trusts no development key, so a
+  draft is built with `--unsigned` and installs only with *Developer mode* on.
+- `prerequisite` documented in `reference/pack-spec.md` and `reference/formats.md`.
+- Destination folders come from `.semitec.json` (`contentRoot`, `packagesRoot`, `academyRepo`).
+
 ## 1.6.0
 - **Prerequisites**: `"prerequisite": true` on any item — an optional refresher shown before the course,
   not counted in progress, *in progress* status or the certificate, and not planned; checked (not with

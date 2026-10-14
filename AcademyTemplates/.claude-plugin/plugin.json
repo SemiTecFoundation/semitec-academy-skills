@@ -1,6 +1,6 @@
 {
   "name": "academy-templates",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "SemiTec Foundation templates as skills: project-brief, diploma-project and lab-manual (PDF), training (interactive web), package (.stlp for the SemiTec Academy app).",
   "author": {
     "name": "Arman Manukyan, SemiTec Foundation"

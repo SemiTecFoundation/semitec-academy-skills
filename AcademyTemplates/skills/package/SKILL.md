@@ -97,9 +97,9 @@ Ask in one short round (skip what is known):
   or the certificate; leave them out of the `"schedule"`. A prerequisite cannot also have `"for"`.
 - **Projects** (optional): briefs to include → run `brief2project.py` on each brief folder (skill
   `academy-templates:project-brief`) and list the `project/` folders under `"projects"`.
-- **Signing**: the private key for releases; for drafts the development key
-  the offline production key `semitec-foundation.key.pem` (kept outside every repository, ask the
-  Foundation for it) — otherwise `--unsigned`, which installs with *Developer mode* on.
+- **Signing**: a release is signed with the offline production key `semitec-foundation.key.pem` (kept
+  outside every repository — ask the Foundation for it). For a draft use `--unsigned`; the app installs
+  unsigned packages only with *Developer mode* on.
 
 ### 2. Write `pack-spec.json`
 Put it in `<packagesRoot>/<package-name>/`. If that folder has a `README.md` listing the packages, add a

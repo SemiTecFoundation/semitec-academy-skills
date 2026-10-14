@@ -133,11 +133,3 @@ there they ask you once and write it, so later runs stay quiet. Create it yourse
 Paths are relative to `.semitec.json` itself, or absolute. Only the keys a skill needs have to be
 present. `diploma-project` writes wherever you tell it and needs no configuration.
 
-## Where things go
-
-- Package sources and built `.stlp` files: the Academy repository's `packs/` and `dist/`
-  (https://github.com/SemiTecFoundation/semitec-academy).
-- In the SemiTec Foundation's own workspace, finished project briefs go to `Diploma-Projects/<topic>/`,
-  and a *template* record (an internal document, published in neither repository) points to a
-  template package (`dist/academy-<name>.zip`) and the collections it serves: research topics (PDF
-  templates) and educational content (labs, trainings, packages).

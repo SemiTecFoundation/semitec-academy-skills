@@ -131,8 +131,8 @@ they agree. This prevents rewriting long LaTeX later.
 
 ### Step 6 — Hand over
 - Give the author the PDF and the source folder.
-- Produce the platform topic record (`templates/topic-record.json`, mapping in
-  `reference/platform-mapping.md`) so the topic can be posted.
+- Optionally, if the author wants a record for a topic-posting system, produce it
+  (`templates/topic-record.json`, mapping in `reference/platform-mapping.md`).
 - For students in **SemiTec Academy**: run `python3 <skill>/tools/brief2project.py <brief-folder>` → writes
   `<brief-folder>/project/` (`project.json` with the weekly plan from the progress tracker, milestones,
   deliverables, rubric, learning path, goals; `brief.pdf`). Fix what it reports (placeholders, missing

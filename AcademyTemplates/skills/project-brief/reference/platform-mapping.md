@@ -1,9 +1,9 @@
 # Brief → platform topic record
 
-A brief is the document package of a **research topic** on the platform
-(`Spec/objects/research-topic.md`; the template object in
-`Spec/objects/template.md`). After the brief is final, produce the record so the
-supervisor can post the topic. Skeleton: `templates/topic-record.json`.
+**Optional.** A brief can also be described as a **research topic** record for a
+topic-posting system. The SemiTec Foundation has one internally; it is not public,
+so skip this file unless the author asks for the record. Nothing else in the skill
+depends on it. Skeleton: `templates/topic-record.json`.
 
 | `research_topics` field | Source in the brief |
 |---|---|
@@ -24,5 +24,4 @@ supervisor can post the topic. Skeleton: `templates/topic-record.json`.
 
 Brief-specific information that has no field yet (language variant, mode,
 departments, duration, learning-path topics) goes into `extra` in the JSON.
-It is a candidate for new fields: see the open questions on tracking thesis
-work (#22) and templates (#38–41).
+Those are candidates for new fields in whatever system consumes the record.

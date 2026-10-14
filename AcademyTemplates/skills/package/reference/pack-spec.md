@@ -5,8 +5,10 @@ other materials and projects — with the **path of each source**, plus an optio
 (template folders, diploma-project folders, a shared drive); nothing has to be copied by hand.
 
 ```bash
-node packer/stlp.js check  packs/fpga-starter/pack-spec.json          # checks every material, changes nothing
-node packer/stlp.js create packs/fpga-starter/pack-spec.json --key <private.pem>   # check → assemble → validate → sign → .stlp
+node scripts/stlp.js check  <pack-spec.json>          # checks every material, changes nothing
+node scripts/stlp.js create <pack-spec.json> --unsigned   # check → assemble → validate → .stlp
+#   a release is signed instead:  --key <production.pem>
+#   with academyRepo set, <academyRepo>/packer/stlp.js is the always-current copy
 ```
 
 `create` always runs the same check first and stops on any error. Without `--out` the pack is written
@@ -88,6 +90,7 @@ students' progress is stored per id, so keep them stable between versions.
 | `estimatedTime` | all | e.g. `"30 min"`, `"2 h"` |
 | `poster` | video | preview image shown before playing |
 | `plannedWeeks` | all | weeks planned for this item; used for the study plan when there is no `schedule` (app ≥ 1.4.0) |
+| `prerequisite` | all | `true` marks an optional refresher: shown before the course under *Before you start*, and **not** counted in progress, *in progress* status or the certificate (app ≥ 1.6.0). Leave such items out of `"schedule"`; a prerequisite cannot also have `"for"`. |
 | `for` | all (usually materials) | id of the lab / training / project this item belongs to: shown **under** that item in *Course order* and *Study plan* and in the lab's **Materials** tab, not as a row of its own; no own week needed (app ≥ 1.5.0; older apps list it normally) |
 | `category` | project | `research` · `diploma` · `thesis` · `course-project` · `capstone` · `internship` · `other` — filter on the Projects page (default: from `project.json`) |
 
@@ -129,7 +132,7 @@ Students find packages in the app's **Catalog**. Two ways to publish:
 
 - **A folder** — put the `.stlp` files in a shared folder (network drive, OneDrive, USB); students add the
   folder in *Settings → Application → Catalog sources*.
-- **A catalog link** — `node packer/stlp.js catalog <folder with .stlp> --name "Your company"` writes
+- **A catalog link** — `node scripts/stlp.js catalog <folder with .stlp> --name "Your company"` writes
   `catalog.json` (+ `catalog-assets/` with covers and logos) next to the files; upload the folder to a
   website and give students the link of `catalog.json`. Each company can publish its own catalog.
 

@@ -8,7 +8,7 @@ A lab is a folder with `lab.json` and (usually) the lab manual PDF made with the
   "summary": "Markdown: what the student builds",
   "difficulty": "beginner",
   "estimatedTime": "2 h",
-  "equipment": ["AMD AUP-ZU3", "Vivado 2024.2+"],
+  "equipment": ["<your board>", "Vivado 2024.2+"],
   "objectives": ["Write sequential logic with `always_ff`", "…"],
   "manual": "manual.pdf",
   "files": "src",

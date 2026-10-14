@@ -8,7 +8,7 @@ student's progress and verifies that the file comes from the Foundation and was 
 The skill is versioned **with the app**: each app release that adds a content type or format gets a new
 skill release (see [`CHANGELOG.md`](CHANGELOG.md) and `scripts/VERSION.json`).
 
-## What it supports (release 1.5)
+## What it supports (release 1.6.2)
 
 | Content | From | Shown in SemiTec Academy as | App |
 |---|---|---|---|

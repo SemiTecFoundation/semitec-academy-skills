@@ -1,5 +1,15 @@
 # Changelog — Academy Templates plugin
 
+## 1.3.0 — 2026-10
+- Destination folders are configuration, not assumptions: `training`, `lab-manual`, `project-brief`
+  and `package` read `.semitec.json` (`contentRoot`, `packagesRoot`, `briefsRoot`, `academyRepo`),
+  asking once and writing the file if it is missing. Documented in the README.
+- No skill writes into a fixed folder layout any more, and `examples/pack-spec.json` is
+  self-contained instead of reaching into sibling folders.
+- **package** 1.6.2: bundled packer from SemiTec Academy 1.6.2; packages are signed with the
+  production key only (no development key is trusted by the app), `prerequisite` documented.
+- The optional topic record for a topic-posting system is marked optional.
+
 ## 1.2.0 — 2026-10
 - **package** 1.5.0: publisher logo (`pack.publisherLogo`), materials attached to labs (`"for"`), project
   `category`, `stlp catalog` for publishing a catalog; bundled packer from SemiTec Academy 1.5.0.

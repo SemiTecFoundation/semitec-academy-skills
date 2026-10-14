@@ -13,6 +13,7 @@ set of formats; the packer writes the formats it used and the minimum app versio
 | reading | 2 | Markdown document + its images / linked files | ≥ 1.3.0 |
 | video | 1 | MP4 / WebM file, or online link | ≥ 1.1.0 |
 | material | 1 | any file (kind: pdf, image, text, markdown, video, file) or link | ≥ 1.1.0 (Markdown view ≥ 1.3.0; older apps offer the file for saving) |
+| pack `prerequisite` | — | item flag: an optional refresher, shown first and not counted in progress | ≥ 1.6.0 |
 | project | 1 | `project.json` (weekly plan, milestones, deliverables, rubric, learning path) + `brief.pdf` — from the project-brief template | ≥ 1.4.0 |
 
 **Optional additions (no new format, older apps ignore them):** `publisherLogo` / `publisherUrl`,

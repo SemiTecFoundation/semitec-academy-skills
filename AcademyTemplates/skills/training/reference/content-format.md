@@ -18,6 +18,7 @@ lists (`- item`, `1. item`), `> quote`, `### heading`, blank line = new paragrap
 | `theme` | string | `foundation` | Default theme = file `css/themes/<name>.css`. |
 | `themes` | string[] | 3 built-in | Themes offered in *View ▾*. |
 | `allowViewSwitch` | bool | `true` | Show layout/theme selectors in *View ▾*. |
+| `schedule` | object | — | Optional week plan: `weeks` (how many) and `topics[]`, each `{ week, topics: [topic id, …] }`. Suggests a pace for self-study; when the training sits inside a package, the package's own `schedule` drives the study plan. |
 | `passThreshold` | 0–1 | `0.8` | Share of correct answers needed to pass a quiz. |
 | `showCorrectAnswers` | `never` \| `afterPass` \| `always` | `afterPass` | When to reveal correct answers + `explain`. |
 | `requireSequential` | bool | `true` | Topic N+1 opens only after topic N is passed. |
