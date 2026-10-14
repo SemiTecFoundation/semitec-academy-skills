@@ -10,7 +10,7 @@ Claude plugins of the SemiTec Foundation. This folder is a **plugin marketplace*
 Add the marketplace once in Claude Code, then install plugins from it:
 
 ```text
-/plugin marketplace add <path to Foundation>/Products/Skills
+/plugin marketplace add https://github.com/SemiTecFoundation/semitec-academy-skills
 /plugin install academy-templates@semitec-skills
 ```
 

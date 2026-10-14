@@ -23,4 +23,5 @@
    optional `claude plugin validate .`.
 7. If students should get it in SemiTec Academy, make sure the **package** skill can take its output
    (a PDF reading, a Markdown reading, a lab folder or a training folder); a new kind of content needs
-   a new app format first (`Products/Academy/docs/VERSIONING.md`).
+   a new app format first ([`docs/VERSIONING.md`](https://github.com/SemiTecFoundation/semitec-academy/blob/main/docs/VERSIONING.md) in the Academy
+   repository).

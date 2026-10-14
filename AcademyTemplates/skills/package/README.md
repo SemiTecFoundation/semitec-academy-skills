@@ -1,7 +1,7 @@
 # package — SemiTec Learning Packages (`.stlp`)
 
 Builds **SemiTec Learning Packages** (`.stlp`): one signed file per course that students add to the
-**SemiTec Academy** desktop app (`Foundation/Products/Academy`). A package can hold any number of
+**SemiTec Academy** desktop app (https://github.com/SemiTecFoundation/semitec-academy). A package can hold any number of
 trainings, labs, readings, videos and other materials; the app shows them in sections, tracks each
 student's progress and verifies that the file comes from the Foundation and was not changed.
 
@@ -75,4 +75,6 @@ node scripts/stlp.js create my-course/pack-spec.json --key /secure/semitec-found
 | `scripts/` | bundled packer (`stlp.js`, `lib/`, `fflate`) and `VERSION.json` — regenerate, do not edit |
 
 Regenerate `scripts/` after an app release:
-`node Foundation/Products/Academy/packer/stlp.js bundle-skill Foundation/Products/Skills/AcademyTemplates/skills/package/scripts`.
+`node <academy>/packer/stlp.js bundle-skill <skills>/AcademyTemplates/skills/package/scripts`, where
+`<academy>` and `<skills>` are checkouts of https://github.com/SemiTecFoundation/semitec-academy and
+https://github.com/SemiTecFoundation/semitec-academy-skills.

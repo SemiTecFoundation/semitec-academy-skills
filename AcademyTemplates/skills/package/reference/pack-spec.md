@@ -52,7 +52,7 @@ students' progress is stored per id, so keep them stable between versions.
     { "id": "lab-01-shift-register", "source": "../../../Skills/AcademyTemplates/skills/lab-manual/examples/lab-01-shift-register/lab" }
   ],
   "readings": [                                // PDF files, or Markdown files (+ their images) — app ≥ 1.3.0
-    { "id": "ecc-brief", "title": "Project brief: ECC memory", "source": "../../../../Diploma-Projects/ecc/brief.pdf", "estimatedTime": "30 min" },
+    { "id": "ecc-brief", "title": "Project brief: ECC memory", "source": "../briefs/ecc/brief.pdf", "estimatedTime": "30 min" },
     { "id": "vivado-ref", "title": "Vivado quick reference", "source": "readings/vivado-quick-reference/vivado-quick-reference.md" }
   ],
   "videos": [                                  // .mp4 (H.264+AAC) / .webm file, or an online link
@@ -162,4 +162,4 @@ material, with what was found (topics, steps, size, kind).
    manual) and asks you about the rest.
 3. When `check` shows 0 errors it runs `create` and reports the `.stlp` file.
 
-The Foundation skill for this is `Products/Skills/AcademyTemplates/skills/package/` (skill `academy-templates:package`).
+The Foundation skill for this is `academy-templates:package` — the `skills/package/` folder of this repository.

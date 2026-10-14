@@ -1,5 +1,5 @@
 {
-  "notes": "Example: copy this file into Foundation/Products/Academy/packs/<your-package>/ — paths are relative to the spec file and point to the sample materials (packs/fpga-starter and the AcademyTemplates examples).",
+  "notes": "Example: copy this file into your own <your-package>/ folder — paths are relative to the spec file and point to the sample materials (packs/fpga-starter and the AcademyTemplates examples).",
   "specVersion": 1,
   "pack": {
     "id": "org.semitec.my-fpga-course",

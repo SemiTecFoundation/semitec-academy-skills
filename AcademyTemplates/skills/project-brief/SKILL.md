@@ -144,4 +144,9 @@ Part of the **Academy Templates** plugin: `academy-templates:project-brief` (pro
 Academy). Hand over to the matching skill when the user needs one of those outputs.
 
 ## Where new material goes
-Course content lives in `Foundation/Products/LearningMaterials/<topic>/` — e.g. `IC-Design/Digital-Design/Verification/projects/verif-<name>/` (the brief's LaTeX + `project/` from brief2project.py); diploma topics may also stay in `Foundation/Diploma-Projects/`. Folder names are `<topic>-<short-name>` (they become ids in packages). Use a **last-level** topic (one without sub-topics); if its material folders do not exist yet, run `python3 Foundation/Products/LearningMaterials/tools/inventory.py --init <topic>` first. After adding material run `python3 Foundation/Products/LearningMaterials/tools/inventory.py`.
+Course content lives in `<content>/<topic>/`, where `<content>` is the course-content folder — ask the user where it is; in the SemiTec Foundation's own workspace that is `Products/LearningMaterials/` — e.g.
+`IC-Design/Digital-Design/Verification/projects/verif-<name>/` (the brief's LaTeX + `project/` from
+brief2project.py). In that workspace, finished diploma topics may instead live in `Diploma-Projects/`.
+Folder names are `<topic>-<short-name>` (they become ids in packages). Use a **last-level** topic (one
+without sub-topics). Where `<content>/tools/inventory.py` exists, run it with `--init <topic>` first if
+the topic's folders are missing, and again after adding material; skip this when the script is absent.

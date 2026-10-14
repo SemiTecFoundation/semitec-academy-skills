@@ -14,7 +14,12 @@ Read `reference/content-format.md` for every field.
 
 ## Workflow
 
-1. **Copy** the whole `training/` skill folder (engine + example content) to `Foundation/Products/LearningMaterials/<topic>/trainings/<topic>-<name>/` (e.g. `IC-Design/Digital-Design/FPGA/trainings/fpga-vivado-flow`; or where the user wants). Use a **last-level** topic (one without sub-topics); if its material folders do not exist yet, run `python3 Foundation/Products/LearningMaterials/tools/inventory.py --init <topic>` first.
+1. **Copy** the whole `training/` skill folder (engine + example content) to
+   `<content>/<topic>/trainings/<topic>-<name>/`, where `<content>` is the course-content folder — ask the user where it is; in the SemiTec Foundation's own workspace that is `Products/LearningMaterials/` (e.g.
+   `IC-Design/Digital-Design/FPGA/trainings/fpga-vivado-flow`). Ask the user if you are unsure. Use a
+   **last-level** topic (one without sub-topics). If that workspace has
+   `LearningMaterials/tools/inventory.py` and the topic's material folders do not exist yet, run
+   `python3 <content>/tools/inventory.py --init <topic>` first; skip this when the script is absent.
 2. **`training.json`** — set a new `id` (progress is stored per id), `title`, `subtitle`, `language`, `hours`, `passThreshold`, default `layout` and `theme`; list the topic files in order. For Armenian / Russian set `language` and translate the UI strings in `labels`.
 3. **Topics** — delete the demo files in `topics/` and write one JSON file per topic (`01-intro.json`, `02-…`). For every topic:
    - 2–5 subsections, each with a stable `id` (kebab-case) and a few blocks;

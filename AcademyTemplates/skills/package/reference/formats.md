@@ -25,5 +25,5 @@ The packer chooses the format from the content: a lab without `files` stays form
 stays format 1 — so packages open in the oldest app that can show them. `stlp create --target-app 1.2.0`
 refuses to build when a material needs a newer app.
 
-The authoritative table is `app/src/shared/versions.js` in `Foundation/Products/Academy` (copied into
+The authoritative table is `app/src/shared/versions.js` in the Academy repository (https://github.com/SemiTecFoundation/semitec-academy) (copied into
 `scripts/lib/versions.js` of this skill).

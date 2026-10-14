@@ -44,9 +44,10 @@ Details: `reference/formats.md`. Markdown rules: `reference/markdown.md`.
 
 ## Tools
 
-`scripts/stlp.js` — bundled, needs only Node.js 18+. When the Foundation folder is available prefer the
-repository copy, which is always current: `Foundation/Products/Academy/packer/stlp.js`
-(run `npm install` once in `Foundation/Products/Academy/app`).
+`scripts/stlp.js` — bundled, needs only Node.js 18+, and works on its own. If a checkout of the Academy
+repository (https://github.com/SemiTecFoundation/semitec-academy) is available, prefer its copy, which is always
+current: `<academy>/packer/stlp.js` (run `npm install` once in `<academy>/app`). In the SemiTec
+Foundation's own workspace `<academy>` is `Products/Academy`.
 
 ```bash
 node <tools>/stlp.js check   <pack-spec.json>                       # check every material (table: ✓ ⚠ ✗)
@@ -63,11 +64,13 @@ Ask in one short round (skip what is known):
   Foundation*) and its **logo** (`pack.publisherLogo`, square SVG / PNG - companies other than the
   Foundation publish packages too), authors, id (propose `org.semitec.<kebab-title>`), version (`1.0.0` for a new package),
   cover image (optional).
-- **Materials per section** — names and where they are. If only names are given, search the Foundation
-  course content in `Foundation/Products/LearningMaterials` (topic folders such as
-  `IC-Design/Digital-Design/FPGA/{lectures,trainings,labs,projects,videos,materials}`; `INVENTORY.md` lists
-  everything — refresh it with `python3 LearningMaterials/tools/inventory.py`), then `Diploma-Projects/*` and
-  `Products/Academy/packs/*`, and confirm the matches. Materials from different topics may be combined.
+- **Materials per section** — names and where they are. If only names are given, ask the user for the
+  course-content folder and search it (topic folders such as
+  `IC-Design/Digital-Design/FPGA/{lectures,trainings,labs,projects,videos,materials}`), then confirm the
+  matches. Materials from different topics may be combined. In the SemiTec Foundation's own workspace
+  that folder is `Products/LearningMaterials`, where `INVENTORY.md` lists everything (refresh it with
+  `python3 Products/LearningMaterials/tools/inventory.py`); `Diploma-Projects/*` and the Academy
+  repository's `packs/*` are worth searching too.
 - **Course order** (optional): modules such as *Week 1: training A, video B, lab 1*.
 - **Study plan** (recommended): how many weeks, and what belongs to each week → `"schedule"`. If the
   author only knows a length per item, use `"plannedWeeks"`. No plan = self-paced.
@@ -85,9 +88,11 @@ Ask in one short round (skip what is known):
   Foundation for it) — otherwise `--unsigned`, which installs with *Developer mode* on.
 
 ### 2. Write `pack-spec.json`
-Put it in `Foundation/Products/LearningMaterials/Packages/<package-name>/` (or where the user wants; samples
-live in `Products/Academy/packs/`). Add a row to `LearningMaterials/Packages/README.md`. Paths are
-relative to the spec; materials stay where they are. Start from `examples/pack-spec.json`; format:
+Put it where the user wants — by default a `<package-name>/` folder next to the course content. In the
+SemiTec Foundation's own workspace that is `Products/LearningMaterials/Packages/<package-name>/`, and a
+row goes in `Packages/README.md`. Sample specs live in the Academy repository under `packs/`
+(https://github.com/SemiTecFoundation/semitec-academy/tree/main/packs). Paths are relative to the spec;
+materials stay where they are. Start from `examples/pack-spec.json`; format:
 `reference/pack-spec.md`. Ids: lowercase-with-dashes, unique in the package, never changed later
 (progress is stored per id). Give every item a title, a one-line description and `estimatedTime`.
 
@@ -110,8 +115,9 @@ For the app's **Catalog**: put the `.stlp` in a shared folder, or run `node <too
 link in *Settings -> Application -> Catalog sources*.
 
 ### 4c. Keep the inventory
-Run `python3 Foundation/Products/LearningMaterials/tools/inventory.py` — it records which package uses which
-material and lists materials not packaged yet.
+If the course-content folder has `tools/inventory.py` (it does in the SemiTec Foundation's workspace:
+`python3 Products/LearningMaterials/tools/inventory.py`), run it — it records which package uses which
+material and lists materials not packaged yet. Skip this step when that script is not there.
 
 ### 5. Report
 The `.stlp` path and size, the minimum SemiTec Academy version, the items per section, remaining

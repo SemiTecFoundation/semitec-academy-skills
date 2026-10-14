@@ -43,11 +43,11 @@ self-checked → **Web**. Handed to students as one course file for the desktop 
 
 ## Install
 
-**Claude Code — as a plugin (recommended).** The folder above this one (`Products/Skills`) is a plugin
-marketplace called `semitec-skills`:
+**Claude Code — as a plugin (recommended).** The folder above this one is a plugin marketplace called
+`semitec-skills`; add it from GitHub, or from a local clone by path:
 
 ```text
-/plugin marketplace add <path to Foundation>/Products/Skills
+/plugin marketplace add https://github.com/SemiTecFoundation/semitec-academy-skills
 /plugin install academy-templates@semitec-skills
 ```
 
@@ -75,7 +75,7 @@ each self-contained (the package zip includes its packer).
 | `skills/training/tools/validate.py [folder]` | training | check JSON, ids, block and question types, review links, answers, referenced files |
 | `skills/training/tools/build_single_file.py` | training | one self-contained HTML (`dist/training.html`, `dist/training-preview.html`) |
 | `skills/training/tools/dev_server.py` | training | local server + demo progress API (the reference for platform integration) |
-| `skills/package/scripts/stlp.js` | package | `check` / `create` / `inspect` SemiTec Learning Packages — bundled copy of `Products/Academy/packer/stlp.js`, regenerate with `bundle-skill` |
+| `skills/package/scripts/stlp.js` | package | `check` / `create` / `inspect` SemiTec Learning Packages — bundled copy of the Academy repository's `packer/stlp.js` (https://github.com/SemiTecFoundation/semitec-academy), regenerate with `bundle-skill` |
 
 ## Folder
 
@@ -103,15 +103,16 @@ AcademyTemplates/
 - The **plugin** has one version (`.claude-plugin/plugin.json`, history in `CHANGELOG.md`).
 - The **package** skill also follows the SemiTec Academy app: its `CHANGELOG.md` and
   `scripts/VERSION.json` say which app release and content formats it supports.
-- The **training** skill's engine is copied into the app (`Products/Academy/app`: `npm run sync-engine`).
+- The **training** skill's engine is copied into the app (https://github.com/SemiTecFoundation/semitec-academy, `npm run sync-engine` in `app/`).
 
 Release checklist: update the skill → `python3 tools/skills.py zip` → `python3 tools/skills.py check`
 (0 errors) → raise the plugin version and add a `CHANGELOG.md` entry.
 
 ## Where things go
 
-- Finished project briefs: `Foundation/Diploma-Projects/<topic>/`.
-- Package sources and built `.stlp` files: `Foundation/Products/Academy/packs/` and `dist/`.
-- In the Foundation platform a *template* record (`Platform/Spec/objects/template.md`) points to a
+- Package sources and built `.stlp` files: the Academy repository's `packs/` and `dist/`
+  (https://github.com/SemiTecFoundation/semitec-academy).
+- In the SemiTec Foundation's own workspace, finished project briefs go to `Diploma-Projects/<topic>/`,
+  and a *template* record (an internal document, published in neither repository) points to a
   template package (`dist/academy-<name>.zip`) and the collections it serves: research topics (PDF
   templates) and educational content (labs, trainings, packages).
