@@ -81,7 +81,8 @@ Ask in one short round (skip what is known):
 - **Projects** (optional): briefs to include → run `brief2project.py` on each brief folder (skill
   `academy-templates:project-brief`) and list the `project/` folders under `"projects"`.
 - **Signing**: the private key for releases; for drafts the development key
-  `Foundation/Private/keys/semitec-foundation-dev.key.pem` (never inside a repository) or `--unsigned`.
+  the offline production key `semitec-foundation.key.pem` (kept outside every repository, ask the
+  Foundation for it) — otherwise `--unsigned`, which installs with *Developer mode* on.
 
 ### 2. Write `pack-spec.json`
 Put it in `Foundation/Products/LearningMaterials/Packages/<package-name>/` (or where the user wants; samples
