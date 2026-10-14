@@ -12,10 +12,26 @@ description: >-
 Instructions for an AI assistant (or a person) who builds a new training from this template.
 Read `reference/content-format.md` for every field.
 
+## Where files go — ask once, then remember
+
+Destination folders are **never** hard-coded. Before writing anything, resolve them:
+
+1. Look for **`.semitec.json`**, starting in the working folder and searching upward. If it
+   exists, use its values and do **not** ask.
+2. If it is missing, ask the user for the keys below — one short round — then write
+   `.semitec.json` at the root of their project with the answers, so no later run asks again.
+
+| Key | Used for |
+|---|---|
+| `contentRoot` | where course materials live; trainings go to `<contentRoot>/<topic>/trainings/` |
+
+Values are paths relative to `.semitec.json`, or absolute. Create folders that do not exist yet.
+Never write outside them, and never assume a particular parent layout.
+
 ## Workflow
 
 1. **Copy** the whole `training/` skill folder (engine + example content) to
-   `<content>/<topic>/trainings/<topic>-<name>/`, where `<content>` is the course-content folder — ask the user where it is; in the SemiTec Foundation's own workspace that is `Products/LearningMaterials/` (e.g.
+   `<content>/<topic>/trainings/<topic>-<name>/`, where `<content>` is `contentRoot` (see *Where files go*) (e.g.
    `IC-Design/Digital-Design/FPGA/trainings/fpga-vivado-flow`). Ask the user if you are unsure. Use a
    **last-level** topic (one without sub-topics). If that workspace has
    `LearningMaterials/tools/inventory.py` and the topic's material folders do not exist yet, run

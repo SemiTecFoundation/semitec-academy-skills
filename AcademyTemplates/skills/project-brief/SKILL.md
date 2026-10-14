@@ -31,6 +31,23 @@ mentor) **before** the student starts. It is the student's map of the project:
 
 The student's *final* diploma document is a different template (`../diploma-project`).
 
+## Where files go — ask once, then remember
+
+Destination folders are **never** hard-coded. Before writing anything, resolve them:
+
+1. Look for **`.semitec.json`**, starting in the working folder and searching upward. If it
+   exists, use its values and do **not** ask.
+2. If it is missing, ask the user for the keys below — one short round — then write
+   `.semitec.json` at the root of their project with the answers, so no later run asks again.
+
+| Key | Used for |
+|---|---|
+| `contentRoot` | where course materials live; projects go to `<contentRoot>/<topic>/projects/` |
+| `briefsRoot` | optional — where finished briefs are collected, if the user keeps them apart |
+
+Values are paths relative to `.semitec.json`, or absolute. Create folders that do not exist yet.
+Never write outside them, and never assume a particular parent layout.
+
 ## Package contents
 
 ```
@@ -144,7 +161,7 @@ Part of the **Academy Templates** plugin: `academy-templates:project-brief` (pro
 Academy). Hand over to the matching skill when the user needs one of those outputs.
 
 ## Where new material goes
-Course content lives in `<content>/<topic>/`, where `<content>` is the course-content folder — ask the user where it is; in the SemiTec Foundation's own workspace that is `Products/LearningMaterials/` — e.g.
+Course content lives in `<content>/<topic>/`, where `<content>` is `contentRoot` (see *Where files go*) — e.g.
 `IC-Design/Digital-Design/Verification/projects/verif-<name>/` (the brief's LaTeX + `project/` from
 brief2project.py). In that workspace, finished diploma topics may instead live in `Diploma-Projects/`.
 Folder names are `<topic>-<short-name>` (they become ids in packages). Use a **last-level** topic (one

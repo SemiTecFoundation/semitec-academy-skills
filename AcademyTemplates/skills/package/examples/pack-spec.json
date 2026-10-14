@@ -1,5 +1,5 @@
 {
-  "notes": "Example: copy this file into your own <your-package>/ folder — paths are relative to the spec file and point to the sample materials (packs/fpga-starter and the AcademyTemplates examples).",
+  "notes": "Example: copy this file into your own <your-package>/ folder and point every \"source\" at your material. Paths are relative to this spec file; nothing outside your own folders is assumed.",
   "specVersion": 1,
   "pack": {
     "id": "org.semitec.my-fpga-course",
@@ -72,14 +72,14 @@
     {
       "id": "feature-tour",
       "title": "How interactive trainings work",
-      "source": "../../../Skills/AcademyTemplates/skills/training",
+      "source": "./feature-tour",
       "description": "All interactive features in 10 short topics",
       "estimatedTime": "1 h"
     },
     {
       "id": "shift-registers",
       "title": "Shift registers",
-      "source": "../fpga-starter/trainings/shift-registers",
+      "source": "./shift-registers",
       "description": "Theory for Lab 1",
       "estimatedTime": "30 min"
     }
@@ -87,12 +87,12 @@
   "labs": [
     {
       "id": "lab-01-shift-register",
-      "source": "../../../Skills/AcademyTemplates/skills/lab-manual/examples/lab-01-shift-register/lab",
+      "source": "./lab-01-shift-register",
       "description": "SystemVerilog, simulation, LEDs and buttons — manual and files from the lab-manual template"
     },
     {
       "id": "lab-02-counter",
-      "source": "../fpga-starter/labs/lab-02-counter",
+      "source": "./lab-02-counter",
       "description": "Synchroniser, debouncer, edge detector"
     }
   ],
@@ -100,20 +100,20 @@
     {
       "id": "vivado-quick-reference",
       "title": "Vivado quick reference",
-      "source": "../fpga-starter/readings/vivado-quick-reference/vivado-quick-reference.md",
+      "source": "./vivado-quick-reference.md",
       "description": "Design flow, Tcl commands, SystemVerilog reminders",
       "estimatedTime": "10 min"
     },
     {
       "id": "ecc-brief",
       "title": "Project brief: ECC-protected sensor data memory",
-      "source": "../fpga-starter/readings/ecc-brief.pdf",
+      "source": "./ecc-brief.pdf",
       "estimatedTime": "30 min"
     },
     {
       "id": "mbist-brief",
       "title": "Project brief: JTAG-accessible memory BIST",
-      "source": "../fpga-starter/readings/mbist-brief.pdf",
+      "source": "./mbist-brief.pdf",
       "estimatedTime": "30 min"
     }
   ],
@@ -121,13 +121,13 @@
     {
       "id": "design-flow",
       "title": "The FPGA design flow in 25 seconds",
-      "source": "../fpga-starter/videos/design-flow.mp4",
+      "source": "./design-flow.mp4",
       "estimatedTime": "1 min"
     },
     {
       "id": "shift-register-animation",
       "title": "Shift register, edge by edge",
-      "source": "../fpga-starter/videos/shift-register.mp4",
+      "source": "./shift-register.mp4",
       "estimatedTime": "1 min"
     }
   ],
@@ -135,27 +135,27 @@
     {
       "id": "lab1-starter",
       "title": "Lab 1 starter files",
-      "source": "../fpga-starter/files/lab1-starter.zip",
+      "source": "./lab1-starter.zip",
       "description": "shift4.sv and testbench skeletons",
       "for": "lab-01-shift-register"
     },
     {
       "id": "constraints",
       "title": "Example constraints (XDC)",
-      "source": "../fpga-starter/files/aup-zu3-leds-buttons.xdc",
+      "source": "./aup-zu3-leds-buttons.xdc",
       "description": "LEDs, button, switch, clock",
       "for": "lab-01-shift-register"
     },
     {
       "id": "board-overview",
       "title": "Board overview",
-      "source": "../fpga-starter/files/board-overview.svg",
+      "source": "./board-overview.svg",
       "for": "lab-02-counter"
     },
     {
       "id": "lab-report-template",
       "title": "Lab report template (Markdown)",
-      "source": "../fpga-starter/files/lab-report-template.md",
+      "source": "./lab-report-template.md",
       "description": "Copy it and fill it in for every lab",
       "for": "lab-01-shift-register"
     }
@@ -163,7 +163,7 @@
   "projects": [
     {
       "id": "ecc-sensor-memory",
-      "source": "../fpga-starter/projects/ecc-sensor-memory",
+      "source": "./ecc-sensor-memory",
       "description": "Bachelor diploma project, 30 weeks: sensors, ECC memory, verification, Zynq",
       "category": "diploma"
     }

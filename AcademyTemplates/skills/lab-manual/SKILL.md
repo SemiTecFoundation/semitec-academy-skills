@@ -27,6 +27,22 @@ Tools (Python 3 + a TeX distribution with XeLaTeX and the FreeSerif fonts):
 - `python3 <skill>/tools/check_lab.py <lab-folder>` — checks lab.json, files, quiz, manual, and that the
   `\labstep` ids equal the lab.json step ids.
 
+## Where files go — ask once, then remember
+
+Destination folders are **never** hard-coded. Before writing anything, resolve them:
+
+1. Look for **`.semitec.json`**, starting in the working folder and searching upward. If it
+   exists, use its values and do **not** ask.
+2. If it is missing, ask the user for the keys below — one short round — then write
+   `.semitec.json` at the root of their project with the answers, so no later run asks again.
+
+| Key | Used for |
+|---|---|
+| `contentRoot` | where course materials live; labs go to `<contentRoot>/<topic>/labs/` |
+
+Values are paths relative to `.semitec.json`, or absolute. Create folders that do not exist yet.
+Never write outside them, and never assume a particular parent layout.
+
 ## Workflow
 
 ### 1. Interview (one short round)
@@ -89,7 +105,7 @@ Part of the **Academy Templates** plugin: `academy-templates:project-brief` (pro
 Academy). Hand over to the matching skill when the user needs one of those outputs.
 
 ## Where new material goes
-Course content lives in `<content>/<topic>/`, where `<content>` is the course-content folder — ask the user where it is; in the SemiTec Foundation's own workspace that is `Products/LearningMaterials/` — e.g.
+Course content lives in `<content>/<topic>/`, where `<content>` is `contentRoot` (see *Where files go*) — e.g.
 `IC-Design/Digital-Design/FPGA/labs/fpga-lab01-leds/` (the folder holds `latex/` and `lab/`). Folder
 names are `<topic>-<short-name>` (they become ids in packages). Use a **last-level** topic (one without
 sub-topics). Where `<content>/tools/inventory.py` exists, run it with `--init <topic>` first if the

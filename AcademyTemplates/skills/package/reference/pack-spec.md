@@ -49,7 +49,7 @@ students' progress is stored per id, so keep them stable between versions.
       "description": "Theory for Lab 1", "estimatedTime": "30 min" }
   ],
   "labs": [                                    // lab/ folders made with the lab-manual template (lab.json + manual.pdf + src/)
-    { "id": "lab-01-shift-register", "source": "../../../Skills/AcademyTemplates/skills/lab-manual/examples/lab-01-shift-register/lab" }
+    { "id": "lab-01-shift-register", "source": "./lab-01-shift-register" }
   ],
   "readings": [                                // PDF files, or Markdown files (+ their images) — app ≥ 1.3.0
     { "id": "ecc-brief", "title": "Project brief: ECC memory", "source": "../briefs/ecc/brief.pdf", "estimatedTime": "30 min" },
