@@ -1,5 +1,13 @@
 # Changelog — Academy Templates plugin
 
+## 1.6.0 — 2026-10
+- Documented open partner publishing: standalone materials and packages require no Foundation approval;
+  `stlp check` is a technical check and publishers retain responsibility for rights, review and attribution.
+- Added optional package feedback contacts and explicitly optional publisher-defined course certificates.
+- Updated the package builder from SemiTec Academy 1.7.0, including publisher-contact validation.
+- Clarified that Academy projects are independently tracked advanced work rather than a supervisor or
+  application workflow. Added Apache-2.0, notice, trademark and security policies.
+
 ## 1.5.1 — 2026-10
 - Repaired the GitHub release workflow after flattening the plugin root. It builds the release archive in
   the runner's temporary directory, preserving the rule that generated archives never enter the source tree.

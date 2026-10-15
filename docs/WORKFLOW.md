@@ -16,7 +16,7 @@ the editable sources remain in the materials repository.
 |---|---|---|
 | `semitec-academy-skills` | skill instructions, templates, validators, the offline package builder, plugin releases | real lessons, production keys, released `.stlp` files |
 | `semitec-academy-materials` | real course sources, package specifications, signed course archives and catalog entries | Academy application code |
-| `semitec-academy` | app behavior, the `.stlp` format, public trusted keys and student installers | course content and built courses |
+| `semitec-academy` | app behavior, the `.stlp` format, Foundation keys, locally trusted publisher keys and student installers | course content and built courses |
 
 ## Typical paths
 
@@ -37,10 +37,14 @@ lecturer → training skill → training folder / self-contained HTML → browse
 ```text
 authors → standalone labs + trainings + readings + briefs
         → package skill + pack-spec.json
-        → stlp check → signed .stlp
-        → materials release or catalog
-        → Academy app
+        → stlp check → publisher self-review → optional certificate + signed .stlp
+        → materials release or catalog → recipient trusts publisher key → Academy app
 ```
+
+`stlp check` confirms technical validity; it is not an institutional approval queue. Partners may create
+and publish their own materials without a Foundation agreement. The publisher chooses author attribution,
+content rights, a feedback contact and whether the package offers a course certificate. Recipients decide
+which publisher public keys to trust in the Academy app. Details: [PUBLISHING.md](PUBLISHING.md).
 
 ## Contributor workflow
 

@@ -82,6 +82,11 @@ Report the PDF, the lab folder and the check result. To give the lab to students
 **lab/** folder to a course pack with the `academy-templates:package` skill (`skills/package`):
 `"labs": [ { "id": "lab-01-…", "source": "<path>/lab" } ]`.
 
+The lab remains a complete standalone result: packaging is optional and does not transfer ownership or
+replace the editable source. For a package, its publisher supplies author names, optional student-feedback
+contact and, only if desired, a course certificate. `stlp check` is a technical check; it is not a request
+for SemiTec Foundation approval.
+
 ## From an existing lab PDF (no LaTeX source)
 Create only the `lab/` folder: copy the PDF as `lab/manual.pdf`, write `lab.json` (steps from the PDF's
 procedure, with `manualPage` set by hand), add `src/`, run `check_lab.py` on the folder (the LaTeX check

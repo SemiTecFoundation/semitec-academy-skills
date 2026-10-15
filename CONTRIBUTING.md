@@ -15,6 +15,17 @@ a new one without changing real course material, signing keys, or Academy releas
 5. When a format, shared tool, or release behavior changes, update the workflow and compatibility docs
    in `docs/` in the same change.
 
+## Rights and contributions
+
+There is no contributor license agreement or copyright assignment. By submitting a contribution, you
+confirm that you have the right to submit it and license it under [Apache-2.0](LICENSE), as the
+repository license provides. Keep notices and attributions intact. Do not submit a client's, university's
+or publisher's real course material unless you have clear permission to publish it under that license.
+
+The skills are tools for creating materials. Each author or publisher chooses the rights statement,
+feedback contact and optional certificate for its own package. SemiTec Foundation does not review or
+approve ordinary partner packages before they are created or distributed.
+
 ## Adding a skill
 
 Create `skills/<name>/SKILL.md` with a lowercase hyphenated name, a concise description,

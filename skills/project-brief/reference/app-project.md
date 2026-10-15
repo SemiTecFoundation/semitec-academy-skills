@@ -24,10 +24,14 @@ python3 tools/brief2project.py <brief-folder> [--pdf <compiled brief.pdf>] [--id
 LaTeX is converted to light Markdown (`**bold**`, `*italic*`, `` `code` ``), cross-references become chapter
 names, citations are removed from texts (kept as "Author Year" in `sources`).
 
-**In the app:** the student enrolls with a start date; week *n* of the tracker is mapped to the calendar,
-each week can be ticked and gets notes for the weekly meeting; milestones and deliverables get dates;
+**In the app:** the student starts a separate project plan with a start date; week *n* of the tracker is
+mapped to the calendar, each week can be ticked and gets notes; milestones and deliverables get dates;
 the Today panel shows this week's tasks. Keep **week numbers stable** between versions of a brief —
 students' ticks are stored per week.
+
+Academy presents a project as advanced independently tracked work, like a harder lab. It does not manage
+project applications, supervisor links or approval. If students need feedback, the package publisher can
+provide an optional package-level contact.
 
 Checks before packaging: every tracker week has tasks and no `[placeholders]`, week numbers are unique,
 milestones lie inside the duration. `academy-templates:package` checks the folder again (`stlp check`).

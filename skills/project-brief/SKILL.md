@@ -135,7 +135,9 @@ they agree. This prevents rewriting long LaTeX later.
   `<brief-folder>/project/` (`project.json` with the weekly plan from the progress tracker, milestones,
   deliverables, rubric, learning path, goals; `brief.pdf`). Fix what it reports (placeholders, missing
   tracker rows), then add the folder to a package with `academy-templates:package` (`"projects"`).
-  Students enroll with a start date and get the 30-week plan in their calendar. Details:
+  Students start a separate project plan with a start date and get the 30-week plan in their calendar.
+  Academy treats the project as independently tracked advanced work, without supervisor links, applications
+  or an approval flow. A package-level publisher contact may be added for feedback. Details:
   `reference/app-project.md`.
 - Tell the author which `\missing` items remain and which sources to double-check.
 

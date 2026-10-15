@@ -20,6 +20,14 @@ only when selected materials should become one `.stlp` course for the SemiTec Ac
 Packaging never changes an original lab, training or brief. It copies the materials chosen by the author
 into a course archive, so the standalone source folders remain the editable originals.
 
+## Open authoring and rights
+
+Anyone may use, change and redistribute this authoring product under [Apache-2.0](LICENSE). No partner
+agreement or SemiTec Foundation approval is required to create a standalone lab, training or project,
+or to create a package. The package publisher identifies its own authors, feedback contact, rights and,
+only if wanted, certificate. See [the publishing flow](docs/PUBLISHING.md) and
+[trademark guidance](TRADEMARKS.md).
+
 ## Install
 
 Every version publishes one file: `AcademyTemplates-<version>.zip`. It contains this complete product,
@@ -77,6 +85,9 @@ semitec-academy-skills/
 ├── tools/skills.py                 validates, tests and builds the one release ZIP
 ├── tests/fixtures/                 fictional test data, excluded from the release ZIP
 ├── CONTRIBUTING.md
+├── LICENSE                         Apache-2.0 terms
+├── NOTICE.md                       project copyright and content boundary
+├── TRADEMARKS.md                   product-name and logo use
 └── CHANGELOG.md
 ```
 

@@ -3,7 +3,7 @@
 Builds **SemiTec Learning Packages** (`.stlp`): one signed file per course that students add to the
 **SemiTec Academy** desktop app (https://github.com/SemiTecFoundation/semitec-academy). A package can hold any number of
 trainings, labs, readings, videos and other materials; the app shows them in sections, tracks each
-student's progress and verifies that the file comes from the Foundation and was not changed.
+student's progress and verifies which trusted publisher signed the file and that it was not changed.
 
 Use this skill only for **Academy delivery**. Labs, trainings, project briefs and diploma documents are
 complete standalone results already; packaging copies selected materials into one course archive and does
@@ -12,7 +12,7 @@ not replace their original folders.
 The skill is versioned **with the app**: each app release that adds a content type or format gets a new
 skill release (see [`CHANGELOG.md`](CHANGELOG.md) and `scripts/VERSION.json`).
 
-## What it supports (release 1.6.2)
+## What it supports (release 1.7.0)
 
 | Content | From | Shown in SemiTec Academy as | App |
 |---|---|---|---|
@@ -23,13 +23,13 @@ skill release (see [`CHANGELOG.md`](CHANGELOG.md) and `scripts/VERSION.json`).
 | Reading — Markdown | `.md` + its images | document reader: outline, tables, code with copy, text size, read tracking | ≥ 1.3 |
 | Video | `.mp4` / `.webm`, or a link | player with resume and watched tracking; links open in the browser | ≥ 1.1 |
 | Other material | any file or link | PDF / image / code / Markdown viewer, *Save a copy*, *Open with default app* | ≥ 1.1 |
-| Project | `project/` folder from the project-brief template (`project.json` + brief PDF) | project page: enroll, weekly plan with dates, tick weeks, notes, milestones, deliverables, rubric, brief | ≥ 1.4 |
+| Project | `project/` folder from the project-brief template (`project.json` + brief PDF) | independently tracked advanced work: start a plan, weekly dates, ticks, notes, milestones, deliverables, rubric, brief | ≥ 1.4 |
 | Study plan | `schedule` (weeks → items) or `plannedWeeks` on items; topic weeks from a training's `schedule` | enrollment with a start date; *Study plan* view, Calendar, Today panel, reminders | ≥ 1.4 |
-| Publisher | `pack.publisher` + `pack.publisherLogo` (+ `publisherUrl`) | name and logo on every card; filter by publisher in Library, Catalog, Projects | 1.5 |
+| Publisher | `pack.publisher` + `pack.publisherLogo` (+ `publisherUrl`, `contact`) | name and logo on every card; feedback contact in Pack details; filter by publisher | 1.5 / 1.7 |
 | Materials of a lab | `"for": "<lab id>"` on a material | shown under the lab (course order, study plan) and in the lab's *Materials* tab | 1.5 |
 | Project category | `"category"` on a project (research, diploma, thesis, course-project, capstone, internship, other) | category badge and filter on the Projects page | 1.5 |
 | Catalog | `stlp catalog <folder>` -> `catalog.json` | the app's Catalog: install / update with one click | 1.5 |
-| Course certificate | `pack.certificate` → `certificate.json` | certificate when every item is completed; Certificates page, save as PDF | ≥ 1.4 |
+| Course certificate | optional `pack.certificate` → `certificate.json` | publisher certificate after every counted item; omit it for no course certificate | ≥ 1.4 |
 
 Course order (modules), a cover image, package versions (updates keep progress) and signing are
 supported for all.
@@ -62,7 +62,7 @@ from Labs/dd1, the lecture notes in Lectures/dd1 (Markdown) and the intro video.
 
 ```bash
 node scripts/stlp.js check  my-course/pack-spec.json
-node scripts/stlp.js create my-course/pack-spec.json --key /secure/semitec-foundation.key.pem
+node scripts/stlp.js create my-course/pack-spec.json --key /secure/your-publisher.key.pem
 ```
 
 ## Folder

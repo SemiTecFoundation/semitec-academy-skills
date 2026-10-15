@@ -3,6 +3,12 @@
 The skill is released with the SemiTec Academy app; the release number is the app version it was
 built from (see `scripts/VERSION.json`). Packages made with an older skill keep opening in newer apps.
 
+## 1.7.0
+- Bundled packer rebuilt from SemiTec Academy 1.7.0.
+- Optional publisher `contact` metadata is checked and shown in Academy's Pack details.
+- A package certificate is opt-in: omit `certificate` for a complete package without a course credential.
+- Partner publishers sign with their own keys; recipients choose to trust their public key locally.
+
 ## 1.6.2
 - Bundled packer rebuilt from SemiTec Academy 1.6.2.
 - Signing: releases use the offline **production** key; the app trusts no development key, so a

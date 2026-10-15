@@ -16,11 +16,11 @@ set of formats; the packer writes the formats it used and the minimum app versio
 | pack `prerequisite` | — | item flag: an optional refresher, shown first and not counted in progress | ≥ 1.6.0 |
 | project | 1 | `project.json` (weekly plan, milestones, deliverables, rubric, learning path) + `brief.pdf` — from the project-brief template | ≥ 1.4.0 |
 
-**Optional additions (no new format, older apps ignore them):** `publisherLogo` / `publisherUrl`,
+**Optional additions (no new format, older apps ignore them):** `publisherLogo` / `publisherUrl` / `contact`,
 `for` (item attached to a lab, app 1.5.0+), project `category`; `schedule` (package study plan),
 `plannedWeeks` on items, a training's own topic plan (`schedule` in `training.json`), `certificate`
-(course certificate design). SemiTec Academy ≥ 1.4.0 uses them for enrollment, the calendar, the Today
-panel and the course certificate.
+(publisher-defined course certificate; omit it for none). SemiTec Academy ≥ 1.4.0 uses them for enrollment,
+the calendar, the Today panel and, when supplied, the course certificate.
 
 The packer chooses the format from the content: a lab without `files` stays format 1, a PDF reading
 stays format 1 — so packages open in the oldest app that can show them. `stlp create --target-app 1.2.0`

@@ -30,12 +30,13 @@ students' progress is stored per id, so keep them stable between versions.
     "title": "FPGA Starter Track",
     "description": "Shown in the library and on the pack page.",
     "language": "en",
-    "publisher": "SemiTec Foundation",         // shown with the logo; students filter by publisher
+    "publisher": "Example Learning Company",   // shown with the logo; students filter by publisher
     "publisherLogo": "publisher-logo.svg",     // square image (SVG / PNG), app ≥ 1.5.0
     "publisherUrl": "https://…",               // optional
     "authors": ["Arman Manukyan, PhD"],
+    "contact": { "name": "Course team", "email": "courses@example.org", "url": "https://example.org" },
     "cover": "cover.svg",                      // optional image, about 600 × 340
-    "certificate": "certificate.json"          // optional design of the course certificate (app ≥ 1.4.0)
+    "certificate": "certificate.json"          // optional: omit it for a package without a course certificate
   },
 
   "schedule": {                                // optional study plan (app ≥ 1.4.0) — see "Study plans" below
@@ -94,6 +95,9 @@ students' progress is stored per id, so keep them stable between versions.
 | `for` | all (usually materials) | id of the lab / training / project this item belongs to: shown **under** that item in *Course order* and *Study plan* and in the lab's **Materials** tab, not as a row of its own; no own week needed (app ≥ 1.5.0; older apps list it normally) |
 | `category` | project | `research` · `diploma` · `thesis` · `course-project` · `capstone` · `internship` · `other` — filter on the Projects page (default: from `project.json`) |
 
+`pack.contact` is optional and may have `name`, `email`, `url` and `instructions`. It is the publisher's
+feedback route shown in *Pack details*, not a supervisor or approval link.
+
 ### How "other materials" are shown
 
 | File | In the app |
@@ -123,8 +127,8 @@ The plan comes from (first match wins):
 
 A training can also carry its own topic plan in `training.json` (`"schedule": { "weeks": 2, "topics":
 [{ "week": 1, "topics": [ids] }] }`, made with the training template); the app shows those topic weeks
-inside the training's block. **Projects** have their own 30-week (or other) plan in `project.json`; students
-enroll in a project separately.
+inside the training's block. **Projects** are advanced lab-style package items. They have their own 30-week
+(or other) plan in `project.json`; students start and track that project plan separately from a course plan.
 
 ## Publishing a catalog
 
@@ -137,13 +141,14 @@ Students find packages in the app's **Catalog**. Two ways to publish:
   website and give students the link of `catalog.json`. Each company can publish its own catalog.
 
 The app shows every package with cover, publisher and logo, *Install* / *Update available* / *Installed*,
-and installs through the normal signature check.
+and installs through the normal signature check. A school or user adds a partner public key in *Settings →
+Application → Trusted publishers* after checking its fingerprint; this is local trust, not Foundation approval.
 
 ## What `check` verifies
 
 | Material | Checks |
 |---|---|
-| pack | id format, version `X.Y.Z`, title; cover is an image |
+| pack | id format, version `X.Y.Z`, title; cover is an image; contact email and URL are well formed when supplied |
 | prerequisite | `"prerequisite": true` items are not in `"schedule"` and have no `"for"`; the pack needs app ≥ 1.6.0 |
 | training | folder exists; `training.json` valid with id, title, topics; every topic file exists and is valid; unique topic / subsection ids; known block types; all assets exist; scroll / step SVGs have `data-step`; quizzes: question types, correct indices in range, single-answer types have one answer, `review` points to real subsections; certificate file exists |
 | lab | `lab.json` valid; title; steps with unique ids and titles; manual PDF exists and is a PDF; source files listed in `files` exist (warning above 50 MB); step `files` links point to listed files; quiz as above with `review` → step ids |

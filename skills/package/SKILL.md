@@ -57,9 +57,11 @@ Never write outside them, and never assume a particular parent layout.
 | Projects | `projects` | `project/` folder (`project.json` + `brief.pdf`) made from a project brief with `academy-templates:project-brief` (its brief2project tool) | 1.4 |
 
 Optional (app ≥ 1.4, ignored by older apps): **`schedule`** — the study plan in weeks (`entries`: `week` or
-`weeks: [from, to]`, `title`, `note`, `items`); or **`plannedWeeks`** on items; **`pack.certificate`** — design
-of the course certificate. A training's own topic plan (`schedule` in its `training.json`) is taken over.
-Students enroll with a start date and get the plan in their calendar and on the Today panel.
+`weeks: [from, to]`, `title`, `note`, `items`); or **`plannedWeeks`** on items; **`pack.certificate`** — a
+publisher-defined course certificate. Omit `certificate` when the package has none. A training's own topic
+plan (`schedule` in its `training.json`) is taken over. Students enroll with a start date and get the plan
+in their calendar and on the Today panel. Projects are harder, independently tracked lab-style work: students
+start their project plan separately; the app has no project application or supervisor-link workflow.
 
 The packer computes the minimum app version from what is used and writes it into the package.
 Details: `reference/formats.md`. Markdown rules: `reference/markdown.md`.
@@ -81,10 +83,10 @@ node <tools>/stlp.js inspect <file.stlp>                            # contents, 
 
 ### 1. Collect
 Ask in one short round (skip what is known):
-- **Package**: title, one-sentence description, language, audience, publisher (default *SemiTec
-  Foundation*) and its **logo** (`pack.publisherLogo`, square SVG / PNG - companies other than the
-  Foundation publish packages too), authors, id (propose `org.semitec.<kebab-title>`), version (`1.0.0` for a new package),
-  cover image (optional).
+- **Package**: title, one-sentence description, language, audience, publisher and its **logo**
+  (`pack.publisherLogo`, square SVG / PNG), authors, id (propose a reverse-domain id owned by the publisher),
+  version (`1.0.0` for a new package), cover image (optional), and optional `contact` (`name`, `email`,
+  `url`, `instructions`) for student feedback. Never invent a person, company, email or rights statement.
 - **Materials per section** — names and where they are. If only names are given, search `contentRoot`
   (topic folders holding `{lectures,trainings,labs,projects,videos,materials}`)
   and confirm the matches. Materials from different topics may be combined. If `contentRoot` has an
@@ -101,9 +103,11 @@ Ask in one short round (skip what is known):
   or the certificate; leave them out of the `"schedule"`. A prerequisite cannot also have `"for"`.
 - **Projects** (optional): briefs to include → run `brief2project.py` on each brief folder (skill
   `academy-templates:project-brief`) and list the `project/` folders under `"projects"`.
-- **Signing**: a release is signed with the offline production key `semitec-foundation.key.pem` (kept
-  outside every repository — ask the Foundation for it). For a draft use `--unsigned`; the app installs
-  unsigned packages only with *Developer mode* on.
+- **Certificate**: ask whether the publisher offers one. If yes, create its `certificate.json` with that
+  publisher as issuer; if no, omit `certificate`. It is not required for a package to be complete.
+- **Signing**: a publisher signs a release with its own offline Ed25519 private key. Keep it outside every
+  repository; distribute only its public `.pub.pem` and fingerprint. Recipients add that key in Academy's
+  *Trusted publishers* settings. For an author's local draft use `--unsigned` and Developer mode.
 
 ### 2. Write `pack-spec.json`
 Put it in `<packagesRoot>/<package-name>/`. If that folder has a `README.md` listing the packages, add a
@@ -129,6 +133,10 @@ For the app's **Catalog**: put the `.stlp` in a shared folder, or run `node <too
 --name "<publisher>"` and upload the folder with `catalog.json` to a website; students add the folder or the
 link in *Settings -> Application -> Catalog sources*.
 
+Publishers do not need a Foundation agreement or approval queue. `stlp check` provides technical validation;
+the publisher remains responsible for a human review of content, citations, rights and the certificate claim.
+See `../../docs/PUBLISHING.md`.
+
 ### 4c. Keep the inventory
 If `contentRoot` ships an inventory script, run it — it records which package uses which material and
 lists materials not packaged yet. Skip this step when there is none.
@@ -140,6 +148,7 @@ For an update: same `id`, higher `version` — students add the new file and kee
 
 ## Rules
 - Never put private keys into the package folder or the spec, never print key contents.
+- Do not call a partner package or certificate Foundation-approved unless the Foundation explicitly issued it.
 - Do not change materials outside the package folder unless the user asks.
 - `pack.id` never changes; raise `version` for every shared update (`1.0.0 → 1.0.1` fixes, `→ 1.1.0` new items).
 - Videos: 720p MP4 (H.264 + AAC), under ~300 MB each; long lectures as online links.
