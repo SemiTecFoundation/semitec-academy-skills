@@ -1,0 +1,20 @@
+{
+  "specVersion": 1,
+  "pack": {
+    "id": "org.semitec.fixture-notes",
+    "version": "1.0.0",
+    "title": "Fixture notes",
+    "description": "Fictional material used only to verify the packaging workflow.",
+    "language": "en",
+    "publisher": "Fixture Publisher",
+    "publisherLogo": "publisher-logo.svg",
+    "cover": "cover.svg"
+  },
+  "readings": [
+    {
+      "id": "notes",
+      "title": "Fixture notes (Markdown)",
+      "source": "notes.md"
+    }
+  ]
+}

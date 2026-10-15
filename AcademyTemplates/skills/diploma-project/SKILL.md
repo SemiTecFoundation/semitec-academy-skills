@@ -34,23 +34,16 @@ diploma-project/
   templates/
     diploma-template.md   ← a plain-Markdown skeleton (for non-LaTeX authors)
   examples/
-    example-outline.md            ← a short Markdown outline example
-    fpga-sensor-platform-hy/      ← full worked example: a cross-department FPGA
-                                    diploma TASK DEFINITION in Armenian, built with a
-                                    XeLaTeX variant of the style (diplomastyle-hy.sty).
-                                    Shows Armenian typesetting, TikZ diagrams, a
-                                    register-map table, and a compiled PDF.
+    example-outline.md            ← a short fictional Markdown outline
   sample-output.pdf ← what the LaTeX template compiles to (placeholder content)
 ```
 
-> **Languages.** The primary `latex/` template uses pdfLaTeX + Times (Latin). For
-> **Armenian** (or other non-Latin scripts), use the XeLaTeX approach shown in
-> `examples/fpga-sensor-platform-hy/` — `fontspec` with an Armenian-capable font
-> (FreeSerif), built with `xelatex`. That `diplomastyle-hy.sty` can be adopted as
-> the template's Armenian variant.
+> **Language.** The shipped `latex/` template uses pdfLaTeX + Times for Latin-script documents.
+> A language-specific variant belongs in its own reviewed skill once it has reproducible builds and
+> fictional fixtures.
 
 > **Read `reference/template-guide.md` first — it is the complete guide** to every
-> feature: the two language variants, simple vs cross-disciplinary projects, all the
+> feature: simple vs cross-disciplinary projects, all the
 > custom functions, images, diagrams, tables, abbreviations, glossary, references,
 > and building. This SKILL is the summary; the guide has the detail.
 
@@ -60,14 +53,9 @@ diploma-project/
    department, degree and **work type** (diploma / thesis / research project),
    field, and a short description of the problem, method, and results.
 
-   Then settle **two choices** (see the guide §1):
-   - **Language:** Latin script → `latex/` + `diplomastyle.sty`, build with
-     **pdfLaTeX**. Armenian / non-Latin → the **XeLaTeX** variant
-     `diplomastyle-hy.sty` (copy `examples/fpga-sensor-platform-hy/`).
-   - **Mode:** **simple** (one student) or **cross-disciplinary** (two students,
+   Then settle the **mode** (see the guide §1): **simple** (one student) or **cross-disciplinary** (two students,
      often different departments). Both are supported — for cross-disciplinary set
-     the second student (`\setsecondauthor…` in the Latin variant, `\setstudenttwo…`
-     in the Armenian one) and the title page becomes a two-student layout.
+     the second student (`\setsecondauthor…`) and the title page becomes a two-student layout.
 
 2. **Pick the output the author wants:**
    - **LaTeX** (recommended for a formal thesis) — use the `latex/` template.
@@ -86,10 +74,9 @@ diploma-project/
      to `glossary.tex` (kept separate; every defined entry is listed via
      `\glsaddall`, with no page numbers).
    - One chapter per file in `sections/`.
-   - Build with `latexmk -pdf main.tex` (Latin) or `latexmk -xelatex main.tex`
-     (Armenian). The `.latexmkrc` runs BibTeX + makeglossaries automatically.
+   - Build with `latexmk -pdf main.tex`. The `.latexmkrc` runs BibTeX + makeglossaries automatically.
    - The **complete reference is `reference/template-guide.md`**; `latex/README.md`
-     is the Latin-variant quick reference.
+     is the quick reference.
 
 4. **Choose depth by work type.** A research project is lighter than a full thesis;
    `reference/document-structure.md` marks each section required/optional and how it

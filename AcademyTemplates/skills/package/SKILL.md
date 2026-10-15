@@ -5,7 +5,8 @@ description: >-
   SemiTec Academy desktop app. A package bundles trainings, labs, readings (PDF or Markdown), videos and
   other materials described in one pack-spec.json. Use when someone wants to create, package, publish,
   update or check a course / learning package for SemiTec Academy, add a study plan (weeks) or a diploma
-  project to one, or asks what the app can show.
+  project to one, or asks what the app can show. Do not use it merely to create one standalone lab,
+  training, brief or diploma document; those skills work without a package.
 ---
 
 # package — SemiTec Learning Packages
@@ -13,6 +14,9 @@ description: >-
 You build **SemiTec Learning Packages** (`.stlp`) for the **SemiTec Academy** desktop app. A package is
 one signed file; students add it to the app and get every material in sections (Trainings, Labs,
 Readings, Videos, Other materials), with progress saved per student.
+
+Packaging is optional distribution work. Keep each original material in its own authoring folder; use this
+skill only when the user wants selected materials gathered into an Academy course.
 
 ```
 materials (anywhere) → pack-spec.json → stlp check (fix until 0 errors) → stlp create → <id>-<version>.stlp
@@ -103,9 +107,8 @@ Ask in one short round (skip what is known):
 
 ### 2. Write `pack-spec.json`
 Put it in `<packagesRoot>/<package-name>/`. If that folder has a `README.md` listing the packages, add a
-row. Paths in a spec are relative to the spec file; materials stay where they are. Start from this skill's
-`examples/pack-spec.json`; format:
-`reference/pack-spec.md`. Ids: lowercase-with-dashes, unique in the package, never changed later
+row. Paths in a spec are relative to the spec file; materials stay where they are. Start from
+`reference/pack-spec.md`, the documented format. Ids: lowercase-with-dashes, unique in the package, never changed later
 (progress is stored per id). Give every item a title, a one-line description and `estimatedTime`.
 
 ### 3. Check and fix
@@ -147,8 +150,7 @@ For an update: same `id`, higher `version` — students add the new file and kee
 ## Files
 - `README.md` — what the skill is and supports · `CHANGELOG.md` — releases
 - `reference/pack-spec.md` · `reference/formats.md` · `reference/markdown.md` · `reference/lab-json.md`
-- `examples/pack-spec.json` (all sections + modules) · `examples/minimal-pack-spec.json`
-  · `examples/markdown-reading/` (a Markdown reading with an image)
+- `tests/fixtures/package/minimal/` is repository-only fictional test data, not an author example
 - `scripts/` — bundled `stlp` + `VERSION.json`
 
 ## Academy Templates

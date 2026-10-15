@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920" role="img" aria-labelledby="title desc">
+  <title id="title">Academy Templates authoring and packaging flow</title>
+  <desc id="desc">Authors use individual skills to create standalone briefs, documents, labs and trainings. Only selected materials pass through the optional package skill into a SemiTec Learning Package for the Academy app.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12 z" fill="#245b84"/></marker>
+    <style>
+      .title{font:700 36px Arial,sans-serif;fill:#12293d}.subtitle{font:20px Arial,sans-serif;fill:#486276}.label{font:700 21px Arial,sans-serif;fill:#12293d}.body{font:18px Arial,sans-serif;fill:#29465d}.small{font:16px Arial,sans-serif;fill:#486276}.box{stroke-width:2.5}.arrow{stroke:#245b84;stroke-width:4;fill:none;marker-end:url(#arrow)}.optional{stroke:#7b8794;stroke-width:3;stroke-dasharray:10 9;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1600" height="920" fill="#ffffff"/>
+  <text x="800" y="62" text-anchor="middle" class="title">Academy Templates: create independently, package only for Academy delivery</text>
+  <text x="800" y="97" text-anchor="middle" class="subtitle">One released plugin gives agents several standalone authoring skills and one optional course assembler.</text>
+
+  <rect x="70" y="158" width="265" height="150" rx="18" fill="#eaf4fb" stroke="#2f77a7" class="box"/>
+  <text x="202" y="210" text-anchor="middle" class="label">Author or AI agent</text>
+  <text x="202" y="244" text-anchor="middle" class="body">lecturer · supervisor</text>
+  <text x="202" y="272" text-anchor="middle" class="body">student · contributor</text>
+
+  <path d="M335 233 H435" class="arrow"/>
+  <rect x="435" y="128" width="440" height="210" rx="18" fill="#edf8f0" stroke="#419160" class="box"/>
+  <text x="655" y="176" text-anchor="middle" class="label">Standalone authoring skills</text>
+  <text x="475" y="217" class="body">project-brief</text><text x="675" y="217" class="body">diploma-project</text>
+  <text x="475" y="260" class="body">lab-manual</text><text x="675" y="260" class="body">training</text>
+  <text x="655" y="307" text-anchor="middle" class="small">Each skill creates editable material that works without Academy.</text>
+
+  <path d="M875 190 H1025" class="arrow"/>
+  <rect x="1025" y="128" width="490" height="210" rx="18" fill="#fff6df" stroke="#b98720" class="box"/>
+  <text x="1270" y="176" text-anchor="middle" class="label">Standalone use</text>
+  <text x="1065" y="219" class="body">brief PDF → supervisor / student</text>
+  <text x="1065" y="254" class="body">lab PDF + files → classroom / LMS</text>
+  <text x="1065" y="289" class="body">interactive HTML → browser / platform</text>
+
+  <text x="662" y="412" text-anchor="middle" class="small">Only when authors want a multi-material Academy course</text>
+  <path d="M655 338 V468" class="optional"/>
+  <rect x="460" y="470" width="390" height="150" rx="18" fill="#f3edfb" stroke="#7754a3" class="box"/>
+  <text x="655" y="520" text-anchor="middle" class="label">Optional package skill</text>
+  <text x="655" y="553" text-anchor="middle" class="body">select materials in pack-spec.json</text>
+  <text x="655" y="584" text-anchor="middle" class="body">check → copy → sign → .stlp</text>
+
+  <path d="M850 545 H1010" class="arrow"/>
+  <rect x="1010" y="470" width="280" height="150" rx="18" fill="#e9f2ff" stroke="#386eb5" class="box"/>
+  <text x="1150" y="520" text-anchor="middle" class="label">Materials release</text>
+  <text x="1150" y="555" text-anchor="middle" class="body">signed .stlp</text>
+  <text x="1150" y="585" text-anchor="middle" class="body">catalog or download</text>
+
+  <path d="M1290 545 H1395" class="arrow"/>
+  <rect x="1395" y="470" width="155" height="150" rx="18" fill="#e8f7f7" stroke="#287c7c" class="box"/>
+  <text x="1472" y="515" text-anchor="middle" class="label">Academy</text>
+  <text x="1472" y="548" text-anchor="middle" class="label">app</text>
+  <text x="1472" y="584" text-anchor="middle" class="small">learners</text>
+
+  <rect x="240" y="716" width="1120" height="132" rx="18" fill="#f7f9fb" stroke="#aec1cf" class="box"/>
+  <text x="280" y="758" class="label">One product release</text>
+  <text x="280" y="794" class="body">AcademyTemplates-&lt;version&gt;.zip contains every skill, templates and the offline package builder.</text>
+  <text x="280" y="824" class="small">Contributors validate standalone tools, build a fictional package, compare the bundled packer with Academy, then release one ZIP.</text>
+</svg>

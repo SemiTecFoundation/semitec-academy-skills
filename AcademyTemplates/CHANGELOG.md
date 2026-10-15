@@ -1,13 +1,25 @@
 # Changelog — Academy Templates plugin
 
+## 1.4.0 — 2026-10
+- Academy Templates is now released as **one portable plugin ZIP** (`AcademyTemplates-<version>.zip`),
+  rather than five per-skill ZIPs. The individual skills remain independently usable inside that product.
+- Documented the primary workflow: create labs, trainings, briefs and diploma documents standalone;
+  use the package skill only to gather selected materials into an Academy `.stlp` course.
+- Removed generated `dist/` artifacts, the broken full package example and the unverified course-like
+  FPGA examples. Small fictional fixtures now verify the package builder and project export without
+  shipping a course as an example.
+- Added structural, standalone-build, package-build and optional cross-repository compatibility checks;
+  releases attach one tested archive and checksum through GitHub Actions.
+- Added contributor, workflow, compatibility and release documentation plus maintained PNG diagrams.
+
 ## 1.3.0 — 2026-10
 - Destination folders are configuration, not assumptions: `training`, `lab-manual`, `project-brief`
   and `package` read `.semitec.json` (`contentRoot`, `packagesRoot`, `briefsRoot`, `academyRepo`),
   asking once and writing the file if it is missing. Documented in the README.
 - No skill names a fixed folder layout any more: the example topic paths are generic (`<sphere>/<topic>`)
   and the inventory step is described without naming one repository's script.
-- `examples/pack-spec.json` is self-contained — its sources, cover, publisher logo and certificate all
-  point inside the package folder, and the author field is a placeholder.
+- The package example was described as self-contained. It was not; 1.4.0 removes it and uses test-only
+  fictional fixtures instead.
 - **package** 1.6.2: bundled packer from SemiTec Academy 1.6.2; packages are signed with the
   production key only (no development key is trusted by the app), `prerequisite` documented.
 - The optional topic record for a topic-posting system is marked optional.

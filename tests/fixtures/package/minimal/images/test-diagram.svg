@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 120" role="img" aria-label="Fixture signal flow">
+  <rect width="360" height="120" rx="12" fill="#f2f7fc"/>
+  <path d="M70 60h190" stroke="#155e9a" stroke-width="4"/>
+  <path d="m260 60-16-10v20z" fill="#155e9a"/>
+  <circle cx="70" cy="60" r="24" fill="#d9eaf8" stroke="#155e9a" stroke-width="3"/>
+  <text x="70" y="66" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#12304d">in</text>
+  <text x="286" y="66" font-family="Arial, sans-serif" font-size="18" fill="#12304d">out</text>
+</svg>

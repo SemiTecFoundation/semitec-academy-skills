@@ -1,0 +1,43 @@
+name: Release Academy Templates
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirm tag matches plugin version
+        if: github.ref_type == 'tag'
+        run: |
+          VERSION="$(node -p "require('./AcademyTemplates/.claude-plugin/plugin.json').version")"
+          test "${GITHUB_REF_NAME#v}" = "$VERSION"
+      - name: Fetch current Academy packer
+        run: git clone --depth=1 https://github.com/SemiTecFoundation/semitec-academy.git "$RUNNER_TEMP/semitec-academy"
+      - name: Install Academy packer dependency
+        working-directory: ${{ runner.temp }}/semitec-academy/app
+        run: npm ci
+      - name: Test product and verify package builder matches Academy
+        run: python3 AcademyTemplates/tools/skills.py test --academy "$RUNNER_TEMP/semitec-academy"
+      - name: Build release archive
+        run: python3 AcademyTemplates/tools/skills.py release --out release/AcademyTemplates-$(node -p "require('./AcademyTemplates/.claude-plugin/plugin.json').version").zip
+      - name: Write checksum
+        run: cd release && shasum -a 256 AcademyTemplates-*.zip > SHA256SUMS.txt
+      - name: Attach product archive
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            release/AcademyTemplates-*.zip
+            release/SHA256SUMS.txt

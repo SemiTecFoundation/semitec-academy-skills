@@ -8,6 +8,9 @@ generated or changed by prompting an AI (see [the training skill](https://github
 The template ships with a **feature tour**: every demo topic is named after a feature and
 shows how to use it.
 
+A training is usable by itself in a browser or web platform. The package skill is only for copying it into
+an Academy course alongside other selected materials.
+
 | # | Topic | Feature shown |
 |---|---|---|
 | 1 | Welcome & How It Works | navigation, tables, callouts, code |
@@ -25,11 +28,12 @@ shows how to use it.
 
 | Mode | What the student gets | Open with |
 |---|---|---|
-| **standalone** | topics unlock by quizzes, progress saved in the browser | `dist/training.html` (double-click) or `index.html` via a server |
-| **preview** | **all topics open**, nothing saved, certificate preview with style controls | `dist/training-preview.html` or `index.html?mode=preview` |
+| **standalone** | topics unlock by quizzes, progress saved in the browser | a generated `training.html` (double-click) or `index.html` via a server |
+| **preview** | **all topics open**, nothing saved, certificate preview with style controls | a generated `training-preview.html` or `index.html?mode=preview` |
 | **platform** | topics unlock by quizzes, progress saved in **your platform's database** | embedded by the platform — see [`INTEGRATION.md`](INTEGRATION.md) |
 
-- `python3 tools/build_single_file.py` builds both single files (everything inside: JSON, CSS, JS, themes, pictures).
+- `python3 tools/build_single_file.py --mode standalone --out /tmp/training.html` builds one portable file
+  (everything inside: JSON, CSS, JS, themes, pictures).
 - `python3 tools/dev_server.py` serves the folder **plus a demo progress API** → <http://localhost:8000/examples/>
   with working demos of all modes (REST, iframe + postMessage, same-page adapter).
 
@@ -61,11 +65,10 @@ training/
 │   ├── certificate.css     certificate designs: classic, modern, minimal
 │   └── themes/             foundation.css, midnight.css, paper.css (variables only)
 ├── js/                     engine: md, core, progress, blocks, quiz, certificate, app
-├── dist/                   training.html (standalone) · training-preview.html (preview)
 ├── examples/               delivery-mode demos: index, platform-iframe, platform-same-page
 ├── tools/
 │   ├── validate.py         checks JSON, ids, answers, review links, files
-│   ├── build_single_file.py  bundles everything into dist/*.html
+│   ├── build_single_file.py  bundles everything into a chosen HTML output path
 │   └── dev_server.py       local server + demo progress REST API
 ├── reference/
 │   ├── content-format.md   every field of every file

@@ -8,8 +8,7 @@ do, by when, and how it will be assessed**.
 (For the student's *final* diploma document, use `../diploma-project`.)
 
 ## With an AI agent (recommended)
-Use the skill `academy-templates:project-brief` (Claude Code plugin) or upload
-`dist/academy-project-brief.zip` in the Claude app (see `../../README.md`), then say e.g.
+Use the skill `academy-templates:project-brief` from the complete Academy Templates plugin, then say e.g.
 *"Help me define a bachelor diploma topic on …"*. The agent follows `SKILL.md`:
 1. asks the language (English / Armenian reformed / Armenian classical) and the mode (one student / cross-department pair);
 2. interviews you in short batches (`reference/interview.md`);
@@ -34,10 +33,11 @@ extensions · supervision & risks · reading list · glossary · approval.
 Single-student and cross-department (two students, two departments) modes
 switch automatically from `metadata.tex`.
 
-See `reference/commands.md` for all commands, and `examples/` for a complete brief.
+See `reference/commands.md` for all commands. A brief is useful as a PDF on its own; Academy packaging is
+optional and only needed when students should also track the project in the desktop app.
 
 ## For SemiTec Academy
 `python3 tools/brief2project.py <brief-folder>` makes `project/` (project.json + brief.pdf): students
 enroll in the project in the app, get the weekly plan in their calendar, tick weeks and keep notes.
-Add the folder to a package with the package skill (`"projects"` in the pack spec). See
+When Academy tracking is wanted, add the folder to a package with the package skill (`"projects"` in the pack spec). See
 `reference/app-project.md`.

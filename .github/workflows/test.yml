@@ -1,0 +1,31 @@
+name: Validate Academy Templates
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check product structure
+        run: python3 AcademyTemplates/tools/skills.py check
+      - name: Fetch current Academy packer
+        run: git clone --depth=1 https://github.com/SemiTecFoundation/semitec-academy.git "$RUNNER_TEMP/semitec-academy"
+      - name: Install Academy packer dependency
+        working-directory: ${{ runner.temp }}/semitec-academy/app
+        run: npm ci
+      - name: Test product and verify package builder matches Academy
+        run: python3 AcademyTemplates/tools/skills.py test --academy "$RUNNER_TEMP/semitec-academy"

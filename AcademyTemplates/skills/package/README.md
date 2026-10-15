@@ -5,6 +5,10 @@ Builds **SemiTec Learning Packages** (`.stlp`): one signed file per course that 
 trainings, labs, readings, videos and other materials; the app shows them in sections, tracks each
 student's progress and verifies that the file comes from the Foundation and was not changed.
 
+Use this skill only for **Academy delivery**. Labs, trainings, project briefs and diploma documents are
+complete standalone results already; packaging copies selected materials into one course archive and does
+not replace their original folders.
+
 The skill is versioned **with the app**: each app release that adds a content type or format gets a new
 skill release (see [`CHANGELOG.md`](CHANGELOG.md) and `scripts/VERSION.json`).
 
@@ -51,7 +55,8 @@ pack-spec.json ──► stlp check ──► stlp create ──► org.semitec.
 `academy-templates:package`. Then ask: *"Make a SemiTec package 'Digital Design 1' with the trainings FSM basics and Timing, labs 1–3
 from Labs/dd1, the lecture notes in Lectures/dd1 (Markdown) and the intro video."*
 
-**In the Claude app** — upload `dist/academy-package.zip` of the plugin as a skill (name `academy-package`).
+**Other agents** — download the single `AcademyTemplates-<version>.zip` release, then load this
+`package/` folder when a course archive is needed. There is no separate package-skill ZIP.
 
 **Without AI** — the same commands by hand:
 
@@ -71,7 +76,7 @@ node scripts/stlp.js create my-course/pack-spec.json --key /secure/semitec-found
 | `reference/formats.md` | content types, format numbers, app versions |
 | `reference/markdown.md` | what Markdown readings support |
 | `reference/lab-json.md` | the lab format (made by the lab-manual template) |
-| `examples/` | full spec, minimal spec, a Markdown reading with an image |
+| `tests/fixtures/package/minimal/` | fictional package used by repository integration tests; it is not shipped to users |
 | `scripts/` | bundled packer (`stlp.js`, `lib/`, `fflate`) and `VERSION.json` — regenerate, do not edit |
 
 Regenerate `scripts/` after an app release:

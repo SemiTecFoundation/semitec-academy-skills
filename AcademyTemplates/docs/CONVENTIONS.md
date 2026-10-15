@@ -30,8 +30,9 @@ What all Academy Templates share, so that every Foundation document and page loo
 
 ## Outputs for SemiTec Academy
 
-- A lab's `lab/` folder (lab-manual), a training folder (training), PDFs and Markdown files are the
-  inputs of the **package** skill; it checks them and builds one signed `.stlp`.
+- A lab's `lab/` folder (lab-manual), a training folder (training), PDFs and Markdown files are complete
+  standalone outputs. They become inputs of the **package** skill only when an Academy course archive is
+  wanted; it copies and checks them before building one signed `.stlp`.
 - Ids (lab id, training id, step / topic ids) are lowercase-with-dashes and never change after release —
   students' progress is stored per id.
 
@@ -39,8 +40,9 @@ What all Academy Templates share, so that every Foundation document and page loo
 
 - Folder name = skill name (`skills/<name>/`, lowercase, digits, `-`); `SKILL.md` frontmatter `name` is
   the same; `description` says what it makes and when to use it (≤ 1024 characters).
-- Each skill has `SKILL.md` (for the assistant), `README.md` (for people), `reference/` (detailed
-  guidance), `examples/` (a complete worked example) and its tools (`tools/` or `scripts/`).
+- Each skill has `SKILL.md` (for the assistant), `README.md` (for people), and only the templates,
+  `reference/` guidance and tools (`tools/` or `scripts/`) that it requires. Examples are optional and
+  must be complete, fictional and covered by a meaningful test; test fixtures live outside the release.
 - Paths in `SKILL.md` are relative to the skill folder, so the skill works the same in the plugin, in
   `~/.claude/skills/academy-<name>/` and as a zip in the Claude app.
 - Other skills are referred to by their plugin name (`academy-templates:<name>`).

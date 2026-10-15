@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340" role="img" aria-label="Fictional fixture notes">
+  <rect width="600" height="340" fill="#0D2338"/>
+  <circle cx="105" cy="110" r="72" fill="#24A0A8" opacity=".9"/>
+  <circle cx="505" cy="250" r="110" fill="#165D98" opacity=".9"/>
+  <text x="58" y="232" fill="#fff" font-family="Arial, sans-serif" font-size="46" font-weight="700">Fixture notes</text>
+  <text x="60" y="272" fill="#CAE8EB" font-family="Arial, sans-serif" font-size="22">Test-only package material</text>
+</svg>

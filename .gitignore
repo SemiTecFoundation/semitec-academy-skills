@@ -1,5 +1,11 @@
 .DS_Store
+__pycache__/
+*.pyc
+.dev-progress/
+release/
+**/dist/
 
-# Do NOT ignore node_modules/ here: the package skill ships a vendored copy of
-# fflate in AcademyTemplates/skills/package/scripts/node_modules/ and stlp.js
-# resolves it from there, so it must stay tracked and go into the released zip.
+# The package skill ships this small vendored runtime. It is part of the single
+# AcademyTemplates release archive, so it must stay tracked.
+!AcademyTemplates/skills/package/scripts/node_modules/
+!AcademyTemplates/skills/package/scripts/node_modules/**

@@ -8,6 +8,9 @@ A laboratory work in two forms that stay in sync:
 2. the **app lab** for SemiTec Academy (`lab/`): `lab.json` (the same steps as a checklist + a check
    quiz), `manual.pdf`, and the source files students view and download (`src/`).
 
+The manual and `lab/` folder can be used or shared on their own. Use the package skill only when this lab
+is one selected part of an Academy course with other materials.
+
 ```
 lab-manual/
 ├── SKILL.md                 instructions for an AI assistant

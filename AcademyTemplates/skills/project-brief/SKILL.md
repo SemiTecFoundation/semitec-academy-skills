@@ -74,8 +74,6 @@ project-brief/
   templates/
     brief-template.md         Markdown skeleton (for Word / Docs output)
     topic-record.json         platform record skeleton
-  examples/
-    fpga-sensor-platform-hy/  full cross-department example, Armenian (reformed)
   sample-output-*.pdf       the empty template compiled in each language
 ```
 
@@ -118,7 +116,7 @@ they agree. This prevents rewriting long LaTeX later.
   instead of inventing it.
 - Anything the author has not supplied stays as `\missing{...}` (printed in red).
   **Never invent** names, dates, equipment, partner companies or grading rules.
-- Draw the architecture as TikZ in `diagrams/` (copy the style of the example).
+- Draw the architecture as TikZ in `diagrams/`; keep it in a named source file so reviewers can update it.
 - Delete chapters 12–14 only if the author says so; they are short and useful.
 
 ### Step 5 — Build and check

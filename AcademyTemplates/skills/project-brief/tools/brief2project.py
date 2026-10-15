@@ -192,8 +192,11 @@ def main(argv):
     if len(summary) > 700:
         summary = summary[:summary.rfind(' ', 0, 680)] + ' …'
 
-    dur = re.findall(r'(\d+)\s*weeks', meta1('setduration'))
-    duration = max([w['week'] for w in weeks] + [int(dur[-1])] if dur else [w['week'] for w in weeks] or [0])
+    # A brief may use any authoring language. Prefer the numbered week tracker,
+    # then use the largest number stated in the duration text (for example
+    # "2 semesters (about 30 weeks)" in English or Armenian).
+    dur = [int(value) for value in re.findall(r'\d+', meta1('setduration'))]
+    duration = max([w['week'] for w in weeks] + dur or [0])
     slots = re.findall(r'\d+', meta1('setslots'))
     project = {
         'format': 1,

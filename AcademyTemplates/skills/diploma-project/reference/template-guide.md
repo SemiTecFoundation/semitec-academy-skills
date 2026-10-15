@@ -1,26 +1,23 @@
 # Diploma Template — Complete Guide
 
 The authoritative reference for producing a diploma / thesis / research-project
-document with this template. It covers both **language variants** (Latin/pdfLaTeX
-and Armenian/XeLaTeX), both **project modes** (simple single-student and
+document with this template. It covers the shipped **Latin/pdfLaTeX** template and both project modes (simple single-student and
 cross-disciplinary two-student), and every template feature — functions, images,
 diagrams, tables, abbreviations, glossary, references, and building. Read this
 before generating a document.
 
 ---
 
-## 1. Decide the setup (two independent choices)
+## 1. Decide the setup
 
-### 1a. Language / script → which style + which engine
+### 1a. Language / script
 
 | Content language | Style file | Engine | Fonts |
 |------------------|-----------|--------|-------|
 | **Latin script** (English, etc.) | `diplomastyle.sty` (in `latex/`) | **pdfLaTeX** (+ BibTeX) | Times |
-| **Armenian** or other **non-Latin** script | `diplomastyle-hy.sty` (see `examples/fpga-sensor-platform-hy/`) | **XeLaTeX** | FreeSerif (covers Armenian **and** Latin, so terms like FPGA/AXI stay in Latin) |
 
-Everything else — the custom commands, images, diagrams, callouts, abbreviations,
-glossary — is **identical** across the two variants. Only the style file, the
-engine, and the fonts differ.
+Use a separate reviewed language-specific skill for non-Latin scripts. It needs reproducible builds and
+fictional fixtures before it can join the shared product.
 
 ### 1b. Project mode → simple or cross-disciplinary
 
@@ -28,7 +25,7 @@ engine, and the fonts differ.
 - **Cross-disciplinary:** two students (often different departments), one shared
   project. Set the second student too.
 
-Both style variants support both modes; the **title page adapts automatically** —
+The **title page adapts automatically** —
 a single author is shown plainly; a second author makes it a two-student layout.
 Leave the second-author fields unset for a simple diploma.
 
@@ -38,7 +35,7 @@ Leave the second-author fields unset for a simple diploma.
 
 ```
 main.tex            wires the document together (which chapters, in order)
-<style>.sty         diplomastyle.sty (Latin) OR diplomastyle-hy.sty (Armenian)
+diplomastyle.sty    shared Latin-script style
 metadata.tex        project details — EDIT the placeholders
 abbreviations.tex   acronyms  → "List of Abbreviations"
 glossary.tex        glossary terms → "Glossary"
@@ -56,14 +53,7 @@ To add a chapter, create the file and add `\input{sections/NN-name}` in `main.te
 
 ## 3. Metadata & title page
 
-Set these in `metadata.tex`. The setter names differ slightly between the two
-variants (the Armenian one is student-centric); the behavior is the same.
-
-**Common to both:** `\setprojecttitle{}`, `\setprojectsubtitle{}` (optional),
-`\setworktype{}` (Diploma Project / Thesis / Research Project / առաջադրանք),
-`\setinstitution{}`, `\setcity{}`, `\setyear{}`.
-
-**Latin variant (`diplomastyle.sty`):**
+Set these in `metadata.tex`:
 
 | Setter | Meaning |
 |--------|---------|
@@ -75,22 +65,12 @@ variants (the Armenian one is student-centric); the behavior is the same.
 | **`\setsecondauthordept{}`** | second student's department |
 | **`\setsecondsupervisor{}`** | second student's supervisor |
 
-**Armenian variant (`diplomastyle-hy.sty`):**
-
-| Setter | Meaning |
-|--------|---------|
-| `\setstudentone{}` · `\setdeptone{}` | first student + department |
-| `\setsupervisorone{}` | first supervisor |
-| **`\setstudenttwo{}`** · `\setdepttwo{}` | second student + department → **cross-disciplinary** |
-| **`\setsupervisortwo{}`** | second supervisor |
-| `\setfaculty{}` | faculty |
-
 Optional fields left unset simply don't appear (handled with `\ifdefempty`, so an
 empty value never prints a stray label). `\maketitlepage` builds the page.
 
 ---
 
-## 4. The custom functions (identical in both variants)
+## 4. The custom functions
 
 Use these inside your chapter files.
 
@@ -146,17 +126,12 @@ the width you pick), text-based (diffs in git), and matches the document fonts.
    `name` is the filename without `.tex`; the third argument is the width fraction;
    it is centered, scaled, and captioned automatically.
 
-Libraries already loaded: `positioning`, `arrows.meta`, `shapes.geometric`, `calc`
-(the Armenian variant also loads `fit`, `backgrounds`). Add more in the style file.
+Libraries already loaded: `positioning`, `arrows.meta`, `shapes.geometric`, `calc`. Add more in the style file.
 
 **For diagrams too complex to hand-code**, draw them in a tool that exports **vector
 PDF** (draw.io / diagrams.net, Inkscape, `tikzit`), save the PDF in `images/`, and
 insert it with `\addimage`. Avoid raster screenshots of diagrams — they blur when
 scaled. (Mermaid etc. are not native to LaTeX; export to PDF first.)
-
-The Armenian example (`examples/fpga-sensor-platform-hy/diagrams/`) has two worked
-TikZ diagrams — a system architecture (with nested PL/PS grouping) and an RTL
-pipeline — good models to copy.
 
 ---
 
@@ -212,17 +187,15 @@ the glossary.
 ## 10. References (Latin variant)
 
 Add BibTeX entries to `references.bib`, cite with `\citep{key}` / `\citet{key}`;
-`\printbibsection` prints them. (The Armenian example omits a bibliography, but you
-can add `natbib` + BibTeX the same way, or `biblatex`.)
+`\printbibsection` prints them.
 
 ---
 
 ## 11. Building
 
-| Variant | Command |
-|---------|---------|
-| Latin (`diplomastyle.sty`) | `latexmk -pdf main.tex` |
-| Armenian (`diplomastyle-hy.sty`) | `latexmk -xelatex main.tex` |
+| Template | Command |
+|----------|---------|
+| Included Latin template (`diplomastyle.sty`) | `latexmk -pdf main.tex` |
 
 The included `.latexmkrc` makes `latexmk` run **BibTeX and makeglossaries**
 automatically, so one command builds the whole PDF. Manual sequence if needed:
@@ -233,13 +206,9 @@ use `latexmk`, or run `makeglossaries main` between LaTeX passes.
 
 ---
 
-## 12. Worked examples (in `examples/`)
+## 12. Fictional outline
 
 - **`example-outline.md`** — a short, single-student outline (shape only).
-- **`fpga-sensor-platform-hy/`** — a full, **cross-disciplinary, Armenian** task
-  definition (two students, XeLaTeX): per-chapter files, two TikZ diagrams, a
-  register-map table, an abbreviations list, and a glossary. The best end-to-end
-  model, and the reference for the Armenian variant.
 - **`../sample-output.pdf`** — the Latin template compiled with placeholder content.
 
 ---

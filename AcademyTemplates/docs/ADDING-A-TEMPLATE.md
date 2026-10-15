@@ -15,12 +15,16 @@
    ```
    Body: the workflow (collect → skeleton → write → build → check → hand over), the tools with exact
    commands, the rules (no invented facts, `\missing{}` markers), and the files of the skill.
-4. **`README.md`** for people (by hand and with AI), **`reference/`**, **`examples/`** (one complete case).
-5. **Register it:** a row in the skills table and the tools table of [`../README.md`](../README.md), its
-   build requirement in `NEEDS` of `tools/skills.py`, an entry in [`../CHANGELOG.md`](../CHANGELOG.md);
+4. **`README.md`** for people (by hand and with AI), **`reference/`**, and only the templates and
+   deterministic tools the skill needs. A worked `examples/` folder is optional; keep one only when it is
+   complete, fictional, validated in CI and useful to an author. Put test fixtures under `tests/`, outside
+   the released plugin.
+5. **Register it:** a row in the skills table of [`../README.md`](../README.md), an integration test in
+   `tools/skills.py`, an entry in [`../CHANGELOG.md`](../CHANGELOG.md);
    raise `version` in `.claude-plugin/plugin.json`; remove it from [ROADMAP.md](ROADMAP.md).
-6. **Check and package:** `python3 tools/skills.py zip && python3 tools/skills.py check` → 0 errors;
-   optional `claude plugin validate .`.
+6. **Check and package:** `python3 tools/skills.py check && python3 tools/skills.py test` → 0 errors;
+   `python3 tools/skills.py release --out /tmp/AcademyTemplates-<version>.zip` builds the one product
+   archive. Optional: `claude plugin validate .`.
 7. If students should get it in SemiTec Academy, make sure the **package** skill can take its output
    (a PDF reading, a Markdown reading, a lab folder or a training folder); a new kind of content needs
    a new app format first ([`docs/VERSIONING.md`](https://github.com/SemiTecFoundation/semitec-academy/blob/main/docs/VERSIONING.md) in the Academy
