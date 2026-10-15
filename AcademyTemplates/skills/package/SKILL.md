@@ -82,9 +82,9 @@ Ask in one short round (skip what is known):
   Foundation publish packages too), authors, id (propose `org.semitec.<kebab-title>`), version (`1.0.0` for a new package),
   cover image (optional).
 - **Materials per section** — names and where they are. If only names are given, search `contentRoot`
-  (topic folders such as `IC-Design/Digital-Design/FPGA/{lectures,trainings,labs,projects,videos,materials}`)
+  (topic folders holding `{lectures,trainings,labs,projects,videos,materials}`)
   and confirm the matches. Materials from different topics may be combined. If `contentRoot` has an
-  `INVENTORY.md`, it lists everything.
+  an inventory file, it lists everything already there.
 - **Course order** (optional): modules such as *Week 1: training A, video B, lab 1*.
 - **Study plan** (recommended): how many weeks, and what belongs to each week → `"schedule"`. If the
   author only knows a length per item, use `"plannedWeeks"`. No plan = self-paced.
@@ -103,9 +103,8 @@ Ask in one short round (skip what is known):
 
 ### 2. Write `pack-spec.json`
 Put it in `<packagesRoot>/<package-name>/`. If that folder has a `README.md` listing the packages, add a
-row. Sample specs live in the Academy repository under `packs/`
-(https://github.com/SemiTecFoundation/semitec-academy/tree/main/packs). Paths in a spec are relative to the
-spec file; materials stay where they are. Start from `examples/pack-spec.json`; format:
+row. Paths in a spec are relative to the spec file; materials stay where they are. Start from this skill's
+`examples/pack-spec.json`; format:
 `reference/pack-spec.md`. Ids: lowercase-with-dashes, unique in the package, never changed later
 (progress is stored per id). Give every item a title, a one-line description and `estimatedTime`.
 
@@ -128,9 +127,8 @@ For the app's **Catalog**: put the `.stlp` in a shared folder, or run `node <too
 link in *Settings -> Application -> Catalog sources*.
 
 ### 4c. Keep the inventory
-If `contentRoot` has `tools/inventory.py`, run `python3 <contentRoot>/tools/inventory.py` — it records
-which package uses which material and lists materials not packaged yet. Skip this step when the script
-is not there.
+If `contentRoot` ships an inventory script, run it — it records which package uses which material and
+lists materials not packaged yet. Skip this step when there is none.
 
 ### 5. Report
 The `.stlp` path and size, the minimum SemiTec Academy version, the items per section, remaining

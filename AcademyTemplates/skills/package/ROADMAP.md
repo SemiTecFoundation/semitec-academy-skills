@@ -12,5 +12,5 @@ Ideas for the next skill releases. They are proposals — see also the app's `do
 | **Size budget** | warn when a package gets too large for e-mail / USB, suggest splitting into several packages |
 | **Cover generator** | create a cover SVG from the title and the Foundation style |
 | **Prerequisites** | let the spec say "lab 2 opens after lab 1" (needs app support) |
-| **Package catalogue entry** | write a catalogue JSON / web page for the package (title, description, contents, minimum app version, download link) |
+| **Package catalogue entry** *(partly done: `stlp catalog` writes catalog.json since app 1.5.0)* | the remaining part is a web page for the package (title, description, contents, minimum app version, download link) |
 | **CI check** | a ready GitHub / GitLab workflow that runs `stlp check` on every change in a packs repository |

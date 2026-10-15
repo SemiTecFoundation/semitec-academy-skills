@@ -4,8 +4,10 @@
 - Destination folders are configuration, not assumptions: `training`, `lab-manual`, `project-brief`
   and `package` read `.semitec.json` (`contentRoot`, `packagesRoot`, `briefsRoot`, `academyRepo`),
   asking once and writing the file if it is missing. Documented in the README.
-- No skill writes into a fixed folder layout any more, and `examples/pack-spec.json` is
-  self-contained instead of reaching into sibling folders.
+- No skill names a fixed folder layout any more: the example topic paths are generic (`<sphere>/<topic>`)
+  and the inventory step is described without naming one repository's script.
+- `examples/pack-spec.json` is self-contained — its sources, cover, publisher logo and certificate all
+  point inside the package folder, and the author field is a placeholder.
 - **package** 1.6.2: bundled packer from SemiTec Academy 1.6.2; packages are signed with the
   production key only (no development key is trusted by the app), `prerequisite` documented.
 - The optional topic record for a topic-posting system is marked optional.

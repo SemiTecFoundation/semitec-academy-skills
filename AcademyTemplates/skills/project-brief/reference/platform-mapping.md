@@ -1,4 +1,4 @@
-# Brief → platform topic record
+# Brief → topic record (optional)
 
 **Optional.** A brief can also be described as a **research topic** record for a
 topic-posting system. The SemiTec Foundation has one internally; it is not public,

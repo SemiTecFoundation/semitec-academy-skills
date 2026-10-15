@@ -116,9 +116,9 @@ there they ask you once and write it, so later runs stay quiet. Create it yourse
 
 ```json
 {
-  "contentRoot":  "semitec-academy-materials",
-  "packagesRoot": "semitec-academy-materials/Packages",
-  "briefsRoot":   "Briefs",
+  "contentRoot":  "materials",
+  "packagesRoot": "materials/Packages",
+  "briefsRoot":   "briefs",
   "academyRepo":  "../semitec-academy"
 }
 ```

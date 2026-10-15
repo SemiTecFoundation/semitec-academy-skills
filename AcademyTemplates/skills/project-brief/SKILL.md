@@ -6,8 +6,8 @@ description: >-
   tells the student what the project is, what to learn, how to get started, what
   to do, by when, and how it will be assessed. Produces a compiled PDF (LaTeX,
   XeLaTeX) in English, Armenian (reformed spelling) or Armenian (classical
-  spelling), single-student or cross-department (two students), plus a platform
-  topic record (JSON). Trigger on "define a diploma topic", "project brief",
+  spelling), single-student or cross-department (two students), and optionally a
+  topic record (JSON) for a topic-posting system. Trigger on "define a diploma topic", "project brief",
   "task definition", "առաջադրանք", "thesis topic for students", "post a research
   topic". NOT for writing the student's final diploma (use diploma-project).
 ---
@@ -162,9 +162,9 @@ Academy). Hand over to the matching skill when the user needs one of those outpu
 
 ## Where new material goes
 Course content lives in `<content>/<topic>/`, where `<content>` is `contentRoot` (see *Where files go*) — e.g.
-`IC-Design/Digital-Design/Verification/projects/verif-<name>/` (the brief's LaTeX + `project/` from
+`<sphere>/<topic>/projects/<topic>-<name>/` (the brief's LaTeX + `project/` from
 brief2project.py). If `briefsRoot` is set, finished briefs are collected there instead of under the
 topic.
 Folder names are `<topic>-<short-name>` (they become ids in packages). Use a **last-level** topic (one
-without sub-topics). Where `<content>/tools/inventory.py` exists, run it with `--init <topic>` first if
+without sub-topics). Where `<content>` ships an inventory script, run it with `--init <topic>` first if
 the topic's folders are missing, and again after adding material; skip this when the script is absent.

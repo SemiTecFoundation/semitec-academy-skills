@@ -144,6 +144,7 @@ and installs through the normal signature check.
 | Material | Checks |
 |---|---|
 | pack | id format, version `X.Y.Z`, title; cover is an image |
+| prerequisite | `"prerequisite": true` items are not in `"schedule"` and have no `"for"`; the pack needs app ≥ 1.6.0 |
 | training | folder exists; `training.json` valid with id, title, topics; every topic file exists and is valid; unique topic / subsection ids; known block types; all assets exist; scroll / step SVGs have `data-step`; quizzes: question types, correct indices in range, single-answer types have one answer, `review` points to real subsections; certificate file exists |
 | lab | `lab.json` valid; title; steps with unique ids and titles; manual PDF exists and is a PDF; source files listed in `files` exist (warning above 50 MB); step `files` links point to listed files; quiz as above with `review` → step ids |
 | reading | PDF: exists, is a PDF, not truncated · Markdown: UTF-8, has headings, every local image / link exists and lies inside the document's folder (packed with it) |
@@ -165,4 +166,4 @@ material, with what was found (topics, steps, size, kind).
    manual) and asks you about the rest.
 3. When `check` shows 0 errors it runs `create` and reports the `.stlp` file.
 
-The Foundation skill for this is `academy-templates:package` — the `skills/package/` folder of this repository.
+The Foundation skill for this is `academy-templates:package`.

@@ -107,7 +107,7 @@ Academy). Hand over to the matching skill when the user needs one of those outpu
 
 ## Where new material goes
 Course content lives in `<content>/<topic>/`, where `<content>` is `contentRoot` (see *Where files go*) — e.g.
-`IC-Design/Digital-Design/FPGA/labs/fpga-lab01-leds/` (the folder holds `latex/` and `lab/`). Folder
+`<sphere>/<topic>/labs/<topic>-lab-NN-<name>/` (the folder holds `latex/` and `lab/`). Folder
 names are `<topic>-<short-name>` (they become ids in packages). Use a **last-level** topic (one without
-sub-topics). Where `<content>/tools/inventory.py` exists, run it with `--init <topic>` first if the
+sub-topics). Where `<content>` ships an inventory script, run it with `--init <topic>` first if the
 topic's folders are missing, and again after adding material; skip this when the script is absent.

@@ -5,7 +5,7 @@
 | Template (skill) | Family | What it makes | Notes |
 |---|---|---|---|
 | `lab-worksheet` | PDF | short fill-in sheet students complete during a lab | from a lab's `lab.json` + manual |
-| `lab-report` | PDF / Markdown | the structure students follow when they hand in lab results | hand-in and grading are a platform feature (an internal design note, published in neither repository) (academy-to-platform.md, PL4) |
+| `lab-report` | PDF / Markdown | the structure students follow when they hand in lab results | hand-in and grading belong to a separate system, designed in an internal note published in neither repository |
 | `defense-slides` | PDF (Beamer) / PPTX | diploma / thesis defense slides | today an outline in `diploma-project/reference/slides-outline.md` |
 | `course-page` | Web | course page: syllabus by week, lectures, labs, assignments, reading list | links lab manuals and trainings |
 | `lecture-slides` | Web | lecture presentations from Markdown, speaker notes, PDF export | |

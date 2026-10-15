@@ -32,10 +32,10 @@ Never write outside them, and never assume a particular parent layout.
 
 1. **Copy** the whole `training/` skill folder (engine + example content) to
    `<content>/<topic>/trainings/<topic>-<name>/`, where `<content>` is `contentRoot` (see *Where files go*) (e.g.
-   `IC-Design/Digital-Design/FPGA/trainings/fpga-vivado-flow`). Ask the user if you are unsure. Use a
+   `<sphere>/<topic>/trainings/<topic>-<name>`). Ask the user if you are unsure. Use a
    **last-level** topic (one without sub-topics). If that workspace has
-   `semitec-academy-materials/tools/inventory.py` and the topic's material folders do not exist yet, run
-   `python3 <content>/tools/inventory.py --init <topic>` first; skip this when the script is absent.
+   an inventory script and the topic's material folders do not exist yet, run it with `--init <topic>`
+   first; skip this when there is none.
 2. **`training.json`** — set a new `id` (progress is stored per id), `title`, `subtitle`, `language`, `hours`, `passThreshold`, default `layout` and `theme`; list the topic files in order. For Armenian / Russian set `language` and translate the UI strings in `labels`.
 3. **Topics** — delete the demo files in `topics/` and write one JSON file per topic (`01-intro.json`, `02-…`). For every topic:
    - 2–5 subsections, each with a stable `id` (kebab-case) and a few blocks;

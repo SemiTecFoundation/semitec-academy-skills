@@ -104,7 +104,7 @@ diploma-project/
 
 Universities differ. Treat the structure and the LaTeX title page as a sensible
 default and adjust section names, order, required/optional status, and the title
-page to match the author's institution. The platform can store several templates
+page to match the author's institution. A topic-posting system can store several templates
 (e.g. one per university or per work type).
 
 ## Academy Templates

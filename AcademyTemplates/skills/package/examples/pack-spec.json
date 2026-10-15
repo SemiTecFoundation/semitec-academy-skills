@@ -8,12 +8,12 @@
     "description": "A first track for students of the SemiTec Foundation: learn how the interactive trainings work, understand shift registers, build two designs on the board, read real diploma project briefs — and take on a diploma project.",
     "language": "en",
     "publisher": "SemiTec Foundation",
-    "publisherLogo": "../fpga-starter/publisher-logo.svg",
+    "publisherLogo": "publisher-logo.svg",
     "authors": [
-      "Arman Manukyan, PhD"
+      "Author Name, role"
     ],
-    "cover": "../fpga-starter/cover.svg",
-    "certificate": "../fpga-starter/certificate.json"
+    "cover": "cover.svg",
+    "certificate": "certificate.json"
   },
   "schedule": {
     "weeks": 7,
