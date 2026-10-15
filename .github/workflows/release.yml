@@ -31,13 +31,13 @@ jobs:
       - name: Test product and verify package builder matches Academy
         run: python3 tools/skills.py test --academy "$RUNNER_TEMP/semitec-academy"
       - name: Build release archive
-        run: python3 tools/skills.py release --out release/AcademyTemplates-$(node -p "require('./.claude-plugin/plugin.json').version").zip
+        run: python3 tools/skills.py release --out "$RUNNER_TEMP/AcademyTemplates-$(node -p "require('./.claude-plugin/plugin.json').version").zip"
       - name: Write checksum
-        run: cd release && shasum -a 256 AcademyTemplates-*.zip > SHA256SUMS.txt
+        run: cd "$RUNNER_TEMP" && shasum -a 256 AcademyTemplates-*.zip > SHA256SUMS.txt
       - name: Attach product archive
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
           files: |
-            release/AcademyTemplates-*.zip
-            release/SHA256SUMS.txt
+            ${{ runner.temp }}/AcademyTemplates-*.zip
+            ${{ runner.temp }}/SHA256SUMS.txt

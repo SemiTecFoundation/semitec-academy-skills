@@ -1,5 +1,9 @@
 # Changelog — Academy Templates plugin
 
+## 1.5.1 — 2026-10
+- Repaired the GitHub release workflow after flattening the plugin root. It builds the release archive in
+  the runner's temporary directory, preserving the rule that generated archives never enter the source tree.
+
 ## 1.5.0 — 2026-10
 - Made the repository itself the `academy-templates` plugin root. The redundant
   `AcademyTemplates/` directory and duplicate README are gone; the canonical product files now live at
