@@ -79,7 +79,7 @@ Look at the PDF (page breaks, figures, code width). For other languages switch t
 
 ### 6. Hand over
 Report the PDF, the lab folder and the check result. To give the lab to students in the app, add the
-**lab/** folder to a course pack with the `academy-templates:package` skill (`AcademyTemplates/skills/package`):
+**lab/** folder to a course pack with the `academy-templates:package` skill (`skills/package`):
 `"labs": [ { "id": "lab-01-…", "source": "<path>/lab" } ]`.
 
 ## From an existing lab PDF (no LaTeX source)

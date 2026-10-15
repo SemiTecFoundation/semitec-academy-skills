@@ -1,8 +1,8 @@
 # Releasing Academy Templates
 
 Every release produces one portable plugin archive: `AcademyTemplates-<version>.zip`. It contains the
-entire `AcademyTemplates/` folder, not one ZIP per skill. GitHub Releases is the distribution channel;
-the repository does not track `dist/` outputs.
+complete product under one `academy-templates/` extraction folder, not one ZIP per skill. GitHub Releases
+is the distribution channel; the repository does not track `dist/` outputs.
 
 ## Before tagging
 
@@ -12,12 +12,12 @@ the repository does not track `dist/` outputs.
 3. Run:
 
    ```bash
-   python3 AcademyTemplates/tools/skills.py check
-   python3 AcademyTemplates/tools/skills.py test --academy /path/to/semitec-academy
-   python3 AcademyTemplates/tools/skills.py release --out /tmp/AcademyTemplates-<version>.zip
+   python3 tools/skills.py check
+   python3 tools/skills.py test --academy /path/to/semitec-academy
+   python3 tools/skills.py release --out /tmp/AcademyTemplates-<version>.zip
    ```
 
-4. Inspect the ZIP in a clean temporary folder. It must contain `AcademyTemplates/`, its plugin manifest,
+4. Inspect the ZIP in a clean temporary folder. It must contain `academy-templates/`, its plugin manifest,
    all skills and the package runtime; it must not contain `.stlp` courses, private keys, generated `dist/`
    folders, personal data or test fixtures.
 

@@ -7,5 +7,5 @@ release/
 
 # The package skill ships this small vendored runtime. It is part of the single
 # AcademyTemplates release archive, so it must stay tracked.
-!AcademyTemplates/skills/package/scripts/node_modules/
-!AcademyTemplates/skills/package/scripts/node_modules/**
+!skills/package/scripts/node_modules/
+!skills/package/scripts/node_modules/**

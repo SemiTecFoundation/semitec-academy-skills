@@ -21,7 +21,7 @@ jobs:
       - name: Confirm tag matches plugin version
         if: github.ref_type == 'tag'
         run: |
-          VERSION="$(node -p "require('./AcademyTemplates/.claude-plugin/plugin.json').version")"
+          VERSION="$(node -p "require('./.claude-plugin/plugin.json').version")"
           test "${GITHUB_REF_NAME#v}" = "$VERSION"
       - name: Fetch current Academy packer
         run: git clone --depth=1 https://github.com/SemiTecFoundation/semitec-academy.git "$RUNNER_TEMP/semitec-academy"
@@ -29,9 +29,9 @@ jobs:
         working-directory: ${{ runner.temp }}/semitec-academy/app
         run: npm ci
       - name: Test product and verify package builder matches Academy
-        run: python3 AcademyTemplates/tools/skills.py test --academy "$RUNNER_TEMP/semitec-academy"
+        run: python3 tools/skills.py test --academy "$RUNNER_TEMP/semitec-academy"
       - name: Build release archive
-        run: python3 AcademyTemplates/tools/skills.py release --out release/AcademyTemplates-$(node -p "require('./AcademyTemplates/.claude-plugin/plugin.json').version").zip
+        run: python3 tools/skills.py release --out release/AcademyTemplates-$(node -p "require('./.claude-plugin/plugin.json').version").zip
       - name: Write checksum
         run: cd release && shasum -a 256 AcademyTemplates-*.zip > SHA256SUMS.txt
       - name: Attach product archive

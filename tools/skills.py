@@ -3,11 +3,11 @@
 
 Run from the repository root:
 
-    python3 AcademyTemplates/tools/skills.py check
-    python3 AcademyTemplates/tools/skills.py test [--academy /path/to/semitec-academy]
-    python3 AcademyTemplates/tools/skills.py release --out /tmp/AcademyTemplates-1.4.0.zip
+    python3 tools/skills.py check
+    python3 tools/skills.py test [--academy /path/to/semitec-academy]
+    python3 tools/skills.py release --out /tmp/AcademyTemplates-<version>.zip
 
-`release` contains every skill in one AcademyTemplates ZIP. The individual skills remain usable from
+`release` contains every skill in one Academy Templates ZIP. The individual skills remain usable from
 their own folders; this tool deliberately does not create per-skill ZIP files.
 """
 import argparse
@@ -17,20 +17,20 @@ import json
 import os
 from pathlib import Path
 import re
-import shutil
 import subprocess
 import sys
 import tempfile
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-REPOSITORY = ROOT.parent
 SKILLS = ROOT / 'skills'
 PACKAGE = SKILLS / 'package'
+ARCHIVE_ROOT = 'academy-templates'
 NAME = re.compile(r'^[a-z0-9][a-z0-9-]{0,63}$')
 SEMVER = re.compile(r'^\d+\.\d+\.\d+$')
-IGNORED_DIRS = {'__pycache__', '.dev-progress', 'dist'}
+IGNORED_DIRS = {'.git', '.github', '__pycache__', '.dev-progress', 'dist', 'release', 'tests'}
 IGNORED_NAMES = {'.DS_Store'}
+SOURCE_ONLY_FILES = {'.claude-plugin/marketplace.json', '.gitignore'}
 PRIVATE_SUFFIXES = ('.key', '.key.pem', '.p12', '.pfx', '.p8')
 
 
@@ -67,7 +67,9 @@ def release_files():
             if name in IGNORED_NAMES or name.endswith(('.pyc', '.aux', '.log', '.toc', '.out', '.fls', '.fdb_latexmk', '.xdv', '.bbl', '.bcf', '.blg', '.run.xml', '.synctex.gz')):
                 continue
             path = current / name
-            yield path, path.relative_to(ROOT).as_posix()
+            relative = path.relative_to(ROOT).as_posix()
+            if relative not in SOURCE_ONLY_FILES:
+                yield path, relative
 
 
 def bundle_files(path):
@@ -89,16 +91,28 @@ def validate():
         if not SEMVER.match(str(plugin.get('version', ''))):
             errors.append('plugin version must use MAJOR.MINOR.PATCH')
     except Exception as exc:
-        errors.append(f'cannot read {manifest.relative_to(REPOSITORY)}: {exc}')
+        errors.append(f'cannot read {manifest.relative_to(ROOT)}: {exc}')
         plugin = {}
 
-    marketplace = REPOSITORY / '.claude-plugin' / 'marketplace.json'
+    marketplace = ROOT / '.claude-plugin' / 'marketplace.json'
     try:
         listed = json.loads(read(marketplace)).get('plugins', [])
-        if not any(item.get('name') == 'academy-templates' for item in listed):
+        entry = next((item for item in listed if item.get('name') == 'academy-templates'), None)
+        if not entry:
             errors.append('marketplace.json does not list academy-templates')
+        else:
+            if entry.get('source') != '.':
+                errors.append('academy-templates marketplace source must be the repository root (.)')
+            if entry.get('version') != plugin.get('version'):
+                errors.append('academy-templates marketplace version must match plugin.json')
     except Exception as exc:
         errors.append(f'cannot read marketplace.json: {exc}')
+
+    if (ROOT / 'AcademyTemplates').exists():
+        errors.append('AcademyTemplates/ must not be nested inside the plugin root')
+    for required in ('README.md', 'CHANGELOG.md', 'CONTRIBUTING.md', 'docs/WORKFLOW.md'):
+        if not (ROOT / required).is_file():
+            errors.append(f'plugin root is missing {required}')
 
     for skill in skills():
         metadata = frontmatter(skill / 'SKILL.md')
@@ -132,7 +146,7 @@ def validate():
         if source.name.endswith(PRIVATE_SUFFIXES):
             errors.append(f'release contains a private signing key: {relative}')
 
-    print(f'AcademyTemplates {plugin.get("version", "?")} — {len(skills())} skills')
+    print(f'Academy Templates {plugin.get("version", "?")} — {len(skills())} skills')
     if errors:
         for error in errors:
             print('ERROR ' + error)
@@ -166,7 +180,7 @@ def compare_bundled_packer(academy, generated):
 def test(academy=None):
     if not validate():
         return False
-    fixture = REPOSITORY / 'tests' / 'fixtures' / 'package' / 'minimal' / 'pack-spec.json'
+    fixture = ROOT / 'tests' / 'fixtures' / 'package' / 'minimal' / 'pack-spec.json'
     if not fixture.is_file():
         print('ERROR missing package fixture: ' + str(fixture))
         return False
@@ -183,7 +197,7 @@ def test(academy=None):
         run([sys.executable, 'tools/check_lab.py', 'examples/lab-01-shift-register'], cwd=lab)
 
         brief = SKILLS / 'project-brief'
-        brief_fixture = REPOSITORY / 'tests' / 'fixtures' / 'project-brief' / 'minimal'
+        brief_fixture = ROOT / 'tests' / 'fixtures' / 'project-brief' / 'minimal'
         project_out = temp / 'project'
         sample_pdf = brief / 'sample-output-english.pdf'
         run([sys.executable, 'tools/brief2project.py', str(brief_fixture), '--pdf', str(sample_pdf), '--out', str(project_out)], cwd=brief)
@@ -207,7 +221,7 @@ def test(academy=None):
         extracted = temp / 'extracted'
         with zipfile.ZipFile(archive) as release_zip:
             release_zip.extractall(extracted)
-        released_builder = extracted / ROOT.name / 'skills' / 'package' / 'scripts' / 'stlp.js'
+        released_builder = extracted / ARCHIVE_ROOT / 'skills' / 'package' / 'scripts' / 'stlp.js'
         run(['node', str(released_builder), 'check', str(fixture)])
 
         if academy:
@@ -223,7 +237,7 @@ def write_release(output):
     """Write the one product archive after validation has completed."""
     output = Path(output).resolve()
     if output == ROOT or ROOT in output.parents:
-        raise RuntimeError('write release ZIP outside AcademyTemplates; generated artifacts are not source files')
+        raise RuntimeError('write release ZIP outside the plugin root; generated artifacts are not source files')
     if output.exists() and output.is_dir():
         raise RuntimeError(f'release path is a directory: {output}')
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -231,7 +245,7 @@ def write_release(output):
         output.unlink()
     with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED) as archive:
         for source, relative in release_files():
-            archive.write(source, ROOT.name + '/' + relative)
+            archive.write(source, ARCHIVE_ROOT + '/' + relative)
     digest = hashlib.sha256(output.read_bytes()).hexdigest()
     print(f'Created {output} ({output.stat().st_size // 1024} KB)')
     print(f'SHA256 {digest}  {output.name}')

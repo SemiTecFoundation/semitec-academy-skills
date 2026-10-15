@@ -36,7 +36,7 @@ Requirements: TeX Live / MacTeX / MiKTeX with XeLaTeX, Biber, latexmk and the GN
 
 ## Into the app
 
-Add the `lab/` folder to a SemiTec Learning Package (`AcademyTemplates/skills/package`):
+Add the `lab/` folder to a SemiTec Learning Package (`skills/package`):
 
 ```json
 "labs": [ { "id": "lab-02-counter", "source": "my-labs/lab-02-counter/lab" } ]

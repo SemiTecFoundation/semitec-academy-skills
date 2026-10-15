@@ -9,11 +9,11 @@ app's packer so it can build packages on a device that has only the plugin ZIP a
 
    ```bash
    node /path/to/semitec-academy/packer/stlp.js bundle-skill \
-     /path/to/semitec-academy-skills/AcademyTemplates/skills/package/scripts
+     /path/to/semitec-academy-skills/skills/package/scripts
    ```
 
 2. Commit the regenerated packer only with its `VERSION.json` record.
-3. Run `python3 AcademyTemplates/tools/skills.py test --academy /path/to/semitec-academy`.
+3. Run `python3 tools/skills.py test --academy /path/to/semitec-academy`.
    It compares the bundled files with a newly generated app bundle and checks that the app can inspect a
    fictional package made by the plugin.
 4. If an app change adds a format, requires a new minimum app version, or changes package validation,
@@ -24,7 +24,7 @@ app's packer so it can build packages on a device that has only the plugin ZIP a
 
 | Version | Meaning |
 |---|---|
-| `AcademyTemplates/.claude-plugin/plugin.json` | complete authoring product release; one ZIP for all skills |
+| `.claude-plugin/plugin.json` | complete authoring product release; one ZIP for all skills |
 | `skills/package/scripts/VERSION.json` | Academy app version that generated the bundled packer and its supported formats |
 | package manifest `version` | a specific course update; owned by the materials repository |
 | app `version` | installed Academy application release |

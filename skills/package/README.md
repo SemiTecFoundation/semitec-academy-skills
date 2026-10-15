@@ -76,10 +76,10 @@ node scripts/stlp.js create my-course/pack-spec.json --key /secure/semitec-found
 | `reference/formats.md` | content types, format numbers, app versions |
 | `reference/markdown.md` | what Markdown readings support |
 | `reference/lab-json.md` | the lab format (made by the lab-manual template) |
-| `tests/fixtures/package/minimal/` | fictional package used by repository integration tests; it is not shipped to users |
+| repository `tests/fixtures/package/minimal/` | fictional package used by repository integration tests; it is not shipped to users |
 | `scripts/` | bundled packer (`stlp.js`, `lib/`, `fflate`) and `VERSION.json` — regenerate, do not edit |
 
 Regenerate `scripts/` after an app release:
-`node <academy>/packer/stlp.js bundle-skill <skills>/AcademyTemplates/skills/package/scripts`, where
+`node <academy>/packer/stlp.js bundle-skill <skills>/skills/package/scripts`, where
 `<academy>` and `<skills>` are checkouts of https://github.com/SemiTecFoundation/semitec-academy and
 https://github.com/SemiTecFoundation/semitec-academy-skills.

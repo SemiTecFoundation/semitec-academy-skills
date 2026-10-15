@@ -1,5 +1,15 @@
 # Changelog — Academy Templates plugin
 
+## 1.5.0 — 2026-10
+- Made the repository itself the `academy-templates` plugin root. The redundant
+  `AcademyTemplates/` directory and duplicate README are gone; the canonical product files now live at
+  the top level in `skills/`, `docs/`, `tools/`, `.claude-plugin/` and `tests/`.
+- Updated the marketplace entry, documentation, validation runner and GitHub workflows for the flat layout.
+  The portable release still extracts safely into one `academy-templates/` folder and excludes tests,
+  CI configuration and marketplace-only metadata.
+- Kept only examples that are useful as standalone demonstrations or exercised by automated checks. Real
+  courses, package archives and private material remain excluded from this repository and its releases.
+
 ## 1.4.0 — 2026-10
 - Academy Templates is now released as **one portable plugin ZIP** (`AcademyTemplates-<version>.zip`),
   rather than five per-skill ZIPs. The individual skills remain independently usable inside that product.

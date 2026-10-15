@@ -21,11 +21,11 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check product structure
-        run: python3 AcademyTemplates/tools/skills.py check
+        run: python3 tools/skills.py check
       - name: Fetch current Academy packer
         run: git clone --depth=1 https://github.com/SemiTecFoundation/semitec-academy.git "$RUNNER_TEMP/semitec-academy"
       - name: Install Academy packer dependency
         working-directory: ${{ runner.temp }}/semitec-academy/app
         run: npm ci
       - name: Test product and verify package builder matches Academy
-        run: python3 AcademyTemplates/tools/skills.py test --academy "$RUNNER_TEMP/semitec-academy"
+        run: python3 tools/skills.py test --academy "$RUNNER_TEMP/semitec-academy"

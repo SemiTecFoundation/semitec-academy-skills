@@ -86,7 +86,7 @@ SemiTec Academy maps the weeks onto the student's calendar from the day they enr
 ## Use in SemiTec Academy
 
 A finished training folder can be put into a SemiTec Learning Package (`.stlp`) for the desktop app with the
-`academy-templates:package` skill (`AcademyTemplates/skills/package`): add it to `"trainings"` in the pack spec with the
+`academy-templates:package` skill (`skills/package`): add it to `"trainings"` in the pack spec with the
 path of this folder. The app brings its own engine — only `training.json`, `topics/`, `assets/`,
 `certificate.json` (and custom themes) are packed; progress and quizzes are saved per student.
 

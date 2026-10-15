@@ -3,7 +3,7 @@
 Interactive training pages: topics with subtopics, interactive learning blocks, a quiz at the
 end of every topic that unlocks the next one, review hints after a failed quiz, and a printable
 certificate at the end. All content is JSON, all styling is a theme file — both can be
-generated or changed by prompting an AI (see [the training skill](https://github.com/SemiTecFoundation/semitec-academy-skills/blob/main/AcademyTemplates/skills/training/SKILL.md)).
+generated or changed by prompting an AI (see [the training skill](https://github.com/SemiTecFoundation/semitec-academy-skills/blob/main/skills/training/SKILL.md)).
 
 The template ships with a **feature tour**: every demo topic is named after a feature and
 shows how to use it.

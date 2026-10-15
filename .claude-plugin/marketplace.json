@@ -9,9 +9,9 @@
   "plugins": [
     {
       "name": "academy-templates",
-      "source": "./AcademyTemplates",
+      "source": ".",
       "description": "Templates as skills: project briefs, diploma documents, lab manuals, interactive trainings and SemiTec Learning Packages (.stlp) for SemiTec Academy.",
-      "version": "1.3.0",
+      "version": "1.5.0",
       "category": "education"
     }
   ]
