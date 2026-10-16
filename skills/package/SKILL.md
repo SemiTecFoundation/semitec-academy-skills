@@ -105,6 +105,12 @@ Ask in one short round (skip what is known):
   `academy-templates:project-brief`) and list the `project/` folders under `"projects"`.
 - **Certificate**: ask whether the publisher offers one. If yes, create its `certificate.json` with that
   publisher as issuer; if no, omit `certificate`. It is not required for a package to be complete.
+- **Publisher visual identity** (optional): ask for the publisher's approved accent colour, readable accent-text
+  colour (usually white), and optional pale accent background. Do not invent a company's colours from its name or
+  logo. When exact values are supplied, write `pack.branding` with `accent`, `accentInk` and optional `accentSoft`.
+  This styles the package details plus labs, projects, readings and materials in Academy ≥ 1.8.0; it does not
+  replace the Academy navigation or the learner's chosen app theme. If the package includes trainings, make their
+  own `css/themes/<publisher>.css` themes match; training iframes do not inherit `pack.branding`.
 - **Signing**: a publisher signs a release with its own offline Ed25519 private key. Keep it outside every
   repository; distribute only its public `.pub.pem`, matching public metadata and fingerprint. Recipients
   add that key in Academy's *Trusted publishers* settings. The Foundation may separately ship a confirmed
@@ -115,7 +121,9 @@ Ask in one short round (skip what is known):
 Put it in `<packagesRoot>/<package-name>/`. If that folder has a `README.md` listing the packages, add a
 row. Paths in a spec are relative to the spec file; materials stay where they are. Start from
 `reference/pack-spec.md`, the documented format. Ids: lowercase-with-dashes, unique in the package, never changed later
-(progress is stored per id). Give every item a title, a one-line description and `estimatedTime`.
+(progress is stored per id). Give every item a title, a one-line description and `estimatedTime`. When there is a
+publisher brand, use only the three documented hex colours in `pack.branding`; never place CSS, fonts, scripts or
+layout instructions there.
 
 ### 3. Check and fix
 Run `check`. One row per material: ✓ / ⚠ / ✗ plus what was found (topics, steps, files, size, kind).
@@ -155,6 +163,10 @@ For an update: same `id`, higher `version` — students add the new file and kee
 - `pack.id` never changes; raise `version` for every shared update (`1.0.0 → 1.0.1` fixes, `→ 1.1.0` new items).
 - Videos: 720p MP4 (H.264 + AAC), under ~300 MB each; long lectures as online links.
 - Markdown readings: GitHub-flavoured Markdown; images in the same folder or below; no scripts.
+- Package branding: `accent` and `accentInk` are required `#RRGGBB` colours with at least 4.5:1 contrast;
+  `accentSoft` is optional. It creates package format 2 and therefore needs Academy ≥ 1.8.0. Keep covers/logos
+  for Catalog and Library; use a training theme file for an interactive training and `certificate.json → style`
+  for either certificate.
 - Study plan: every week block should be realistic (sum of `estimatedTime`); every non-project item in some
   week; keep item ids stable — enrolled students' dates and progress follow the ids.
 

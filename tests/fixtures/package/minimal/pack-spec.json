@@ -8,7 +8,12 @@
     "language": "en",
     "publisher": "Fixture Publisher",
     "publisherLogo": "publisher-logo.svg",
-    "cover": "cover.svg"
+    "cover": "cover.svg",
+    "branding": {
+      "accent": "#006B54",
+      "accentInk": "#FFFFFF",
+      "accentSoft": "#E2F4EE"
+    }
   },
   "readings": [
     {

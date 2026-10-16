@@ -3,6 +3,12 @@
 The skill is released with the SemiTec Academy app; the release number is the app version it was
 built from (see `scripts/VERSION.json`). Packages made with an older skill keep opening in newer apps.
 
+## 1.8.0 — built for Academy 1.8.0
+- Package branding: `pack.branding` declares an accessible publisher accent (`accent`, `accentInk`, optional
+  `accentSoft`) for package details, labs, projects, readings and materials.
+- Branding is data, not CSS: only strict hex colours are accepted and the builder writes package format 2,
+  requiring Academy 1.8.0. Trainings and certificates keep their own author-controlled styles.
+
 ## 1.7.0
 - Bundled packer rebuilt from SemiTec Academy 1.7.0.
 - Optional publisher `contact` metadata is checked and shown in Academy's Pack details.

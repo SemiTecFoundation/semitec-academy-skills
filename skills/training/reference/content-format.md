@@ -133,3 +133,7 @@ Only variables on `:root`:
 `--bg --surface --surface-2 --text --heading --muted --accent --accent-ink --accent-soft --good --bad --warn --border --track --focus --radius --radius-sm --font --font-head --font-mono --font-size --shadow --shadow-sm --head-bg --head-ink --toc-bg --toc-ink --code-bg --code-ink --quiz-bg`
 
 Copy `foundation.css`, change values, add the name to `themes` in `training.json`.
+
+If this training belongs to a branded Academy package, it does not automatically inherit the package
+colour values because it runs in its own frame. Make a matching local theme file and select it through
+`training.json`; do not add arbitrary CSS to `pack.branding`.

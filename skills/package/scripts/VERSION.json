@@ -1,11 +1,11 @@
 {
   "skill": "academy-templates:package",
-  "release": "1.7.1",
-  "builtFrom": "SemiTec Academy 1.7.1",
-  "builtAt": "2026-10-16T11:37:04.503Z",
+  "release": "1.8.0",
+  "builtFrom": "SemiTec Academy 1.8.0",
+  "builtAt": "2026-10-16T13:44:10.178Z",
   "extension": ".stlp",
   "writes": {
-    "pack": 1,
+    "pack": 2,
     "training": 1,
     "reading": 1,
     "lab": 1,
@@ -15,7 +15,8 @@
   },
   "appCanOpen": {
     "pack": [
-      1
+      1,
+      2
     ],
     "training": [
       1
@@ -74,6 +75,10 @@
     {
       "app": "1.7.1",
       "notes": "Projects follow My packages; removing a package stops its active plans after confirmation and clears stale plan references on sign-in."
+    },
+    {
+      "app": "1.8.0",
+      "notes": "Package format 2 adds a publisher-defined, accessible accent style for package details and non-training material views."
     }
   ]
 }

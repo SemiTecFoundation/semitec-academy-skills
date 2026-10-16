@@ -36,6 +36,11 @@ students' progress is stored per id, so keep them stable between versions.
     "authors": ["Arman Manukyan, PhD"],
     "contact": { "name": "Course team", "email": "courses@example.org", "url": "https://example.org" },
     "cover": "cover.svg",                      // optional image, about 600 × 340
+    "branding": {                                // optional: Academy ≥ 1.8.0
+      "accent": "#006B54",
+      "accentInk": "#FFFFFF",
+      "accentSoft": "#E2F4EE"
+    },
     "certificate": "certificate.json"          // optional: omit it for a package without a course certificate
   },
 
@@ -98,6 +103,29 @@ students' progress is stored per id, so keep them stable between versions.
 `pack.contact` is optional and may have `name`, `email`, `url` and `instructions`. It is the publisher's
 feedback route shown in *Pack details*, not a supervisor or approval link.
 
+### Package branding (Academy ≥ 1.8.0)
+
+Use `pack.branding` only when the publisher supplies approved colours. It styles this package's details,
+labs, projects, readings and other materials, while Academy navigation and other packages stay in the
+learner's app theme.
+
+```json
+"branding": {
+  "accent": "#006B54",
+  "accentInk": "#FFFFFF",
+  "accentSoft": "#E2F4EE"
+}
+```
+
+`accent` and `accentInk` are required six-digit hex colours and need 4.5:1 contrast; `accentSoft` is
+optional. Never add CSS, a font, JavaScript, a logo path or a layout rule to `branding`. A branded package
+uses package format 2, so it needs Academy 1.8.0. The catalogue identity remains `cover` and
+`publisherLogo`.
+
+An interactive training is an iframe with its own theme. Copy `css/themes/foundation.css` to a matching
+company theme, update variables there, list it in `training.json → themes`, and set the training's default
+`theme`. Use `certificate.json → style` for certificate colours.
+
 ### How "other materials" are shown
 
 | File | In the app |
@@ -148,7 +176,7 @@ Application → Trusted publishers* after checking its fingerprint; this is loca
 
 | Material | Checks |
 |---|---|
-| pack | id format, version `X.Y.Z`, title; cover is an image; contact email and URL are well formed when supplied |
+| pack | id format, version `X.Y.Z`, title; cover is an image; contact email and URL are well formed when supplied; branding allows only `#RRGGBB` colours and checks readable accent text |
 | prerequisite | `"prerequisite": true` items are not in `"schedule"` and have no `"for"`; the pack needs app ≥ 1.6.0 |
 | training | folder exists; `training.json` valid with id, title, topics; every topic file exists and is valid; unique topic / subsection ids; known block types; all assets exist; scroll / step SVGs have `data-step`; quizzes: question types, correct indices in range, single-answer types have one answer, `review` points to real subsections; certificate file exists |
 | lab | `lab.json` valid; title; steps with unique ids and titles; manual PDF exists and is a PDF; source files listed in `files` exist (warning above 50 MB); step `files` links point to listed files; quiz as above with `review` → step ids |
@@ -157,7 +185,7 @@ Application → Trusted publishers* after checking its fingerprint; this is loca
 | material | file exists and is not empty (PDFs are checked as PDFs), size warning above 300 MB; links start with `http(s)://` |
 | project | `project.json` valid (format 1), title, weekly plan with unique week numbers inside `durationWeeks`, milestones / deliverables inside the duration, brief PDF exists |
 | links | `for` points to an existing item that is not itself attached; warning when it points to a video / material |
-| pack | `publisherLogo` is an image (warning when missing), `publisherUrl` is a web link |
+| pack | `publisherLogo` is an image (warning when missing), `publisherUrl` is a web link; branding allows only `accent`, `accentInk`, optional `accentSoft` |
 | schedule | entries have valid weeks inside `weeks`, every listed item exists; warning for items without a week; `plannedWeeks` 0–104; training `schedule` topics exist |
 | whole spec | unique ids across all materials; modules reference existing ids; minimum app version for the formats used |
 

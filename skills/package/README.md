@@ -12,7 +12,7 @@ not replace their original folders.
 The skill is versioned **with the app**: each app release that adds a content type or format gets a new
 skill release (see [`CHANGELOG.md`](CHANGELOG.md) and `scripts/VERSION.json`).
 
-## What it supports (release 1.7.0)
+## What it supports (built for Academy 1.8.0)
 
 | Content | From | Shown in SemiTec Academy as | App |
 |---|---|---|---|
@@ -26,6 +26,7 @@ skill release (see [`CHANGELOG.md`](CHANGELOG.md) and `scripts/VERSION.json`).
 | Project | `project/` folder from the project-brief template (`project.json` + brief PDF) | independently tracked advanced work: start a plan, weekly dates, ticks, notes, milestones, deliverables, rubric, brief | ≥ 1.4 |
 | Study plan | `schedule` (weeks → items) or `plannedWeeks` on items; topic weeks from a training's `schedule` | enrollment with a start date; *Study plan* view, Calendar, Today panel, reminders | ≥ 1.4 |
 | Publisher | `pack.publisher` + `pack.publisherLogo` (+ `publisherUrl`, `contact`) | name and logo on every card; feedback contact in Pack details; filter by publisher | 1.5 / 1.7 |
+| Publisher package style | `pack.branding` with `accent`, `accentInk`, optional `accentSoft` | publisher colours on that package's details, labs, projects, readings and materials; Academy shell stays learner-controlled | ≥ 1.8 |
 | Materials of a lab | `"for": "<lab id>"` on a material | shown under the lab (course order, study plan) and in the lab's *Materials* tab | 1.5 |
 | Project category | `"category"` on a project (research, diploma, thesis, course-project, capstone, internship, other) | category badge and filter on the Projects page | 1.5 |
 | Catalog | `stlp catalog <folder>` -> `catalog.json` | the app's Catalog: install / update with one click | 1.5 |
@@ -48,6 +49,13 @@ pack-spec.json ──► stlp check ──► stlp create ──► org.semitec.
 2. **check** validates each material deeply (training topics and quizzes, lab steps and files, PDF and
    Markdown files, videos, links) and prints a table.
 3. **create** builds and signs the package (private key) — or `--unsigned` for a test.
+
+### Publisher styles
+
+A package can carry a small, safe colour-only brand: `accent`, `accentInk` and optional `accentSoft`.
+The checker accepts only `#RRGGBB` values and verifies readable button text. It produces package format 2,
+which needs Academy 1.8.0. This does not accept arbitrary CSS or change the Academy navigation. Use a
+training's own theme file for interactive lesson styling and `certificate.json → style` for certificates.
 
 ## Use it
 

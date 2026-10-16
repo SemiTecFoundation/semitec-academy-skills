@@ -68,6 +68,16 @@ Never write outside them, and never assume a particular parent layout.
   and give it a clear title — the title is shown on the Next button and in the review links.
 - Set `version` in `training.json` when you publish changed content.
 
+## Matching a publisher package style
+
+When this training is part of a branded Academy package, its iframe does **not** inherit the package's
+`pack.branding`. Create a matching training theme instead: copy `css/themes/foundation.css` to
+`css/themes/<publisher>.css`, change only its variables, then set both `"theme": "<publisher>"` and
+include the name in `"themes"` in `training.json`. Use the package's `accent`, `accentInk` and optional
+`accentSoft` as the matching variables, but keep readable text and focus contrast. Do not edit engine JS,
+`css/app.css`, or inject a stylesheet from the package manifest. Certificate colours remain in
+`certificate.json → style`.
+
 ## Example prompts
 
 - *"Create a new topic `topics/<nn>-ecc.json` about Hamming SECDED codes: 3 subsections (why ECC, encoding with a stepper animation of check-bit calculation, decoding and syndrome with a reveal picture), and a 6-question quiz with review links."*

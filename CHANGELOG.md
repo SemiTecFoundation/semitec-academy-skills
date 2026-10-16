@@ -1,5 +1,11 @@
 # Changelog — Academy Templates plugin
 
+## 1.7.0 — 2026-10
+- Updated the package skill for SemiTec Academy 1.8.0: package authors can declare a constrained,
+  accessible publisher colour style for package details, labs, projects, readings and materials.
+- Documented the complete styling boundary for AI authors: package accent metadata, training theme files,
+  and independently styled certificates. The bundled packer will be synchronized with Academy 1.8.0.
+
 ## 1.6.1 — 2026-10
 - Documented the two partner-key paths: recipients may trust a publisher locally, while the Foundation may
   separately include a confirmed partner public key in a future Academy release.
