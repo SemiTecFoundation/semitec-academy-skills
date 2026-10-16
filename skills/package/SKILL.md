@@ -47,7 +47,7 @@ Never write outside them, and never assume a particular parent layout.
 
 | Section in the app | Spec list | Source | Needs app |
 |---|---|---|---|
-| Trainings | `trainings` | folder made with the web training template (`training.json` + `topics/`) — skill `academy-templates:training` | 1.0 |
+| Trainings | `trainings` | standard JSON training (`training.json` + `topics/`), or explicit custom local web training (`format: 2`, `runtime.entry`) — skill `academy-templates:training` | 1.0 / 1.9 |
 | Labs | `labs` | `lab/` folder of a lab made with the lab-manual template (`lab.json`, `manual.pdf`) — skill `academy-templates:lab-manual` | 1.0 |
 | Labs with source files | `labs` | same, with `"files": "src"` in `lab.json` (Files tab, zip download) | 1.2 |
 | Readings (PDF) | `readings` | `.pdf` file | 1.0 |
@@ -116,6 +116,12 @@ Ask in one short round (skip what is known):
   add that key in Academy's *Trusted publishers* settings. The Foundation may separately ship a confirmed
   partner public key in a future Academy release; that never includes the private key and does not make
   each package Foundation-approved. For an author's local draft use `--unsigned` and Developer mode.
+- **Custom web training**: use only when a selected training has an existing or necessary local JavaScript
+  experience. Its `training.json` must explicitly use `"format": 2` with
+  `"runtime": { "kind": "web", "entry": "index.html" }`; all HTML, JS, CSS and assets stay local.
+  It requires Academy 1.9.0. Do not add remote scripts, CDNs, network calls, Electron/Node code, frames
+  or forms. The lesson restores and saves progress through `window.SemiTecAcademy`; it can complete the
+  optional package certificate but has no individual training certificate.
 
 ### 2. Write `pack-spec.json`
 Put it in `<packagesRoot>/<package-name>/`. If that folder has a `README.md` listing the packages, add a
@@ -167,6 +173,9 @@ For an update: same `id`, higher `version` — students add the new file and kee
   `accentSoft` is optional. It creates package format 2 and therefore needs Academy ≥ 1.8.0. Keep covers/logos
   for Catalog and Library; use a training theme file for an interactive training and `certificate.json → style`
   for either certificate.
+- Custom web training: `format: 2` is a full local browser lesson, not JSON topics with a script pasted
+  into the manifest. Keep `runtime.entry` below its source folder and let `stlp check` validate it. This
+  makes the package require Academy 1.9.0.
 - Study plan: every week block should be realistic (sum of `estimatedTime`); every non-project item in some
   week; keep item ids stable — enrolled students' dates and progress follow the ids.
 

@@ -12,11 +12,12 @@ not replace their original folders.
 The skill is versioned **with the app**: each app release that adds a content type or format gets a new
 skill release (see [`CHANGELOG.md`](CHANGELOG.md) and `scripts/VERSION.json`).
 
-## What it supports (built for Academy 1.8.0)
+## What it supports (built for Academy 1.9.0)
 
 | Content | From | Shown in SemiTec Academy as | App |
 |---|---|---|---|
 | Training | web training template (JSON topics, quizzes, certificate) | the interactive training, progress and certificate per student | ≥ 1.0 |
+| Custom web training | a local HTML/CSS/JavaScript folder with `training.json → format: 2` and `runtime.entry` | sandboxed interactive lesson, with progress saved through `window.SemiTecAcademy`; counts toward a package certificate | ≥ 1.9 |
 | Lab | lab-manual template (`lab/`: `lab.json`, `manual.pdf`) | tabs *Manual*, *Steps* (checklist), *Check quiz* | ≥ 1.0 |
 | Lab source files | `"files"` in `lab.json` | tab *Files*: viewer, *Save file*, *Download all* (zip) | ≥ 1.2 |
 | Reading — PDF | any PDF | PDF reader: outline, zoom, resume, pages-read tracking | ≥ 1.0 |
@@ -56,6 +57,16 @@ A package can carry a small, safe colour-only brand: `accent`, `accentInk` and o
 The checker accepts only `#RRGGBB` values and verifies readable button text. It produces package format 2,
 which needs Academy 1.8.0. This does not accept arbitrary CSS or change the Academy navigation. Use a
 training's own theme file for interactive lesson styling and `certificate.json → style` for certificates.
+
+### Custom web trainings
+
+The normal training template remains JSON topics and quizzes. Use custom format 2 only for a complete
+lesson that needs its own local JavaScript interactions. Declare `"format": 2` and
+`"runtime": { "kind": "web", "entry": "index.html" }` in `training.json`; keep its HTML, scripts,
+styles and assets together in the training folder. The packer copies those local files, verifies the entry
+and sets Academy 1.9.0 as the minimum version. In Academy, remote network code, Electron/Node APIs,
+frames and forms are blocked; progress uses `window.SemiTecAcademy`. Individual training certificates
+are not available for this format.
 
 ## Use it
 

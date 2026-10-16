@@ -52,7 +52,7 @@ students' progress is stored per id, so keep them stable between versions.
     ]
   },
 
-  "trainings": [                               // web training template folders (training.json + topics/)
+  "trainings": [                               // JSON-template or custom web training folders
     { "id": "shift-registers", "title": "Shift registers", "source": "trainings/shift-registers",
       "description": "Theory for Lab 1", "estimatedTime": "30 min" }
   ],
@@ -125,6 +125,25 @@ uses package format 2, so it needs Academy 1.8.0. The catalogue identity remains
 An interactive training is an iframe with its own theme. Copy `css/themes/foundation.css` to a matching
 company theme, update variables there, list it in `training.json → themes`, and set the training's default
 `theme`. Use `certificate.json → style` for certificate colours.
+
+### Custom web trainings (Academy ≥ 1.9.0)
+
+Use the same `trainings` entry in the spec for an interactive lesson with its own local JavaScript. Its
+source `training.json` must opt in:
+
+```json
+{
+  "format": 2,
+  "id": "logic-playground",
+  "title": "Logic playground",
+  "runtime": { "kind": "web", "entry": "index.html" }
+}
+```
+
+The folder contains the local `index.html`, JS, CSS and assets. The builder validates that the entry page
+is local, copies the full lesson and sets `minAppVersion` to 1.9.0. In Academy the lesson has no network,
+Electron, Node, frame or form access. It saves a plain progress object through `window.SemiTecAcademy`.
+It counts for an optional package certificate, without an individual training certificate.
 
 ### How "other materials" are shown
 

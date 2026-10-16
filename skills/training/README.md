@@ -2,7 +2,7 @@
 
 Interactive training pages: topics with subtopics, interactive learning blocks, a quiz at the
 end of every topic that unlocks the next one, review hints after a failed quiz, and a printable
-certificate at the end. All content is JSON, all styling is a theme file — both can be
+certificate at the end. The default format keeps content in JSON and styling in a theme file — both can be
 generated or changed by prompting an AI (see [the training skill](https://github.com/SemiTecFoundation/semitec-academy-skills/blob/main/skills/training/SKILL.md)).
 
 The template ships with a **feature tour**: every demo topic is named after a feature and
@@ -10,6 +10,15 @@ shows how to use it.
 
 A training is usable by itself in a browser or web platform. The package skill is only for copying it into
 an Academy course alongside other selected materials.
+
+## Custom JavaScript lessons in Academy
+
+The normal template is the right choice for new topic-based teaching. A separate **training format 2** is
+available in Academy 1.9.0+ for a complete existing or purpose-built local HTML/CSS/JavaScript lesson.
+Its `training.json` has `"format": 2` plus `"runtime": { "kind": "web", "entry": "index.html" }`.
+The package keeps that folder's local web files and injects `window.SemiTecAcademy` for restored progress,
+`save(state, { percent })`, and `complete(state)`. It has no network, Electron or Node access in Academy.
+See [`SKILL.md`](SKILL.md) for the format, rules and bridge API.
 
 | # | Topic | Feature shown |
 |---|---|---|

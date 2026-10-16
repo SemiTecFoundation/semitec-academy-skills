@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Validate a training folder: JSON syntax, ids, block/question types, review links,
 correct answers and referenced files.   Usage:  python3 tools/validate.py [training-folder]"""
-import json, os, sys
+import json, os, re, sys
 
 ROOT = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), '..'))
 BLOCKS = {'text', 'callout', 'image', 'svg', 'compare', 'accordion', 'tabs', 'flipcards', 'reveal',
           'scrolly', 'stepper', 'sort', 'categorize', 'code', 'table', 'video'}
 QTYPES = {'single', 'truefalse', 'multiple', 'order', 'match', 'hotspot'}
 errors, warnings = [], []
+LOCAL_WEB_ENTRY = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._/-]*\.html?$')
 
 def err(where, msg): errors.append(f'{where}: {msg}')
 def warn(where, msg): warnings.append(f'{where}: {msg}')
@@ -23,6 +24,15 @@ def asset(where, src):
     if not src: err(where, 'missing "src"'); return
     if src.startswith(('http://', 'https://', 'data:', '<svg')): return
     if not os.path.isfile(os.path.join(ROOT, src)): err(where, f'file not found: {src}')
+
+def local_web_entry(value):
+    if not isinstance(value, str) or not LOCAL_WEB_ENTRY.fullmatch(value): return False
+    return all(part not in ('.', '..') for part in value.split('/'))
+
+def print_result(topics, label='topics'):
+    for w in warnings: print('WARN ', w)
+    for e in errors: print('ERROR', e)
+    print(f'\n{topics} {label} checked — {len(errors)} error(s), {len(warnings)} warning(s).')
 
 def spots(where, sp, need_id=False):
     for i, s in enumerate(sp or []):
@@ -87,8 +97,34 @@ def question(where, q, subs):
 def main():
     tr = load('training.json')
     if not tr: return
-    for k in ('id', 'title', 'topics'):
+    for k in ('id', 'title'):
         if not tr.get(k): err('training.json', f'missing "{k}"')
+    fmt = tr.get('format', 1)
+    if fmt not in (1, 2):
+        err('training.json', '"format" must be 1 (Academy JSON) or 2 (custom web training)')
+        print_result(0, 'custom web trainings')
+        return
+    if fmt == 2:
+        runtime = tr.get('runtime')
+        if not isinstance(runtime, dict):
+            err('training.json', 'format 2 needs "runtime": { "kind": "web", "entry": "index.html" }')
+        else:
+            for key in runtime:
+                if key not in ('kind', 'entry'): err('training.json runtime', f'unknown field "{key}"')
+            if runtime.get('kind') != 'web': err('training.json runtime', '"kind" must be "web"')
+            entry = runtime.get('entry')
+            if not local_web_entry(entry):
+                err('training.json runtime', '"entry" must be a local .html file inside this training, such as "index.html"')
+            else:
+                root = os.path.realpath(ROOT)
+                target = os.path.realpath(os.path.join(ROOT, entry))
+                if os.path.commonpath((root, target)) != root or not os.path.isfile(target):
+                    err('training.json runtime', f'entry file not found: {entry}')
+        if tr.get('certificate'):
+            err('training.json', 'format 2 does not support an individual training certificate; use an optional package certificate instead')
+        print_result(1, 'custom web training')
+        return
+    if not tr.get('topics'): err('training.json', 'missing "topics"')
     thr = tr.get('passThreshold', 0.8)
     if not (0 < thr <= 1): err('training.json', 'passThreshold must be between 0 and 1 (e.g. 0.8)')
     if tr.get('layout', 'sidebar') not in ('sidebar', 'topbar'): err('training.json', 'layout must be "sidebar" or "topbar"')
@@ -143,9 +179,7 @@ def main():
             d = c.get('style', {}).get('design', 'classic')
             if d not in ('classic', 'modern', 'minimal'): err(tr['certificate'], f'unknown design "{d}"')
             if c.get('logo'): asset(tr['certificate'], c['logo'])
-    for w in warnings: print('WARN ', w)
-    for e in errors: print('ERROR', e)
-    print(f'\n{len(tr.get("topics", []))} topics checked — {len(errors)} error(s), {len(warnings)} warning(s).')
+    print_result(len(tr.get("topics", [])))
 
 main()
 sys.exit(1 if errors else 0)

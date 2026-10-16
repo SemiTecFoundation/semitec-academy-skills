@@ -3,6 +3,14 @@
 The skill is released with the SemiTec Academy app; the release number is the app version it was
 built from (see `scripts/VERSION.json`). Packages made with an older skill keep opening in newer apps.
 
+## Next — built for Academy 1.9.0
+- Added training format 2: a complete local HTML/CSS/JavaScript lesson declares
+  `runtime: { kind: "web", entry: "index.html" }`. The bundled packer validates and copies it, writes
+  the correct minimum Academy version and preserves its own local assets.
+- Documented the Academy progress bridge and its boundary: no remote code, Electron/Node APIs, frames,
+  forms or individual training certificate. A completed custom lesson still counts toward an optional
+  package certificate.
+
 ## 1.8.0 — built for Academy 1.8.0
 - Package branding: `pack.branding` declares an accessible publisher accent (`accent`, `accentInk`, optional
   `accentSoft`) for package details, labs, projects, readings and materials.

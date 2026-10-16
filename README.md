@@ -14,7 +14,7 @@ only when selected materials should become one `.stlp` course for the SemiTec Ac
 | `project-brief` | Project task-definition PDF and optional Academy project folder | Add it only when students should track the project in Academy. |
 | `diploma-project` | Thesis or diploma document and defence outline | Usually never; it is a final academic document. |
 | `lab-manual` | Lab manual PDF, `lab.json`, quiz and source files | Add it when the lab belongs to an Academy course. |
-| `training` | Interactive HTML training usable in a browser or another platform | Add it when it belongs to an Academy course. |
+| `training` | Interactive training: the Academy JSON template or a custom local HTML/CSS/JavaScript lesson | Add it when it belongs to an Academy course; custom web lessons need Academy 1.9.0. |
 | `package` | One signed or test-only `.stlp` course archive | Use after choosing materials for Academy delivery. |
 
 Packaging never changes an original lab, training or brief. It copies the materials chosen by the author

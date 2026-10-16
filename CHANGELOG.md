@@ -1,5 +1,10 @@
 # Changelog — Academy Templates plugin
 
+## 1.8.0 — 2026-10
+- Added documented training format 2 for complete local HTML/CSS/JavaScript lessons in SemiTec Academy
+  1.9.0. It has a constrained progress bridge, a validator and package checks, while the established
+  JSON training template remains format 1.
+
 ## 1.7.0 — 2026-10
 - Updated the package skill for SemiTec Academy 1.8.0: package authors can declare a constrained,
   accessible publisher colour style for package details, labs, projects, readings and materials.

@@ -1,6 +1,7 @@
 # Content format reference
 
-Everything a training shows comes from JSON. This page lists every field.
+Format 1 trainings show JSON content through the supplied Academy engine. Format 2 trainings are complete
+local web lessons with an explicit entry page. This page documents both formats.
 Text fields marked *md* accept light Markdown: `**bold**`, `*italic*`, `` `code` ``, `[link](url)`,
 lists (`- item`, `1. item`), `> quote`, `### heading`, blank line = new paragraph. HTML is escaped.
 
@@ -11,6 +12,7 @@ lists (`- item`, `1. item`), `> quote`, `### heading`, blank line = new paragrap
 | Field | Type | Default | Meaning |
 |---|---|---|---|
 | `id` | string | — | Unique id. Progress is saved per id — change it for a new training. |
+| `format` | `1` \| `2` | `1` | `1` = Academy JSON training; `2` = custom local web training (Academy ≥ 1.9.0). |
 | `version` | string | — | Content version, copied into the saved state (`trainingVersion`). |
 | `title`, `subtitle` | string | — | Shown in the header (title also on the certificate). |
 | `language` | string | `en` | `en`, `hy`, `ru` … Used for date format and `<html lang>`. |
@@ -28,6 +30,24 @@ lists (`- item`, `1. item`), `> quote`, `### heading`, blank line = new paragrap
 | `topics` | string[] | — | File names in `topics/`, in order. |
 | `certificate` | string | — | Path of the certificate file (omit = no certificate). |
 | `delivery` | object | `{mode: "standalone"}` | Delivery mode and progress storage — see `INTEGRATION.md` §2 (`mode`, `progress`, `progressUrl`, `urlParams`, `resume`, `allowReset`, …). |
+
+For **format 2**, the required fields are `id`, `title`, and `runtime`; the JSON-engine fields in this
+table (`topics`, theme, layout, quiz options, delivery and `certificate`) do not apply.
+
+```json
+{
+  "format": 2,
+  "id": "logic-playground",
+  "title": "Logic playground",
+  "runtime": { "kind": "web", "entry": "index.html" }
+}
+```
+
+`runtime` has exactly `kind: "web"` and `entry`, a relative local `.html` file below the training
+folder. Include every JS, CSS, image, font and media file locally. Academy packages this folder and runs
+the page in a sandbox with network, Electron, Node, frames and forms blocked. The page can persist state
+with `window.SemiTecAcademy.onState`, `.save` and `.complete`; see `SKILL.md`. Format 2 has no individual
+training certificate; use an optional package certificate when needed.
 
 ## 2. Topic file `topics/NN-name.json`
 
