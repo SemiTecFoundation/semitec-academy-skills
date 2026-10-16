@@ -1,5 +1,11 @@
 # Changelog — Academy Templates plugin
 
+## 1.6.1 — 2026-10
+- Documented the two partner-key paths: recipients may trust a publisher locally, while the Foundation may
+  separately include a confirmed partner public key in a future Academy release.
+- Clarified that default trust never includes a partner private key and does not make every partner package
+  or certificate Foundation-issued or Foundation-approved.
+
 ## 1.6.0 — 2026-10
 - Documented open partner publishing: standalone materials and packages require no Foundation approval;
   `stlp check` is a technical check and publishers retain responsibility for rights, review and attribution.

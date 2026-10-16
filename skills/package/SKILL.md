@@ -106,8 +106,10 @@ Ask in one short round (skip what is known):
 - **Certificate**: ask whether the publisher offers one. If yes, create its `certificate.json` with that
   publisher as issuer; if no, omit `certificate`. It is not required for a package to be complete.
 - **Signing**: a publisher signs a release with its own offline Ed25519 private key. Keep it outside every
-  repository; distribute only its public `.pub.pem` and fingerprint. Recipients add that key in Academy's
-  *Trusted publishers* settings. For an author's local draft use `--unsigned` and Developer mode.
+  repository; distribute only its public `.pub.pem`, matching public metadata and fingerprint. Recipients
+  add that key in Academy's *Trusted publishers* settings. The Foundation may separately ship a confirmed
+  partner public key in a future Academy release; that never includes the private key and does not make
+  each package Foundation-approved. For an author's local draft use `--unsigned` and Developer mode.
 
 ### 2. Write `pack-spec.json`
 Put it in `<packagesRoot>/<package-name>/`. If that folder has a `README.md` listing the packages, add a

@@ -23,6 +23,12 @@ and fingerprint. A school or user adds that public key in Academy's *Settings â†
 publishers*. Trust is the recipient's decision, not a central approval queue. Unsigned packages are for
 the authorâ€™s local Developer-mode test only.
 
+The Foundation can optionally include a confirmed partner **public** key in a future Academy release, so
+new installations trust that publisher by default. This is a separate Foundation distribution decision:
+the partner keeps its private key, and default trust does not make every package or certificate
+Foundation-issued or Foundation-approved. The app procedure is in
+[Academy's signing-key guide](https://github.com/SemiTecFoundation/semitec-academy/blob/main/docs/KEYS.md#optional-foundation-default-trust-for-a-partner).
+
 The skills and templates are [Apache-2.0](../LICENSE). Authors and publishers keep responsibility for
 the content they create, its content license, third-party permissions and attribution. See
 [TRADEMARKS.md](../TRADEMARKS.md) before using SemiTec names or logos.

@@ -1,8 +1,8 @@
 {
   "skill": "academy-templates:package",
-  "release": "1.7.0",
-  "builtFrom": "SemiTec Academy 1.7.0",
-  "builtAt": "2026-10-15T20:48:00.100Z",
+  "release": "1.7.1",
+  "builtFrom": "SemiTec Academy 1.7.1",
+  "builtAt": "2026-10-16T11:37:04.503Z",
   "extension": ".stlp",
   "writes": {
     "pack": 1,
@@ -70,6 +70,10 @@
     {
       "app": "1.7.0",
       "notes": "Locally trusted publisher keys, publisher feedback contact, optional package certificates, and clearer independent project plans."
+    },
+    {
+      "app": "1.7.1",
+      "notes": "Projects follow My packages; removing a package stops its active plans after confirmation and clears stale plan references on sign-in."
     }
   ]
 }
