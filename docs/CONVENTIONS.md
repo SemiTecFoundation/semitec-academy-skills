@@ -20,7 +20,7 @@ What all Academy Templates share, so that every Foundation document and page loo
 ## Web templates (training)
 
 - **Self-contained:** HTML + CSS + JavaScript in one folder, works offline, no build step to view;
-  `tools/build_single_file.py` makes one HTML file to share.
+  `tools/build_single_file.py` generates learner `index_offline.html` and all-open `index_preview.html`; distribute the complete folder.
 - **Content separate from layout:** all content in JSON (`training.json`, `topics/*.json`), all styling
   in theme files; both can be written or changed by prompting an AI.
 - **Accessible:** keyboard navigation, contrast, works at phone width.

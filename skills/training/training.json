@@ -1,8 +1,8 @@
 {
   "id": "training-template-tour",
   "version": "1.0",
-  "title": "Training Template — Feature Tour",
-  "subtitle": "SemiTec Foundation · interactive trainings",
+  "title": "Training Template \u2014 Feature Tour",
+  "subtitle": "SemiTec Foundation \u00b7 interactive trainings",
   "language": "en",
   "layout": "sidebar",
   "theme": "foundation",
@@ -44,7 +44,7 @@
   },
   "delivery": {
     "mode": "standalone",
-    "urlParams": true,
+    "urlParams": false,
     "resume": true
   },
   "labels": {},
@@ -60,5 +60,5 @@
     "09-quiz-types.json",
     "10-views-and-themes.json"
   ],
-  "certificate": "certificate.json"
+  "certificate": "certificate/index.html"
 }

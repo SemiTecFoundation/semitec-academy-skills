@@ -3,11 +3,11 @@
 Inlines CSS, JS, all JSON files, all themes and turns asset paths into data: URIs.
 
 Usage:
-  python3 tools/build_single_file.py                      -> dist/training.html (standalone, progress in the browser)
-                                                             dist/training-preview.html (preview: everything open)
+  python3 tools/build_single_file.py                      -> index_offline.html (standalone, progress in the browser)
+                                                             index_preview.html (preview: everything open)
   python3 tools/build_single_file.py --mode preview --out share.html
   python3 tools/build_single_file.py path/to/training --mode standalone
-A mode baked into the file can still be overridden by ?mode=... unless training.json delivery.urlParams is false."""
+Generated entries disable URL mode overrides; the author preview is a separate file."""
 import argparse, base64, json, mimetypes, os, re, sys
 
 ap = argparse.ArgumentParser()
@@ -37,7 +37,7 @@ def embed_assets(obj):
 tr = loadj('training.json')
 files = {'training.json': tr}
 for f in tr.get('topics', []): files['topics/' + f] = embed_assets(loadj('topics/' + f))
-if tr.get('certificate'): files[tr['certificate']] = embed_assets(loadj(tr['certificate']))
+if isinstance(tr.get('certificate'), str) and tr['certificate'].endswith('.json'): files[tr['certificate']] = embed_assets(loadj(tr['certificate']))
 themes = list(dict.fromkeys(tr.get('themes') or ['foundation', 'midnight', 'paper']) )
 if tr.get('theme', 'foundation') not in themes: themes.insert(0, tr.get('theme', 'foundation'))
 
@@ -52,16 +52,21 @@ def build(mode, out):
     theme_css = '\n'.join(f'<style data-theme="{t}"{"" if t == default else " disabled"}>\n{read("css/themes/" + t + ".css")}\n</style>' for t in themes)
     html = html.replace('</head>', theme_css + '\n<link id="theme-css">\n</head>')
     payload = json.dumps({'files': files, 'themes': themes}, ensure_ascii=False).replace('</', '<\\/')
-    boot = '<script>window.TRAINING_DATA = ' + payload + ';\n  window.TRAINING_CONFIG = Object.assign({ mode: ' + json.dumps(mode) + ' }, window.TRAINING_CONFIG || {});</script>'
+    boot = '<script>window.TRAINING_DATA = ' + payload + ';\n  window.TRAINING_CONFIG = Object.assign({ mode: ' + json.dumps(mode) + ', urlParams: false }, window.TRAINING_CONFIG || {});</script>'
     html = html.replace('<script src="js/md.js"></script>', boot + '\n  <script src="js/md.js"></script>')
     html = re.sub(r'<script src="([^"]+)"></script>', lambda m: '<script>\n' + read(m.group(1)).replace('</script', '<\\/script') + '\n</script>', html)
 
+    if isinstance(tr.get('certificate'), str) and tr['certificate'].endswith('.html') and os.path.dirname(os.path.abspath(out)) != ROOT:
+        html = html.replace(json.dumps(tr['certificate']), json.dumps(os.path.relpath(os.path.join(ROOT, tr['certificate']), os.path.dirname(os.path.abspath(out)))))
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     with open(out, 'w', encoding='utf-8') as f: f.write(html)
     print(f'Wrote {out} [{mode}] ({os.path.getsize(out) // 1024} KB, {len(files)} JSON files, themes: {", ".join(themes)})')
 
+print('Certificate: ' + (str(tr['certificate']) if tr.get('certificate') else 'not offered (author choice)'))
+if isinstance(tr.get('certificate'), str) and tr['certificate'].endswith('.html'): print('Certificate preview: ' + os.path.join(ROOT, os.path.dirname(tr['certificate']), 'index_preview.html'))
+
 if args.mode == 'both':
-    build('standalone', os.path.join(ROOT, 'dist', 'training.html'))
-    build('preview', os.path.join(ROOT, 'dist', 'training-preview.html'))
+    build('preview', os.path.join(ROOT, 'index_preview.html'))
+    build('standalone', os.path.join(ROOT, 'index_offline.html'))
 else:
-    build(args.mode, args.out or os.path.join(ROOT, 'dist', 'training.html' if args.mode == 'standalone' else f'training-{args.mode}.html'))
+    build(args.mode, args.out or os.path.join(ROOT, 'index_preview.html' if args.mode == 'preview' else 'index_offline.html'))

@@ -32,7 +32,7 @@ A lab is a folder with `lab.json` and (usually) the lab manual PDF made with the
 | `summary`, `objectives` | | Markdown; shown above the steps |
 | `difficulty`, `estimatedTime`, `equipment` | | shown in the lab header |
 | `manual` | recommended | PDF in the lab folder; opens in the *Manual* tab |
-| `files` | | **format 2:** source files of the lab — a folder (`"src"`) or a list of files / folders (`["src/", "scripts/run.tcl"]`). Shown in the app's *Files* tab (text viewer with line numbers, copy, save) and downloadable as one zip |
+| `files` | | **format 2:** source files of the lab — a folder (`"src"`) or a list of files / folders (`["src/", "scripts/run.tcl"]`). Shown in the app's *Files* tab (text viewer with line numbers and copy). **Download folder** exports the entire lab with its manual, source files and supporting materials |
 | `steps[]` | ✓ | `id` (unique, lowercase), `title`; optional `md`, `code`, `hint`, `manualPage` (filled by `tools/build.py`), `files` (links to files listed in `files`) |
 | `quiz` | recommended | same question types as trainings: `single`, `truefalse`, `multiple`, `order`, `match`, `hotspot`; `review` = step ids to re-read when wrong |
 

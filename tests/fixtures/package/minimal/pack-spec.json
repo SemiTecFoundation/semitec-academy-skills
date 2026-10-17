@@ -21,5 +21,25 @@
       "title": "Fixture notes (Markdown)",
       "source": "notes.md"
     }
-  ]
+  ],
+  "modules": [
+    {
+      "id": "start",
+      "title": "Start",
+      "items": [
+        "notes"
+      ]
+    }
+  ],
+  "schedule": {
+    "weeks": 1,
+    "entries": [
+      {
+        "week": 1,
+        "items": [
+          "notes"
+        ]
+      }
+    ]
+  }
 }

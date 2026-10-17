@@ -9,6 +9,7 @@ BLOCKS = {'text', 'callout', 'image', 'svg', 'compare', 'accordion', 'tabs', 'fl
 QTYPES = {'single', 'truefalse', 'multiple', 'order', 'match', 'hotspot'}
 errors, warnings = [], []
 LOCAL_WEB_ENTRY = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._/-]*\.html?$')
+LOCAL_CONTENT_PATH = re.compile(r'^[A-Za-z0-9][A-Za-z0-9._/-]*$')
 
 def err(where, msg): errors.append(f'{where}: {msg}')
 def warn(where, msg): warnings.append(f'{where}: {msg}')
@@ -27,6 +28,10 @@ def asset(where, src):
 
 def local_web_entry(value):
     if not isinstance(value, str) or not LOCAL_WEB_ENTRY.fullmatch(value): return False
+    return all(part not in ('.', '..') for part in value.split('/'))
+
+def local_content_path(value):
+    if not isinstance(value, str) or not LOCAL_CONTENT_PATH.fullmatch(value): return False
     return all(part not in ('.', '..') for part in value.split('/'))
 
 def print_result(topics, label='topics'):
@@ -101,13 +106,24 @@ def main():
         if not tr.get(k): err('training.json', f'missing "{k}"')
     fmt = tr.get('format', 1)
     if fmt not in (1, 2):
-        err('training.json', '"format" must be 1 (Academy JSON) or 2 (custom web training)')
+        err('training.json', '"format" must be 1 (Academy JSON) or 2 (custom HTML/CSS/JavaScript)')
         print_result(0, 'custom web trainings')
         return
+    cert = tr.get('certificate')
+    print('Certificate: ' + (str(cert) if cert else 'not offered (author choice)'))
+    if cert:
+        if not local_content_path(cert) or not os.path.isfile(os.path.join(ROOT, cert)): err('training.json.certificate', 'missing or unsafe local certificate file')
+        elif cert.endswith('.html'):
+            preview = os.path.join(os.path.dirname(cert), 'index_preview.html')
+            if not os.path.isfile(os.path.join(ROOT, preview)): err('training.json.certificate', 'missing preview: ' + preview)
+            print('Certificate preview: ' + preview)
+        elif cert.endswith('.json'): load(cert)
+        else: err('training.json.certificate', 'use HTML or legacy JSON')
+    if not os.path.isfile(os.path.join(ROOT, 'index_preview.html')): err('index_preview.html', 'missing all-sections-open author preview; generate before final validation')
     if fmt == 2:
         runtime = tr.get('runtime')
         if not isinstance(runtime, dict):
-            err('training.json', 'format 2 needs "runtime": { "kind": "web", "entry": "index.html" }')
+            err('training.json', f'format {fmt} needs "runtime": {{ "kind": "web", "entry": "index.html" }}')
         else:
             for key in runtime:
                 if key not in ('kind', 'entry'): err('training.json runtime', f'unknown field "{key}"')
@@ -120,8 +136,11 @@ def main():
                 target = os.path.realpath(os.path.join(ROOT, entry))
                 if os.path.commonpath((root, target)) != root or not os.path.isfile(target):
                     err('training.json runtime', f'entry file not found: {entry}')
-        if tr.get('certificate'):
-            err('training.json', 'format 2 does not support an individual training certificate; use an optional package certificate instead')
+        progress = tr.get('progress', {})
+        if progress.get('mode') not in ('bridge', 'manual'): err('training.json', 'progress.mode must be bridge or manual')
+        if progress.get('mode') == 'manual':
+            steps = progress.get('steps', [])
+            if not steps or any(not x.get('id') or not x.get('title') for x in steps) or len({x['id'] for x in steps}) != len(steps): err('training.json', 'progress.steps needs unique ids and titles')
         print_result(1, 'custom web training')
         return
     if not tr.get('topics'): err('training.json', 'missing "topics"')
@@ -173,7 +192,7 @@ def main():
                 planned.add(tid)
         missing = [t for t in topic_ids if t not in planned]
         if missing: warn('training.json', 'schedule: topics without a week: ' + ', '.join(sorted(missing)))
-    if tr.get('certificate'):
+    if isinstance(tr.get('certificate'), str) and tr['certificate'].endswith('.json'):
         c = load(tr['certificate'])
         if c:
             d = c.get('style', {}).get('design', 'classic')

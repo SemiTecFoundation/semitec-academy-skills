@@ -18,7 +18,7 @@
     {
       "id": "project",
       "title": "Create the Vivado project",
-      "md": "Create an **RTL project** for your board. Download the lab files (**Files** tab → *Download all*) and add `src/rtl/*.sv` as design sources and `src/sim/tb_shift4.sv` as a simulation source.",
+      "md": "Create an **RTL project** for your board. Download the lab files (**Download folder** beside the lab or in its viewer) and add `src/rtl/*.sv` as design sources and `src/sim/tb_shift4.sv` as a simulation source.",
       "manualPage": 3
     },
     {

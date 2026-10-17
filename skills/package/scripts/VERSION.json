@@ -1,11 +1,11 @@
 {
   "skill": "academy-templates:package",
-  "release": "1.9.0",
-  "builtFrom": "SemiTec Academy 1.9.0",
-  "builtAt": "2026-10-16T15:48:40.743Z",
+  "release": "2.1.1",
+  "builtFrom": "SemiTec Academy 2.1.1",
+  "builtAt": "2026-10-17T16:02:15.617Z",
   "extension": ".stlp",
   "writes": {
-    "pack": 2,
+    "pack": 3,
     "training": 2,
     "reading": 1,
     "lab": 1,
@@ -16,7 +16,8 @@
   "appCanOpen": {
     "pack": [
       1,
-      2
+      2,
+      3
     ],
     "training": [
       1,
@@ -84,6 +85,18 @@
     {
       "app": "1.9.0",
       "notes": "Training format 2 is a self-contained custom web training: local HTML, CSS and JavaScript run in a sandboxed iframe and use the Academy bridge to save progress."
+    },
+    {
+      "app": "2.0.0",
+      "notes": "Package format 3 adds an optional per-package password gate. Learners can export local package files; JSON trainings export as a standalone HTML file and custom web trainings export as their local folder."
+    },
+    {
+      "app": "2.1.0",
+      "notes": "Two training formats: JSON and custom web, optional HTML certificates, manual progress, full-folder exports and mandatory course order and study plan."
+    },
+    {
+      "app": "2.1.1",
+      "notes": "After preview-password approval, Academy opens an all-sections author preview for trainings; normal tracked study remains separately available."
     }
   ]
 }

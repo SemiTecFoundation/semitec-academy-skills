@@ -1,5 +1,21 @@
 # Changelog — Academy Templates plugin
 
+## 2.0.1 — 2026-10-17
+- Clarified that a successful preview-password unlock opens an Academy training's required all-sections
+  author preview, which does not write learner progress; **Study normally** returns to the tracked entry.
+- Clarified that every package installation, including the same version, requires the package password
+  again while preserving stable learning progress.
+
+## 2.0.0 — local development, not released
+- Two training formats: JSON (1) and custom HTML/CSS/JavaScript (2). Both support optional individual
+  certificates; package certificates are independently optional. New designs use HTML/CSS/JavaScript,
+  with a visible author preview. Legacy JSON certificate designs remain readable.
+- Added required author previews and explicit bridge/manual progress for custom trainings and slide decks.
+- Package order and study plan are mandatory; the shared checker also runs during Academy import.
+- Downloads preserve complete folders, sources and attachments; optional preview passwords exclude
+  author preview HTML until unlocked. No individual PDF or training-only HTML export workflow.
+- Regenerated the bundled packer from Academy 2.1.0 and refreshed app/publisher documentation.
+
 ## 1.8.0 — 2026-10
 - Added documented training format 2 for complete local HTML/CSS/JavaScript lessons in SemiTec Academy
   1.9.0. It has a constrained progress bridge, a validator and package checks, while the established

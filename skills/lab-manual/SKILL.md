@@ -17,7 +17,7 @@ lab-manual-folder/
 └── lab/            what goes into a SemiTec Learning Package (.stlp):
     ├── lab.json    steps (same ids as \labstep in the manual), check quiz, "files"
     ├── manual.pdf  built from latex/ by tools/build.py
-    └── src/        source files students view in the app and download as a zip
+    └── src/        source files included with the full lab folder download
 ```
 
 Tools (Python 3 + a TeX distribution with XeLaTeX and the FreeSerif fonts):

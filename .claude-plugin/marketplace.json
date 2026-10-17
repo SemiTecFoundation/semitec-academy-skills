@@ -11,7 +11,7 @@
       "name": "academy-templates",
       "source": ".",
       "description": "Templates as skills: project briefs, diploma documents, lab manuals, interactive trainings and SemiTec Learning Packages (.stlp) for SemiTec Academy.",
-      "version": "1.8.0",
+      "version": "2.0.1",
       "category": "education"
     }
   ]

@@ -43,4 +43,4 @@ Add the `lab/` folder to a SemiTec Learning Package (`skills/package`):
 ```
 
 In SemiTec Academy the lab has the tabs **Manual** (this PDF; steps link to their page),
-**Steps** (checklist), **Files** (source files, *Download all* as zip) and **Check quiz**.
+**Steps** (checklist), **Files** (source viewer; *Download folder* exports the full lab, manual and supporting files) and **Check quiz**.

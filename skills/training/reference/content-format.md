@@ -1,53 +1,23 @@
 # Content format reference
 
-Format 1 trainings show JSON content through the supplied Academy engine. Format 2 trainings are complete
-local web lessons with an explicit entry page. This page documents both formats.
-Text fields marked *md* accept light Markdown: `**bold**`, `*italic*`, `` `code` ``, `[link](url)`,
-lists (`- item`, `1. item`), `> quote`, `### heading`, blank line = new paragraph. HTML is escaped.
-
----
+There are two training formats: **1 = JSON topics** and **2 = custom HTML/CSS/JavaScript**. Both have
+optional certificates. New certificate layouts use [HTML/CSS/JavaScript](certificates.md); legacy JSON
+styles below remain readable. See [SKILL.md](../SKILL.md) for custom runtime/progress declarations and
+required `index_preview.html` generation. Current packaging targets Academy 2.1.0+.
 
 ## 1. `training.json`
 
-| Field | Type | Default | Meaning |
-|---|---|---|---|
-| `id` | string | — | Unique id. Progress is saved per id — change it for a new training. |
-| `format` | `1` \| `2` | `1` | `1` = Academy JSON training; `2` = custom local web training (Academy ≥ 1.9.0). |
-| `version` | string | — | Content version, copied into the saved state (`trainingVersion`). |
-| `title`, `subtitle` | string | — | Shown in the header (title also on the certificate). |
-| `language` | string | `en` | `en`, `hy`, `ru` … Used for date format and `<html lang>`. |
-| `layout` | `sidebar` \| `topbar` | `sidebar` | Default layout. |
-| `theme` | string | `foundation` | Default theme = file `css/themes/<name>.css`. |
-| `themes` | string[] | 3 built-in | Themes offered in *View ▾*. |
-| `allowViewSwitch` | bool | `true` | Show layout/theme selectors in *View ▾*. |
-| `schedule` | object | — | Optional week plan: `weeks` (how many) and `topics[]`, each `{ week, topics: [topic id, …] }`. Suggests a pace for self-study; when the training sits inside a package, the package's own `schedule` drives the study plan. |
-| `passThreshold` | 0–1 | `0.8` | Share of correct answers needed to pass a quiz. |
-| `showCorrectAnswers` | `never` \| `afterPass` \| `always` | `afterPass` | When to reveal correct answers + `explain`. |
-| `requireSequential` | bool | `true` | Topic N+1 opens only after topic N is passed. |
-| `topicWord` | string | `Topic` | Word in the kicker "Topic 2 / 10". |
-| `hours` | string | — | Used by `{hours}` on the certificate. |
-| `labels` | object | — | Override any UI text (see `T.labels` in `js/core.js`), e.g. `{"next": "Հաջորդը"}`. |
-| `topics` | string[] | — | File names in `topics/`, in order. |
-| `certificate` | string | — | Path of the certificate file (omit = no certificate). |
-| `delivery` | object | `{mode: "standalone"}` | Delivery mode and progress storage — see `INTEGRATION.md` §2 (`mode`, `progress`, `progressUrl`, `urlParams`, `resume`, `allowReset`, …). |
+Format 1 fields: `id`, `title`, `topics` (JSON filenames below `topics/`), optional `subtitle`, `language`,
+`hours`, `layout` (`sidebar`/`topbar`), `theme`, `themes`, `allowViewSwitch`, `passThreshold` (0–1),
+`requireSequential`, `showCorrectAnswers`, `labels`, `delivery`, `schedule`, and `certificate`.
+`delivery.mode` is `standalone`, `preview` or `platform`; use `delivery.urlParams: false` for normal delivery.
+Omit `certificate` for none; otherwise reference local `certificate/index.html` (or a legacy JSON file).
+A training's topic `schedule` is optional; a package's course order and study plan are mandatory.
 
-For **format 2**, the required fields are `id`, `title`, and `runtime`; the JSON-engine fields in this
-table (`topics`, theme, layout, quiz options, delivery and `certificate`) do not apply.
-
-```json
-{
-  "format": 2,
-  "id": "logic-playground",
-  "title": "Logic playground",
-  "runtime": { "kind": "web", "entry": "index.html" }
-}
-```
-
-`runtime` has exactly `kind: "web"` and `entry`, a relative local `.html` file below the training
-folder. Include every JS, CSS, image, font and media file locally. Academy packages this folder and runs
-the page in a sandbox with network, Electron, Node, frames and forms blocked. The page can persist state
-with `window.SemiTecAcademy.onState`, `.save` and `.complete`; see `SKILL.md`. Format 2 has no individual
-training certificate; use an optional package certificate when needed.
+Format 2 fields: `format: 2`, `id`, `title`, optional `hours`, `runtime: {kind: "web", entry: "index.html"}`,
+`progress: {mode: "bridge"}` or `{mode: "manual", steps: [{id, title}]}`, optional `certificate`.
+Each manual step needs a unique ID and title. The preview must be an authored all-open HTML entry.
+JSON topic/block fields below apply to format 1 only.
 
 ## 2. Topic file `topics/NN-name.json`
 
@@ -125,7 +95,7 @@ Common fields: `id`, `type`, `text` (md), `image` (optional), `review` (subsecti
 Option indices start at **0**. Score = correct questions / all questions; pass when score ≥ threshold.
 On a fail the result lists the `review` subsections as links, then **Try again** rebuilds the quiz (re-shuffled).
 
-## 5. `certificate.json`
+## 5. Legacy `certificate.json` designs
 
 | Field | Meaning |
 |---|---|
@@ -144,7 +114,7 @@ On a fail the result lists the `review` subsections as links, then **Try again**
 | `style.seal` | `false` hides the seal. |
 
 Printing (*Print / save as PDF*) outputs only the certificate on one A4 page.
-In preview mode (`?mode=preview`) the certificate page has live controls for these style fields and shows the resulting JSON.
+In the generated `index_preview.html` the certificate page has live controls for these style fields and shows the resulting JSON.
 
 ## 6. Theme file `css/themes/<name>.css`
 

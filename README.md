@@ -14,11 +14,18 @@ only when selected materials should become one `.stlp` course for the SemiTec Ac
 | `project-brief` | Project task-definition PDF and optional Academy project folder | Add it only when students should track the project in Academy. |
 | `diploma-project` | Thesis or diploma document and defence outline | Usually never; it is a final academic document. |
 | `lab-manual` | Lab manual PDF, `lab.json`, quiz and source files | Add it when the lab belongs to an Academy course. |
-| `training` | Interactive training: the Academy JSON template or a custom local HTML/CSS/JavaScript lesson | Add it when it belongs to an Academy course; custom web lessons need Academy 1.9.0. |
+| `training` | Interactive training: the Academy JSON template or a custom local HTML/CSS/JavaScript lesson | Add it when it belongs to an Academy course; current packages target Academy 2.1.0; both training formats support optional certificates. |
 | `package` | One signed or test-only `.stlp` course archive | Use after choosing materials for Academy delivery. |
 
 Packaging never changes an original lab, training or brief. It copies the materials chosen by the author
 into a course archive, so the standalone source folders remain the editable originals.
+
+Academy 2.1.0 downloads each material as a complete folder, including source files and supporting assets.
+Training format 1 uses JSON; format 2 uses custom HTML/CSS/JavaScript. Both can independently offer an
+optional HTML/CSS/JavaScript certificate, separately from the optional package certificate. Every training
+includes `index_preview.html` for author review. Learner downloads exclude author previews by default, even when no password is configured.
+A successful package-password unlock allows previews to be included. Course order and study plan are mandatory in packages.
+See the [archive layout](skills/package/reference/archive-layout.md) and [package contract](skills/package/reference/pack-spec.md).
 
 ## Open authoring and rights
 
